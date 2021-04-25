@@ -1,50 +1,50 @@
 <template>
-  <div class="about w-full flex justify-center">
-    <div class="flex flex-row flex-wrap w-2/3 mt-12">
-
+  <div class="game w-full h-full flex flex-col justify-between">
+    <div class="flex flex-col m-12">
+      <div class="flex flex-row items-start justify-center w-full">
+        <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
+        <Boxscore v-if="boxscore" :game="boxscore"/>
+      </div>
+      <Players v-if="batters" :game="batters" class="w-full"/>
     </div>
+    <ScorebugList class="z-10"/>
   </div>
 </template>
 
 <script>
-import MLBStatsAPI from 'mlb-stats-api'
-// import { all, hash } from 'rsvp'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
-// import Scorebug from '@/components/Scorebug.vue'
+import Players from '@/components/Players'
+import Boxscore from '@/components/Boxscore'
+import Scorebug from '@/components/Scorebug'
+import ScorebugList from '@/components/ScorebugList'
 
-// import teamMap from '@/util/teamMap'
+import createPlayersObj from '@/util/createPlayersObj'
+import createBoxscoreObj from '@/util/createBoxscoreObj'
+import createScorebugObj from '@/util/createScorebugObj'
 
 export default {
-  name: 'Home',
-  // components: {
-  //   Scorebug
-  // },
-  setup(props, { emit }) {
+  name: 'Game',
+  components: {
+    Boxscore,
+    Players,
+    Scorebug,
+    ScorebugList
+  },
+  setup() {
     const route = useRoute()
-    const model = ref([])
-    const timer = ref(null)
+    const store = useStore()
 
-    const mlbStats = new MLBStatsAPI()
-    const gamePk = route.params.gamepk
-
-    const fetchData = async () => {
-      const gameData = await mlbStats.getGameLinescore({ pathParams: { gamePk: gamePk } }).then(({ data }) => data)
-      console.log(gameData)
-      model.value = []
-    }
-
-    onMounted(() => {
-      fetchData()
-      // timer.value = setInterval(fetchData, 60000)
-    })
-
-    onBeforeUnmount(() => clearInterval(timer))
+    const gamePk = computed(() => route.params.gamepk)
+    const gameData = computed(() => store.state.games.find(g => g.gamePk === gamePk.value))
 
     return {
-      model,
-      emit
+      model: store,
+      boxscore: computed(() => createBoxscoreObj(gameData.value)),
+      scorebug: computed(() => createScorebugObj(gameData.value)),
+      batters: computed(() => createPlayersObj(gameData.value))
     }
   }
 }

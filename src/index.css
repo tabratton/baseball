@@ -5,39 +5,3 @@
 th, td {
     @apply p-2;
 }
-
-.roster-table {
-    @apply border-collapse border border-white border-opacity-50;
-}
-
-.roster-table th {
-    @apply pr-3 pl-3;
-}
-
-.roster-table td {
-    @apply pr-3 pl-3 border-l border-r border-white border-opacity-60;
-}
-
-.scorebug table td {
-    @apply whitespace-nowrap;
-}
-
-.scorebug table td:first-of-type {
-    @apply w-20;
-}
-
-.out-indicator {
-    @apply rounded-full w-4 h-4 m-2;
-}
-
-.base {
-    @apply w-8 h-8 border-2 border-gray-800;
-}
-
-.active {
-    @apply bg-yellow-600;
-}
-
-.inactive {
-    @apply bg-gray-500;
-}
