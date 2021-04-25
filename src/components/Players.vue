@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           <tr v-for="player in game.away.batters" :key="player.jerseyNumber">
-            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder)}.` / 100 : '' }}</td>
+            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
             <td>{{ player.position.abbreviation }}</td>
             <td>{{ player.person.fullName }}</td>
             <td>{{ player.jerseyNumber }}</td>
@@ -64,7 +64,7 @@
         </thead>
         <tbody>
           <tr v-for="player in game.home.batters" :key="player.jerseyNumber">
-            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder)}.` / 100 : '' }}</td>
+            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
             <td>{{ player.position.abbreviation }}</td>
             <td>{{ player.person.fullName }}</td>
             <td>{{ player.jerseyNumber }}</td>
