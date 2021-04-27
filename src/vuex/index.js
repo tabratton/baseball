@@ -25,12 +25,18 @@ export default createStore({
         const homeTeam = teamMap.find(t => t.id === d.teams.home.team.id)
         const awayTeam = teamMap.find(t => t.id === d.teams.away.team.id)
 
+        const schedule = scheduleData.find(s => s.gamePk === d.gamePk)
+
+        const isOver = schedule.status.statusCode === 'F' || schedule.status.statusCode === 'DR' || schedule.status.statusCode === 'O'
+        const isPregame = schedule.status.statusCode === 'P' || schedule.status.statusCode === 'S'
+
         return hash({
           lineScore: axios.get(`${state.apiHost}/game/${d.gamePk}/linescore`).then(({ data }) => data),
           boxScore: axios.get(`${state.apiHost}/game/${d.gamePk}/boxscore`).then(({ data }) => data),
-          schedule: scheduleData.find(s => s.gamePk === d.gamePk),
+          schedule,
           gamePk: `${d.gamePk}`,
           gameTime: parseISO(d.gameDate),
+          inProgress: !isOver && !isPregame,
           home: {
             short: homeTeam.short.toUpperCase(),
             name: homeTeam.name,
@@ -44,7 +50,7 @@ export default createStore({
         })
       }))
 
-      const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime))
+      const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime)).sort((a, b) => a === b ? 0 : (a ? -1 : 1))
 
       commit('updateGames', sorted)
     }

@@ -124,6 +124,9 @@ module.exports = {
           main: '#FF5910',
           secondary: '#002D72'
         }
+      },
+      boxShadow: {
+        'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       }
     },
   },

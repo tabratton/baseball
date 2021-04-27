@@ -13,7 +13,7 @@ export default function(game) {
   const obj = {
     gamePk: game.gamePk,
     isTop: game.lineScore.isTopInning,
-    inProgress: !isOver && !isPregame,
+    inProgress: game.inProgress,
     home: {
       team: game.home.short,
       bgClass: homeTeam.bgClass,

@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="bg-gray-300 shadow-md-side rounded">
     <Scorebug v-for="g in games" :key="g.gamePk" :game="g"/>
   </div>
 </template>

@@ -44,7 +44,7 @@ export default function(gameData) {
   const isPregame = gameData.schedule.status.statusCode === 'P' || gameData.schedule.status.statusCode === 'S'
 
   gameObj.isPregame = isPregame
-  gameObj.inProgress = !isOver && !isPregame
+  gameObj.inProgress = gameData.inProgress
   gameObj.status = gameData.schedule.status.abstractGameState
 
   if (gameObj.home.runs > gameObj.away.runs && !gameObj.home.innings[gameData.schedule.scheduledInnings - 1].runs && isOver) {
