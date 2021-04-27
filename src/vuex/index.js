@@ -1,5 +1,5 @@
+import axios from 'axios'
 import { compareAsc, parseISO } from 'date-fns'
-import MLBStatsAPI from 'mlb-stats-api'
 import { all, hash } from 'rsvp'
 import { createStore } from 'vuex'
 
@@ -10,7 +10,7 @@ export default createStore({
   state() {
     return {
       games: [],
-      mlbStats: new MLBStatsAPI()
+      apiHost: 'https://statsapi.mlb.com/api/v1'
     }
   },
   mutations: {
@@ -20,14 +20,14 @@ export default createStore({
   },
   actions: {
     async updateGames({ commit, state }) {
-      const scheduleData = await state.mlbStats.getSchedule({ params: { sportId: 1 } }).then(({ data: { dates: [{ games }] } }) => games)
+      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1 } }).then(({ data: { dates: [{ games }] } }) => games)
       const gameData = await all(scheduleData.map(d => {
         const homeTeam = teamMap.find(t => t.id === d.teams.home.team.id)
         const awayTeam = teamMap.find(t => t.id === d.teams.away.team.id)
 
         return hash({
-          lineScore: state.mlbStats.getGameLinescore({ pathParams: { gamePk: d.gamePk } }).then(({ data }) => data),
-          boxScore: state.mlbStats.getGameBoxscore({ pathParams: { gamePk: d.gamePk }}).then(({ data }) => data),
+          lineScore: axios.get(`${state.apiHost}/game/${d.gamePk}/linescore`).then(({ data }) => data),
+          boxScore: axios.get(`${state.apiHost}/game/${d.gamePk}/boxscore`).then(({ data }) => data),
           schedule: scheduleData.find(s => s.gamePk === d.gamePk),
           gamePk: `${d.gamePk}`,
           gameTime: parseISO(d.gameDate),
