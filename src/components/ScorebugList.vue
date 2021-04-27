@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row items-end overflow-auto">
+  <div class="">
     <Scorebug v-for="g in games" :key="g.gamePk" :game="g"/>
   </div>
 </template>

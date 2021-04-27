@@ -43,13 +43,13 @@ export default function(game) {
     obj.displaySide = false
     obj.batterCount = null
     obj.outs = [false, false]
-    obj.runners = [false, false, false]
+    obj.runners = [{ num: 1, runner: false }, { num: 2, runner: false }, { num: 3, runner: false }]
   } else {
     obj.inning = game.lineScore.currentInning
     obj.displaySide = true
     obj.batterCount = `${game.lineScore.balls}-${game.lineScore.strikes}`
     obj.outs = [game.lineScore.outs >= 1, game.lineScore.outs >= 2]
-    obj.runners = [!!game.lineScore.offense.first, !!game.lineScore.offense.second, !!game.lineScore.offense.third]
+    obj.runners = [{ num: 1, runner: !!game.lineScore.offense.first }, { num: 2, runner: !!game.lineScore.offense.second }, { num: 3, runner: !!game.lineScore.offense.third }]
   }
 
   if (isPregame) {

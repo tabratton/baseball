@@ -1,13 +1,13 @@
 <template>
-  <div class="game w-full h-full flex flex-col justify-between">
-    <div class="flex flex-col m-12">
+  <div class="game w-full h-full flex flex-row">
+    <ScorebugList class="w-max"/>
+    <div class="flex flex-col flex-grow m-12">
       <div class="flex flex-row items-start justify-center w-full">
         <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
         <Boxscore v-if="boxscore" :game="boxscore"/>
       </div>
       <Players v-if="batters" :game="batters" class="w-full"/>
     </div>
-    <ScorebugList class="z-10"/>
   </div>
 </template>
 

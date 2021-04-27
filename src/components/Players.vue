@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row items-start justify-center">
     <div class="flex flex-col items-center justify-start m-2">
-      <table :class="`players-table table-auto text-center text-white ${game.away.bgClass}`">
+      <table :class="{ [game.away.bgClass]: true }" class="players-table table-auto text-center text-white">
         <caption class="sr-only">Away Batters</caption>
         <thead>
           <tr>
@@ -30,7 +30,7 @@
           </tr>
         </tbody>
       </table>
-      <table :class="`players-table table-auto text-center mt-4 text-white ${game.away.bgClass}`">
+      <table :class="{ [game.away.bgClass]: true }" class="players-table table-auto text-center mt-4 text-white">
         <caption class="sr-only">Away Pitchers</caption>
         <thead>
           <tr>
@@ -52,7 +52,7 @@
       </table>
     </div>
     <div class="flex flex-col justify-start items-center m-2">
-      <table :class="`players-table table-auto text-center text-white ${game.home.bgClass}`">
+      <table :class="{ [game.home.bgClass]: true }" class="players-table table-auto text-center text-white">
         <caption class="sr-only">Home Batters</caption>
         <thead>
           <tr>
@@ -81,7 +81,7 @@
           </tr>
         </tbody>
       </table>
-      <table :class="`players-table table-auto text-center mt-4 text-white ${game.home.bgClass}`">
+      <table :class="{ [game.home.bgClass]: true }" class="players-table table-auto text-center mt-4 text-white">
         <caption class="sr-only">Home Pitchers</caption>
         <thead>
           <tr>
