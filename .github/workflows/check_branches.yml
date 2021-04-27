@@ -1,0 +1,21 @@
+name: check branch
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 14
+      uses: actions/setup-node@v2.1.5
+      with:
+        node-version: 14
+    - uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: install
+    - uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: build
+      env:
+        CI: true
