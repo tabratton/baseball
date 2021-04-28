@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row items-start justify-center">
-    <div class="flex flex-col items-start justify-start m-2">
-      <h4 class="font-bold text-lg">{{game.away.teamName}} - Batters</h4>
+    <div class="m-2">
+      <h4 class="font-bold text-lg text-center">{{game.away.teamName}} - Batters</h4>
       <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
         <caption class="sr-only">Away Batters</caption>
         <thead>
@@ -31,15 +31,16 @@
           </tr>
         </tbody>
       </table>
-      <h4 class="font-bold text-lg">{{game.away.teamName}} - Pitchers</h4>
-      <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center text-white">
-        <caption class="sr-only">Away Pitchers</caption>
-        <thead>
+      <div class="inline-block">
+        <h4 class="font-bold text-lg text-center">{{game.away.teamName}} - Pitchers</h4>
+        <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center text-white">
+          <caption class="sr-only">Away Pitchers</caption>
+          <thead>
           <tr>
             <th v-for="header in pitcherHeaders" :key="header" scope="col">{{ header }}</th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           <tr v-for="player in game.away.pitchers" :key="player.jerseyNumber">
             <td>{{ player.person.fullName }}</td>
             <td>{{ player.jerseyNumber }}</td>
@@ -50,11 +51,12 @@
             <td>{{ player.stats.pitching.runs }}</td>
             <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="flex flex-col items-start justify-start m-2">
-      <h4 class="font-bold text-lg">{{game.home.teamName}} - Batters</h4>
+    <div class="m-2">
+      <h4 class="font-bold text-lg text-center">{{game.home.teamName}} - Batters</h4>
       <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
         <caption class="sr-only">Home Batters</caption>
         <thead>
@@ -84,15 +86,16 @@
           </tr>
         </tbody>
       </table>
-      <h4 class="font-bold text-lg">{{game.home.teamName}} - Pitchers</h4>
-      <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center text-white">
-        <caption class="sr-only">Home Pitchers</caption>
-        <thead>
+      <div class="inline-block">
+        <h4 class="font-bold text-lg text-center">{{game.home.teamName}} - Pitchers</h4>
+        <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center text-white">
+          <caption class="sr-only">Home Pitchers</caption>
+          <thead>
           <tr>
             <th v-for="header in pitcherHeaders" :key="header" scope="col">{{ header }}</th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           <tr v-for="player in game.home.pitchers" :key="player.jerseyNumber">
             <td>{{ player.person.fullName }}</td>
             <td>{{ player.jerseyNumber }}</td>
@@ -103,8 +106,9 @@
             <td>{{ player.stats.pitching.runs }}</td>
             <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

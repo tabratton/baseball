@@ -29,11 +29,11 @@ export default function(game) {
   if (obj.isTop) {
     obj.home.currentPlayer = game.boxScore.teams.home.players[`ID${(game.lineScore.defense.pitcher || {}).id}`]
     obj.away.currentPlayer = game.boxScore.teams.away.players[`ID${(game.lineScore.offense.batter || {}).id}`]
-    obj.away.order = obj.away.currentPlayer ? `${Math.floor(Number(obj.away.currentPlayer.battingOrder)) / 100}.` : ''
+    obj.away.order = obj.away.currentPlayer ? `${Math.floor(Number(obj.away.currentPlayer.battingOrder) / 100)}.` : ''
   } else {
     obj.home.currentPlayer = game.boxScore.teams.home.players[`ID${(game.lineScore.offense.batter || {}).id}`]
     obj.away.currentPlayer = game.boxScore.teams.away.players[`ID${(game.lineScore.defense.pitcher || {}).id}`]
-    obj.home.order = obj.home.currentPlayer ? `${Math.floor(Number(obj.home.currentPlayer.battingOrder)) / 100}.` : ''
+    obj.home.order = obj.home.currentPlayer ? `${Math.floor(Number(obj.home.currentPlayer.battingOrder) / 100)}.` : ''
   }
 
   if (isOver || isPregame) {

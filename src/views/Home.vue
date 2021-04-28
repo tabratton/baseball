@@ -1,5 +1,5 @@
 <template>
-  <div class="home h-full w-full flex flex-row items-center">
+  <div class="home h-screen w-screen flex flex-row items-center">
     <ScorebugList class="w-full shadow-md overflow-auto flex flex-row flex-wrap justify-center p-12 m-12"/>
   </div>
 </template>
