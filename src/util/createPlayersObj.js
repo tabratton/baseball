@@ -1,20 +1,19 @@
-import teamMap from '@/util/teamMap'
-
 export default function(game) {
   if (!game) return null
-
-  const homeTeam = teamMap.find(t => t.id === game.schedule.teams.home.team.id)
-  const awayTeam = teamMap.find(t => t.id === game.schedule.teams.away.team.id)
 
   const obj = {
     gamePk: game.gamePk,
     home: {
       team: game.home.short,
-      bgClass: homeTeam.bgClass,
+      teamName: game.home.name,
+      bgClass: game.home.bgClass,
+      textClass: game.home.textClass,
     },
     away: {
       team: game.away.short,
-      bgClass: awayTeam.bgClass,
+      teamName: game.away.name,
+      bgClass: game.away.bgClass,
+      textClass: game.away.textClass,
     }
   }
 

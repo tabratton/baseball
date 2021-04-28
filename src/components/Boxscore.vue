@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr :class="game.away.bgClass">
+        <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
           <td>{{ game.away.name }}</td>
           <td v-for="score in game.away.innings" :key="score">{{ score.runs }}</td>
           <td>{{ game.away.runs }}</td>
@@ -19,7 +19,7 @@
           <td>{{ game.away.errors }}</td>
         </tr>
 
-        <tr :class="game.home.bgClass">
+        <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
           <td>{{ game.home.name }}</td>
           <td v-for="score in game.home.innings" :key="score">{{ score.runs }}</td>
           <td>{{ game.home.runs }}</td>

@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-row items-start justify-center">
-    <div class="flex flex-col items-center justify-start m-2">
-      <table :class="{ [game.away.bgClass]: true }" class="players-table table-auto text-center text-white">
+    <div class="flex flex-col items-start justify-start m-2">
+      <h4 class="font-bold text-lg">{{game.away.teamName}} - Batters</h4>
+      <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
         <caption class="sr-only">Away Batters</caption>
         <thead>
           <tr>
@@ -30,7 +31,8 @@
           </tr>
         </tbody>
       </table>
-      <table :class="{ [game.away.bgClass]: true }" class="players-table table-auto text-center mt-4 text-white">
+      <h4 class="font-bold text-lg">{{game.away.teamName}} - Pitchers</h4>
+      <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center text-white">
         <caption class="sr-only">Away Pitchers</caption>
         <thead>
           <tr>
@@ -51,8 +53,9 @@
         </tbody>
       </table>
     </div>
-    <div class="flex flex-col justify-start items-center m-2">
-      <table :class="{ [game.home.bgClass]: true }" class="players-table table-auto text-center text-white">
+    <div class="flex flex-col items-start justify-start m-2">
+      <h4 class="font-bold text-lg">{{game.home.teamName}} - Batters</h4>
+      <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
         <caption class="sr-only">Home Batters</caption>
         <thead>
           <tr>
@@ -81,7 +84,8 @@
           </tr>
         </tbody>
       </table>
-      <table :class="{ [game.home.bgClass]: true }" class="players-table table-auto text-center mt-4 text-white">
+      <h4 class="font-bold text-lg">{{game.home.teamName}} - Pitchers</h4>
+      <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center text-white">
         <caption class="sr-only">Home Pitchers</caption>
         <thead>
           <tr>

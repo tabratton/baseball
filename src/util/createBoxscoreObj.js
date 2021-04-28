@@ -8,11 +8,13 @@ export default function(gameData) {
     home: {
       name: gameData.home.name,
       bgClass: gameData.home.bgClass,
+      textClass: gameData.home.textClass,
       innings: []
     },
     away: {
       name: gameData.away.name,
       bgClass: gameData.away.bgClass,
+      textClass: gameData.away.textClass,
       innings: []
     }
   }
@@ -41,9 +43,8 @@ export default function(gameData) {
   gameObj.away.errors = sumField(gameObj.away.innings, 'errors')
 
   const isOver = gameData.schedule.status.statusCode === 'F' || gameData.schedule.status.statusCode === 'DR' || gameData.schedule.status.statusCode === 'O'
-  const isPregame = gameData.schedule.status.statusCode === 'P' || gameData.schedule.status.statusCode === 'S'
 
-  gameObj.isPregame = isPregame
+  gameObj.isPregame = gameData.schedule.status.statusCode === 'P' || gameData.schedule.status.statusCode === 'S'
   gameObj.inProgress = gameData.inProgress
   gameObj.status = gameData.schedule.status.abstractGameState
 

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{ 'cursor-pointer': !disableClick }"
-    class="scorebug flex m-2 w-min"
+    class="scorebug flex m-2"
     @click="goToBoxscore()"
   >
     <table class="table-auto text-white">
@@ -13,24 +13,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr :class="game.away.bgClass">
-          <td class="pr-6">{{ game.away.team }}</td>
-          <td class="pl-6 text-right">
+        <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
+          <td class="pr-4">{{ game.away.team }}</td>
+          <td class="pl-4 text-right">
             <span v-if="game.away.score < 10" class="text-transparent">0</span>
             {{ game.away.score }}
           </td>
         </tr>
 
-        <tr :class="game.home.bgClass">
-          <td class="pr-6">{{ game.home.team }}</td>
-          <td class="pl-6 text-right">
+        <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
+          <td class="pr-4">{{ game.home.team }}</td>
+          <td class="pl-4 text-right">
             <span v-if="game.home.score < 10" class="text-transparent">0</span>
             {{ game.home.score }}
           </td>
         </tr>
 
         <tr class="bg-gray-900">
-          <td class="pl-0" v-if="game.displaySide">
+          <td class="pl-0 pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
               <svg
                 :class="{ '-translate-y-1': game.isTop }"
@@ -44,8 +44,8 @@
             </span>
           </td>
           <td v-if="!game.displaySide">{{ game.inning }}</td>
-          <td class="text-right" v-if="game.batterCount">{{ game.batterCount }}</td>
-          <td v-if="!game.displaySide && !game.batterCount"></td>
+          <td class="text-right pl-4" v-if="game.batterCount">{{ game.batterCount }}</td>
+          <td v-if="!game.batterCount"></td>
         </tr>
       </tbody>
     </table>
@@ -84,12 +84,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr :class="game.away.bgClass">
+        <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
           <td class="text-right">{{ game.isTop ? `${game.away.order} ${game.away.currentPlayer.person.fullName}` : game.away.currentPlayer.person.fullName }}</td>
           <td class="text-right">{{ game.isTop ? `${game.away.currentPlayer.stats.batting.hits}-${game.away.currentPlayer.stats.batting.atBats}` : `${game.away.currentPlayer.stats.pitching.pitchesThrown}P` }}</td>
         </tr>
 
-        <tr :class="game.home.bgClass">
+        <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
           <td class="text-right">{{ game.isTop ? game.home.currentPlayer.person.fullName : `${game.home.order} ${game.home.currentPlayer.person.fullName}` }}</td>
           <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : `${game.home.currentPlayer.stats.batting.hits}-${game.home.currentPlayer.stats.batting.atBats}` }}</td>
         </tr>

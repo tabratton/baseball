@@ -30,6 +30,8 @@ export default createStore({
         const isOver = schedule.status.statusCode === 'F' || schedule.status.statusCode === 'DR' || schedule.status.statusCode === 'O'
         const isPregame = schedule.status.statusCode === 'P' || schedule.status.statusCode === 'S'
 
+        const colorConflict = (homeTeam.conflicts || []).includes(awayTeam.short)
+
         return hash({
           lineScore: axios.get(`${state.apiHost}/game/${d.gamePk}/linescore`).then(({ data }) => data),
           boxScore: axios.get(`${state.apiHost}/game/${d.gamePk}/boxscore`).then(({ data }) => data),
@@ -40,17 +42,19 @@ export default createStore({
           home: {
             short: homeTeam.short.toUpperCase(),
             name: homeTeam.name,
-            bgClass: homeTeam.bgClass,
+            bgClass: colorConflict ? homeTeam.secondaryBackground : homeTeam.mainBackground,
+            textClass: colorConflict ? homeTeam.mainText : homeTeam.mainText
           },
           away: {
             short: awayTeam.short.toUpperCase(),
             name: awayTeam.name,
-            bgClass: awayTeam.bgClass,
+            bgClass: colorConflict ? awayTeam.secondaryBackground : awayTeam.mainBackground,
+            textClass: colorConflict ? awayTeam.mainText : awayTeam.mainText
           }
         })
       }))
 
-      const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime)).sort((a, b) => a === b ? 0 : (a ? -1 : 1))
+      const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime))
 
       commit('updateGames', sorted)
     }

@@ -1,6 +1,15 @@
 <template>
-  <div class="bg-gray-300 shadow-md-side rounded">
-    <Scorebug v-for="g in games" :key="g.gamePk" :game="g"/>
+  <div class="bg-gray-200 rounded">
+    <Scorebug
+      v-for="g in games.filter(game => game.inProgress).sort((a, b) => a.inning > b.inning ? 1 : (a.inning === b.inning ? 0 : -1))"
+      :key="g.gamePk"
+      :game="g"
+    />
+    <Scorebug
+      v-for="g in games.filter(game => !game.inProgress)"
+      :key="g.gamePk"
+      :game="g"
+    />
   </div>
 </template>
 
