@@ -63,11 +63,11 @@
       </div>
       <div class="flex justify-center items-center w-full">
         <div
-          :class="{ 'active': game.outs[1] }"
+          :class="{ 'active': game.outs[0] }"
           class="out-indicator"
         ></div>
         <div
-          :class="{ 'active': game.outs[0] }"
+          :class="{ 'active': game.outs[1] }"
           class="out-indicator"
         ></div>
       </div>
