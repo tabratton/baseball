@@ -24,7 +24,7 @@ const mlbColors = {
   laa: { main: '#BA0021', secondary: '#003263' },
   hou: { main: '#EB6E1F', secondary: '#002D62' },
   phi: { main: '#E81828', secondary: '#002D72' },
-  mia: { main: '#000000', secondary: '#00A3E0' },
+  mia: { main: '#00A3E0', secondary: '#000000' },
   atl: { main: '#CE1141', secondary: '#13274F' },
   nym: { main: '#FF5910', secondary: '#002D72' },
   pit: { main: '#FDB827', secondary: '#27251F' },
@@ -53,6 +53,9 @@ module.exports = {
       colors: mlbColors,
       boxShadow: {
         'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
+      },
+      height: {
+        '30': '7.5rem'
       }
     },
   },

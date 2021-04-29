@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{ 'cursor-pointer': !disableClick }"
-    class="scorebug flex m-2"
+    class="scorebug flex m-2 rounded h-30"
     @click="goToBoxscore()"
   >
-    <table class="table-auto text-white">
+    <table class="table-auto text-white rounded">
       <caption class="sr-only">Score</caption>
       <thead class="sr-only">
         <tr>
@@ -40,6 +40,7 @@
               >
                 <path fill="currentColor" d="M7,15L12,10L17,15H7Z"/>
               </svg>
+
               <span>{{ game.inning }}</span>
             </span>
           </td>
@@ -73,8 +74,8 @@
       </div>
     </div>
     <table
-      v-if="game.home.currentPlayer && game.away.currentPlayer && game.displaySide"
-      class="table-auto w-full text-white"
+      v-if="playerInfoExpanded"
+      class="table-auto w-full text-white rounded"
     >
       <caption class="sr-only">Current Pitcher/Batter</caption>
       <thead class="sr-only">
@@ -94,17 +95,31 @@
           <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : `${game.home.currentPlayer.stats.batting.hits}-${game.home.currentPlayer.stats.batting.atBats}` }}</td>
         </tr>
         <tr class="bg-gray-900">
-          <td class="p-4"></td>
-          <td class="p-4"></td>
+          <td class="p-5"></td>
+          <td class="p-5"></td>
         </tr>
       </tbody>
     </table>
+    <div
+      v-if="game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
+      class="text-white bg-gray-900 pt-2 pr-1 pl-1"
+      @click="togglePlayerInfoExpanded"
+    >
+      <div class="cursor-pointer">
+        <svg v-if="!playerInfoExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+        </svg>
+        <svg v-if="playerInfoExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
-import { toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 
 export default {
   name: 'Scorebug',
@@ -122,10 +137,16 @@ export default {
     const router = useRouter()
     const { game } = toRefs(props)
 
+    const playerInfoExpanded = ref(false)
+
+    const togglePlayerInfoExpanded = () => (playerInfoExpanded.value = !playerInfoExpanded.value)
+
     const goToBoxscore = () => router.push(`/game/${game.value.gamePk}`)
 
     return {
-      goToBoxscore
+      goToBoxscore,
+      playerInfoExpanded,
+      togglePlayerInfoExpanded
     }
   }
 }

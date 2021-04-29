@@ -1,119 +1,24 @@
 <template>
   <div class="flex flex-row items-start justify-center">
     <div class="m-2">
-      <h4 class="font-bold text-lg text-center">{{game.away.teamName}} - Batters</h4>
-      <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
-        <caption class="sr-only">Away Batters</caption>
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" v-for="header in batterHeaders" :key="header">
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in game.away.batters" :key="player.jerseyNumber">
-            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
-            <td>{{ player.position.abbreviation }}</td>
-            <td>{{ player.person.fullName }}</td>
-            <td>{{ player.jerseyNumber }}</td>
-            <td>{{ player.stats.batting.atBats }}</td>
-            <td>{{ player.stats.batting.runs }}</td>
-            <td>{{ player.stats.batting.hits }}</td>
-            <td>{{ player.stats.batting.hits - player.stats.batting.doubles - player.stats.batting.triples - player.stats.batting.homeRuns }}</td>
-            <td>{{ player.stats.batting.doubles }}</td>
-            <td>{{ player.stats.batting.triples }}</td>
-            <td>{{ player.stats.batting.homeRuns }}</td>
-            <td>{{ player.stats.batting.baseOnBalls }}</td>
-            <td>{{ player.stats.batting.hitByPitch }}</td>
-            <td>{{ player.stats.batting.rbi }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <BattersTable :side="'away'" :game="game"/>
       <div class="inline-block">
-        <h4 class="font-bold text-lg text-center">{{game.away.teamName}} - Pitchers</h4>
-        <table :class="{ [game.away.bgClass]: true, [game.away.textClass]: true }" class="players-table table-auto text-center text-white">
-          <caption class="sr-only">Away Pitchers</caption>
-          <thead>
-          <tr>
-            <th v-for="header in pitcherHeaders" :key="header" scope="col">{{ header }}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="player in game.away.pitchers" :key="player.jerseyNumber">
-            <td>{{ player.person.fullName }}</td>
-            <td>{{ player.jerseyNumber }}</td>
-            <td>{{ player.stats.pitching.inningsPitched }}</td>
-            <td>{{ player.stats.pitching.strikeOuts }}</td>
-            <td>{{ player.stats.pitching.hits }}</td>
-            <td>{{ player.stats.pitching.baseOnBalls }}</td>
-            <td>{{ player.stats.pitching.runs }}</td>
-            <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
-          </tr>
-          </tbody>
-        </table>
+        <PitchersTable :side="'away'" :game="game"/>
       </div>
     </div>
     <div class="m-2">
-      <h4 class="font-bold text-lg text-center">{{game.home.teamName}} - Batters</h4>
-      <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center mb-4 text-white">
-        <caption class="sr-only">Home Batters</caption>
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" v-for="header in batterHeaders" :key="header">
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in game.home.batters" :key="player.jerseyNumber">
-            <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
-            <td>{{ player.position.abbreviation }}</td>
-            <td>{{ player.person.fullName }}</td>
-            <td>{{ player.jerseyNumber }}</td>
-            <td>{{ player.stats.batting.atBats }}</td>
-            <td>{{ player.stats.batting.runs }}</td>
-            <td>{{ player.stats.batting.hits }}</td>
-            <td>{{ player.stats.batting.hits - player.stats.batting.doubles - player.stats.batting.triples - player.stats.batting.homeRuns }}</td>
-            <td>{{ player.stats.batting.doubles }}</td>
-            <td>{{ player.stats.batting.triples }}</td>
-            <td>{{ player.stats.batting.homeRuns }}</td>
-            <td>{{ player.stats.batting.baseOnBalls }}</td>
-            <td>{{ player.stats.batting.hitByPitch }}</td>
-            <td>{{ player.stats.batting.rbi }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <BattersTable :side="'home'" :game="game"/>
       <div class="inline-block">
-        <h4 class="font-bold text-lg text-center">{{game.home.teamName}} - Pitchers</h4>
-        <table :class="{ [game.home.bgClass]: true, [game.home.textClass]: true }" class="players-table table-auto text-center text-white">
-          <caption class="sr-only">Home Pitchers</caption>
-          <thead>
-          <tr>
-            <th v-for="header in pitcherHeaders" :key="header" scope="col">{{ header }}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="player in game.home.pitchers" :key="player.jerseyNumber">
-            <td>{{ player.person.fullName }}</td>
-            <td>{{ player.jerseyNumber }}</td>
-            <td>{{ player.stats.pitching.inningsPitched }}</td>
-            <td>{{ player.stats.pitching.strikeOuts }}</td>
-            <td>{{ player.stats.pitching.hits }}</td>
-            <td>{{ player.stats.pitching.baseOnBalls }}</td>
-            <td>{{ player.stats.pitching.runs }}</td>
-            <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
-          </tr>
-          </tbody>
-        </table>
+        <PitchersTable :side="'home'" :game="game"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BattersTable from '@/components/BattersTable'
+import PitchersTable from '@/components/PitchersTable'
+
 export default {
   name: 'Players',
   props: {
@@ -122,11 +27,9 @@ export default {
       required: true
     }
   },
-  setup() {
-    return {
-      batterHeaders: ['POS', 'Name', '#', 'AB', 'R', 'H', '1B', '2B', '3B', 'HR', 'BB', 'HBP', 'RBI'],
-      pitcherHeaders: ['Name', '#', 'IP', 'K', 'H', 'BB', 'R', 'B/S']
-    }
+  components: {
+    BattersTable,
+    PitchersTable
   }
 }
 </script>
