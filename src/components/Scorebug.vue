@@ -2,9 +2,11 @@
   <div
     :class="{ 'cursor-pointer': !disableClick }"
     class="scorebug flex m-2 rounded h-30"
-    @click="goToBoxscore()"
   >
-    <table class="table-auto text-white rounded">
+    <table
+      class="table-auto text-white rounded"
+      @click="goToBoxscore()"
+    >
       <caption class="sr-only">Score</caption>
       <thead class="sr-only">
         <tr>
@@ -16,7 +18,6 @@
         <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
           <td class="pr-4">{{ game.away.team }}</td>
           <td class="pl-4 text-right">
-            <span v-if="game.away.score < 10" class="text-transparent">0</span>
             {{ game.away.score }}
           </td>
         </tr>
@@ -24,7 +25,6 @@
         <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
           <td class="pr-4">{{ game.home.team }}</td>
           <td class="pl-4 text-right">
-            <span v-if="game.home.score < 10" class="text-transparent">0</span>
             {{ game.home.score }}
           </td>
         </tr>
@@ -44,13 +44,15 @@
               <span>{{ game.inning }}</span>
             </span>
           </td>
-          <td v-if="!game.displaySide">{{ game.inning }}</td>
-          <td class="text-right pl-4" v-if="game.batterCount">{{ game.batterCount }}</td>
-          <td v-if="!game.batterCount"></td>
+          <td v-else>{{ game.inning }}</td>
+          <td class="text-right pl-4">{{ game.batterCount ? game.batterCount : '' }}</td>
         </tr>
       </tbody>
     </table>
-    <div class="flex flex-col justify-center w-28 items-center bg-gray-900">
+    <div
+      class="flex flex-col justify-center w-28 items-center bg-gray-900"
+      @click="goToBoxscore()"
+    >
       <div class="flex-grow w-28 relative">
         <div class="w-16 h-16 flex flex-wrap transform rotate-45 translate-x-6 translate-y-6 absolute">
           <div
@@ -76,6 +78,7 @@
     <table
       v-if="playerInfoExpanded"
       class="table-auto w-full text-white rounded"
+      @click="goToBoxscore()"
     >
       <caption class="sr-only">Current Pitcher/Batter</caption>
       <thead class="sr-only">
@@ -106,11 +109,21 @@
       @click="togglePlayerInfoExpanded"
     >
       <div class="cursor-pointer">
-        <svg v-if="!playerInfoExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-        </svg>
-        <svg v-if="playerInfoExpanded" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            v-if="!playerInfoExpanded"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 5l7 7-7 7M5 5l7 7-7 7"
+          />
+          <path
+            v-else
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+          />
         </svg>
       </div>
     </div>

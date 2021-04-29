@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 rounded">
+  <div class="bg-gray-200 dark:bg-black dark:bg-opacity-80 rounded">
     <Scorebug
       v-for="g in games.filter(game => game.inProgress).sort((a, b) => a.inning > b.inning ? 1 : (a.inning === b.inning ? 0 : -1))"
       :key="g.gamePk"

@@ -47,7 +47,7 @@ Object.keys(mlbColors).forEach(key => {
 
 module.exports = {
   purge: { content: ['./public/**/*.html', './src/**/*.vue', './src/**/*.js'] },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       colors: mlbColors,
@@ -55,12 +55,23 @@ module.exports = {
         'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       },
       height: {
-        '30': '7.5rem'
+        '30': '7.5rem',
+        '34': '8.5rem',
+        '38': '9.5rem',
+        '42': '10.5rem',
+        '46': '11.5rem',
+        'content': 'calc(100vh - 11.5rem)',
+        'home': '11.315px'
+      },
+      width: {
+        'home': '11.315px'
       }
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }
