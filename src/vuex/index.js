@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { compareAsc, parseISO } from 'date-fns'
+import { compareAsc, format, parseISO } from 'date-fns'
 import { all, hash } from 'rsvp'
 import { createStore } from 'vuex'
 
@@ -20,7 +20,8 @@ export default createStore({
   },
   actions: {
     async updateGames({ commit, state }) {
-      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1 } }).then(({ data: { dates: [{ games }] } }) => games)
+      const date = format(new Date(), 'yyyy-MM-dd')
+      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1, date } }).then(({ data: { dates: [{ games }] } }) => games)
       const gameData = await all(scheduleData.map(d => {
         const homeTeam = teamMap.find(t => t.id === d.teams.home.team.id)
         const awayTeam = teamMap.find(t => t.id === d.teams.away.team.id)
