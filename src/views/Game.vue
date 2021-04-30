@@ -1,7 +1,7 @@
 <template>
   <div class="game w-screen">
-    <ScorebugList class="shadow-md flex flex-row overflow-y-hidden overflow-x-auto"/>
-    <div class="overflow-auto p-4 h-content">
+    <ScorebugList class="shadow-md flex flex-row overflow-y-hidden overflow-x-auto p-2"/>
+    <div class="overflow-auto p-6 h-content">
       <div class="flex flex-row items-start justify-center">
         <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
         <Boxscore v-if="boxscore" :game="boxscore"/>

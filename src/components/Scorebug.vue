@@ -61,7 +61,10 @@
             :class="{ 'active': base.runner}"
             class="base"
           ></div>
-          <div class="w-5 h-5 mt-2 ml-2 bg-gray-50"></div>
+          <svg class="transform -rotate-45 mt-3 ml-3" viewBox="189.848 157.915 17 17.119" width="17" height="17.119">
+            <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034" style="paint-order: fill; fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0);"></path>
+            <polygon style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);" points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
+          </svg>
         </div>
       </div>
       <div class="flex justify-center items-center w-full">
@@ -76,7 +79,7 @@
       </div>
     </div>
     <table
-      v-if="playerInfoExpanded"
+      v-if="playerInfoExpanded && game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
       class="table-auto w-full text-white rounded"
       @click="goToBoxscore()"
     >
@@ -104,7 +107,7 @@
       </tbody>
     </table>
     <div
-      v-if="game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
+      v-if="game.inProgress"
       class="text-white bg-gray-900 pt-2 pr-1 pl-1"
       @click="togglePlayerInfoExpanded"
     >

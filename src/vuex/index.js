@@ -44,13 +44,13 @@ export default createStore({
             short: homeTeam.short.toUpperCase(),
             name: homeTeam.name,
             bgClass: colorConflict ? homeTeam.secondaryBackground : homeTeam.mainBackground,
-            textClass: colorConflict ? homeTeam.mainText : homeTeam.mainText
+            textClass: colorConflict ? homeTeam.secondaryText : homeTeam.mainText
           },
           away: {
             short: awayTeam.short.toUpperCase(),
             name: awayTeam.name,
             bgClass: colorConflict ? awayTeam.secondaryBackground : awayTeam.mainBackground,
-            textClass: colorConflict ? awayTeam.mainText : awayTeam.mainText
+            textClass: colorConflict ? awayTeam.secondaryText : awayTeam.mainText
           }
         })
       }))

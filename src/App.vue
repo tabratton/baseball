@@ -1,10 +1,16 @@
 <template>
   <div class="app-grid">
     <div class="navbar flex flex-row items-center justify-between bg-red-800 shadow-lg text-white">
-      <span
-        class="h-home w-home bg-white transform rotate-45 ml-4 cursor-pointer"
+      <svg
+        class="ml-4"
+        viewBox="189.848 157.915 17 17.119"
+        width="17"
+        height="17.119"
         @click="goHome"
-      ></span>
+      >
+        <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034" style="paint-order: fill; fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0);"></path>
+        <polygon style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);" points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
+      </svg>
       <input
         class="p-1 pl-2 bg-transparent placeholder-white placeholder-opacity-75 border-none focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0"
         type="text"

@@ -47,7 +47,7 @@ Object.keys(mlbColors).forEach(key => {
 
 module.exports = {
   purge: { content: ['./public/**/*.html', './src/**/*.vue', './src/**/*.js'] },
-  darkMode: 'media', // or 'media' or 'class'
+  darkMode: 'media',
   theme: {
     extend: {
       colors: mlbColors,
@@ -60,11 +60,14 @@ module.exports = {
         '38': '9.5rem',
         '42': '10.5rem',
         '46': '11.5rem',
-        'content': 'calc(100vh - 11.5rem)',
+        'content': 'calc(100vh - 12.5rem)',
         'home': '11.315px'
       },
       width: {
         'home': '11.315px'
+      },
+      fontFamily: {
+        'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'
       }
     },
   },
