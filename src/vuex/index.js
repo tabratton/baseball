@@ -32,8 +32,13 @@ export default createStore({
         const isPregame = schedule.status.statusCode === 'P' || schedule.status.statusCode === 'S'
 
         const colorConflict = (homeTeam.conflicts || []).includes(awayTeam.short)
+        let teamPriority = 'home';
 
-        return hash({
+        if ((awayTeam.priority || Number.MAX_SAFE_INTEGER) < (homeTeam.priority || Number.MAX_SAFE_INTEGER)) {
+          teamPriority = 'away'
+        }
+
+        const gameObj = {
           lineScore: axios.get(`${state.apiHost}/game/${d.gamePk}/linescore`).then(({ data }) => data),
           boxScore: axios.get(`${state.apiHost}/game/${d.gamePk}/boxscore`).then(({ data }) => data),
           schedule,
@@ -43,16 +48,32 @@ export default createStore({
           home: {
             short: homeTeam.short.toUpperCase(),
             name: homeTeam.name,
-            bgClass: colorConflict ? homeTeam.secondaryBackground : homeTeam.mainBackground,
-            textClass: colorConflict ? homeTeam.secondaryText : homeTeam.mainText
+            bgClass: homeTeam.mainBackground,
+            textClass: homeTeam.mainText
           },
           away: {
             short: awayTeam.short.toUpperCase(),
             name: awayTeam.name,
-            bgClass: colorConflict ? awayTeam.secondaryBackground : awayTeam.mainBackground,
-            textClass: colorConflict ? awayTeam.secondaryText : awayTeam.mainText
+            bgClass:awayTeam.mainBackground,
+            textClass: awayTeam.mainText
           }
-        })
+        }
+
+        if (colorConflict) {
+          if (teamPriority === 'home') {
+            gameObj.home.bgClass = homeTeam.mainBackground;
+            gameObj.home.textClass = homeTeam.mainText;
+            gameObj.away.bgClass = awayTeam.secondaryBackground;
+            gameObj.away.textClass = awayTeam.secondaryText;
+          } else {
+            gameObj.home.bgClass = homeTeam.secondaryBackground;
+            gameObj.home.textClass = homeTeam.secondaryText;
+            gameObj.away.bgClass = awayTeam.mainBackground;
+            gameObj.away.textClass = awayTeam.mainText;
+          }
+        }
+
+        return hash(gameObj)
       }))
 
       const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime))

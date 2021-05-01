@@ -50,6 +50,7 @@
       </tbody>
     </table>
     <div
+      v-if="game.inProgress"
       class="flex flex-col justify-center w-28 items-center bg-gray-900"
       @click="goToBoxscore()"
     >
@@ -58,12 +59,12 @@
           <div
             v-for="base in [game.runners.find(b => b.num === 2), game.runners.find(b => b.num === 1), game.runners.find(b => b.num === 3)]"
             :key="base.num"
-            :class="{ 'active': base.runner}"
+            :class="{ 'active': base.runner }"
             class="base"
           ></div>
           <svg class="transform -rotate-45 mt-3 ml-3" viewBox="189.848 157.915 17 17.119" width="17" height="17.119">
-            <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034" style="paint-order: fill; fill: rgb(255, 255, 255); stroke: rgb(0, 0, 0);"></path>
-            <polygon style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);" points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
+            <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034" style="paint-order: fill; fill: white; stroke: black;"></path>
+            <polygon style="stroke: white; fill: white;" points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
           </svg>
         </div>
       </div>
