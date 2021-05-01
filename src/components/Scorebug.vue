@@ -33,8 +33,8 @@
           <td class="pl-0 pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
               <svg
-                :class="{ '-translate-y-1': game.isTop }"
-                class="transform rotate-180 translate-y-1"
+                :class="{ 'rotate-180 translate-y-1': game.isTop }"
+                class="transform -translate-y-1"
                 style="width:24px;height:24px"
                 viewBox="0 0 24 24"
               >
