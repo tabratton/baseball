@@ -12,17 +12,19 @@
         <td>{{ player.person.fullName }}</td>
         <td>{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.pitching.inningsPitched }}</td>
-        <td>{{ player.stats.pitching.strikeOuts }}</td>
         <td>{{ player.stats.pitching.hits }}</td>
+        <td>{{ player.stats.pitching.earnedRuns }}</td>
+        <td>{{ player.stats.pitching.strikeOuts }}</td>
         <td>{{ player.stats.pitching.baseOnBalls }}</td>
-        <td>{{ player.stats.pitching.runs }}</td>
         <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
+        <td>{{ numbro(player.stats.pitching.earnedRuns * 9 / Number(player.stats.pitching.inningsPitched)).format({ mantissa: 2 }) }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+import numbro from 'numbro'
 import { computed, toRefs } from 'vue'
 
 export default {
@@ -43,8 +45,9 @@ export default {
     const team = computed(() => game.value[side.value])
 
     return {
+      numbro,
       team,
-      pitcherHeaders: ['Name', '#', 'IP', 'K', 'H', 'BB', 'R', 'B/S']
+      pitcherHeaders: ['Name', '#', 'IP', 'H', 'ER', 'K', 'BB', 'B/S', 'ERA']
     }
   }
 }

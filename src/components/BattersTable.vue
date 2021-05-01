@@ -17,21 +17,23 @@
         <td>{{ player.person.fullName }}</td>
         <td>{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.batting.atBats }}</td>
-        <td>{{ player.stats.batting.runs }}</td>
         <td>{{ player.stats.batting.hits }}</td>
+        <td>{{ player.stats.batting.runs }}</td>
+        <td>{{ player.stats.batting.baseOnBalls }}</td>
+        <td>{{ player.stats.batting.rbi }}</td>
         <td>{{ player.stats.batting.hits - player.stats.batting.doubles - player.stats.batting.triples - player.stats.batting.homeRuns }}</td>
         <td>{{ player.stats.batting.doubles }}</td>
         <td>{{ player.stats.batting.triples }}</td>
         <td>{{ player.stats.batting.homeRuns }}</td>
-        <td>{{ player.stats.batting.baseOnBalls }}</td>
         <td>{{ player.stats.batting.hitByPitch }}</td>
-        <td>{{ player.stats.batting.rbi }}</td>
+        <td>{{ numbro((player.stats.batting.hits || 0) / (player.stats.batting.atBats || 1)).format({ mantissa: 3 }) }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+import numbro from 'numbro'
 import { computed, toRefs } from 'vue'
 
 export default {
@@ -52,8 +54,9 @@ export default {
     const team = computed(() => game.value[side.value])
 
     return {
+      numbro,
       team,
-      batterHeaders: ['POS', 'Name', '#', 'AB', 'R', 'H', '1B', '2B', '3B', 'HR', 'BB', 'HBP', 'RBI']
+      batterHeaders: ['POS', 'Name', '#', 'AB', 'H', 'R', 'BB', 'RBI', '1B', '2B', '3B', 'HR', 'HBP', 'AVG']
     }
   }
 }
