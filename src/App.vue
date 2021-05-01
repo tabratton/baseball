@@ -2,7 +2,7 @@
   <div class="app-grid">
     <div class="navbar flex flex-row items-center justify-between bg-red-800 shadow-lg text-white">
       <svg
-        class="ml-4"
+        class="ml-4 cursor-pointer"
         viewBox="189.848 157.915 17 17.119"
         width="17"
         height="17.119"
