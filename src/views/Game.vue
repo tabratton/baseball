@@ -4,9 +4,9 @@
     <div class="overflow-auto p-6 h-content">
       <div class="flex flex-row items-start justify-center">
         <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
-        <Boxscore v-if="boxscore" :game="boxscore"/>
+        <Boxscore :gamePk="gamePk"/>
       </div>
-      <Players v-if="batters" :game="batters"/>
+      <Players :gamePk="gamePk"/>
     </div>
   </div>
 </template>
@@ -21,10 +21,6 @@ import Boxscore from '@/components/Boxscore'
 import Scorebug from '@/components/Scorebug'
 import ScorebugList from '@/components/ScorebugList'
 
-import createPlayersObj from '@/util/createPlayersObj'
-import createBoxscoreObj from '@/util/createBoxscoreObj'
-import createScorebugObj from '@/util/createScorebugObj'
-
 export default {
   name: 'Game',
   components: {
@@ -38,13 +34,10 @@ export default {
     const store = useStore()
 
     const gamePk = computed(() => route.params.gamepk)
-    const gameData = computed(() => store.state.games.find(g => g.gamePk === gamePk.value))
 
     return {
-      model: store,
-      boxscore: computed(() => createBoxscoreObj(gameData.value)),
-      scorebug: computed(() => createScorebugObj(gameData.value)),
-      batters: computed(() => createPlayersObj(gameData.value))
+      gamePk,
+      scorebug: computed(() => store.getters.getScorebug(gamePk.value))
     }
   }
 }

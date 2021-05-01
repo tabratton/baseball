@@ -1,12 +1,12 @@
 <template>
   <div class="bg-gray-200 dark:bg-black dark:bg-opacity-80 rounded">
     <Scorebug
-      v-for="g in games.filter(game => game.inProgress).sort((a, b) => a.inning > b.inning ? 1 : (a.inning === b.inning ? 0 : -1))"
+      v-for="g in inProgress"
       :key="g.gamePk"
       :game="g"
     />
     <Scorebug
-      v-for="g in games.filter(game => !game.inProgress)"
+      v-for="g in notInProgress"
       :key="g.gamePk"
       :game="g"
     />
@@ -17,7 +17,6 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
-import createScorebugObj from '@/util/createScorebugObj'
 import Scorebug from '@/components/Scorebug.vue'
 
 export default {
@@ -28,8 +27,14 @@ export default {
   setup() {
     const store = useStore()
 
+    const games = computed(() => store.getters.scorebugGames)
+    const inProgress = computed(() => games.value.filter(game => game.inProgress).sort((a, b) => a.inning > b.inning ? 1 : (a.inning === b.inning ? 0 : -1)))
+    const notInProgress = computed(() => games.value.filter(game => !game.inProgress))
+
     return {
-      games: computed(() => store.state.games.map(game => createScorebugObj(game)))
+      games,
+      inProgress,
+      notInProgress
     }
   }
 }

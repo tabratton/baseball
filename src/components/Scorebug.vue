@@ -32,15 +32,7 @@
         <tr class="bg-gray-900">
           <td class="pl-0 pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
-              <svg
-                :class="{ 'rotate-180 translate-y-1': game.isTop }"
-                class="transform -translate-y-1"
-                style="width:24px;height:24px"
-                viewBox="0 0 24 24"
-              >
-                <path fill="currentColor" d="M7,15L12,10L17,15H7Z"/>
-              </svg>
-
+              <Chevron :isUp="game.isTop"/>
               <span>{{ game.inning }}</span>
             </span>
           </td>
@@ -138,6 +130,8 @@
 import { useRouter } from 'vue-router'
 import { ref, toRefs } from 'vue'
 
+import Chevron from '@/components/Chevron'
+
 export default {
   name: 'Scorebug',
   props: {
@@ -149,6 +143,9 @@ export default {
       type: Boolean,
       required: false
     }
+  },
+  components: {
+    Chevron
   },
   setup(props) {
     const router = useRouter()
