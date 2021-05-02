@@ -2,7 +2,7 @@
   <div class="league-leaders h-home w-screen">
     <div class="w-full flex items-center justify-center p-4">
       <multiselect
-        class="w-1/6"
+        class="w-full md:w-1/2 xl:w-1/4"
         v-model="selectedType"
         placeholder="Select..."
         valueProp="key"

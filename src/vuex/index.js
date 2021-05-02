@@ -74,7 +74,7 @@ export default createStore({
 
       return obj
     }).filter(v => v),
-    getScorebug: (state, getters) => gamePk => getters.scorebugGames.find(g => g,gamePk === gamePk),
+    getScorebug: (state, getters) => gamePk => getters.scorebugGames.find(g => g.gamePk === gamePk),
     getTeamBattersForGame: (state, getters) => (gamePk, team) => {
       const game = getters.getGame(gamePk)
 

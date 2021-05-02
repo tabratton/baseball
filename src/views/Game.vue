@@ -2,7 +2,7 @@
   <div class="game w-screen">
     <ScorebugList class="shadow-md flex flex-row overflow-y-hidden overflow-x-auto p-2"/>
     <div class="overflow-auto p-4 h-content">
-      <div class="flex flex-row items-start justify-center">
+      <div class="flex flex-col md:flex-row items-center justify-center">
         <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
         <Boxscore :gamePk="gamePk"/>
       </div>
@@ -34,10 +34,11 @@ export default {
     const store = useStore()
 
     const gamePk = computed(() => route.params.gamepk)
+    const scorebug = computed(() => store.getters.getScorebug(gamePk.value))
 
     return {
       gamePk,
-      scorebug: computed(() => store.getters.getScorebug(gamePk.value))
+      scorebug
     }
   }
 }
