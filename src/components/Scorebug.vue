@@ -7,11 +7,11 @@
       class="table-auto text-white rounded"
       @click="goToBoxscore()"
     >
-      <caption class="sr-only">Score</caption>
+      <caption class="sr-only">{{ t('scorebug.score') }}</caption>
       <thead class="sr-only">
         <tr>
-          <th scope="col">Team</th>
-          <th scope="col">Score</th>
+          <th scope="col">{{ t('scorebug.team') }}</th>
+          <th scope="col">{{ t('scorebug.score') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -76,11 +76,11 @@
       class="table-auto w-full text-white rounded"
       @click="goToBoxscore()"
     >
-      <caption class="sr-only">Current Pitcher/Batter</caption>
+      <caption class="sr-only">{{ t('scorebug.currentPlayers') }}</caption>
       <thead class="sr-only">
         <tr>
-          <th scope="col">Player</th>
-          <th scope="col">Stat</th>
+          <th scope="col">{{ t('scorebug.player') }}</th>
+          <th scope="col">{{ t('scorebug.stat') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -131,6 +131,7 @@ import { useRouter } from 'vue-router'
 import { ref, toRefs } from 'vue'
 
 import Chevron from '@/components/Chevron'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'Scorebug',
@@ -150,6 +151,7 @@ export default {
   setup(props) {
     const router = useRouter()
     const { game } = toRefs(props)
+    const { t } = useI18n()
 
     const playerInfoExpanded = ref(false)
 
@@ -158,6 +160,7 @@ export default {
     const goToBoxscore = () => router.push(`/game/${game.value.gamePk}`)
 
     return {
+      t,
       goToBoxscore,
       playerInfoExpanded,
       togglePlayerInfoExpanded

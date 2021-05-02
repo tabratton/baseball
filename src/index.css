@@ -5,3 +5,45 @@
 th, td {
     @apply p-2;
 }
+
+.players-table {
+    @apply border-collapse border border-white border-opacity-50 mb-4;
+}
+
+.players-table th,
+.players-table td {
+    @apply pr-3 pl-3;
+}
+
+.players-table td {
+    @apply border-l border-r border-white border-opacity-60;
+}
+
+.players-table th {
+    @apply border-b border-white border-opacity-60;
+}
+
+.multiselect-input {
+    @apply border-0 border-b-2 border-red-800 p-2 dark:bg-gray-900 min-h-select;
+}
+
+.multiselect-option {
+    @apply p-2 min-h-0 cursor-pointer dark:text-white;
+}
+
+.multiselect-option.is-selected,
+.multiselect-option.is-selected.is-pointed {
+    @apply bg-red-800;
+}
+
+.multiselect-option.is-pointed {
+    @apply dark:bg-gray-600;
+}
+
+.multiselect-options {
+    @apply dark:bg-gray-900 border-0;
+}
+
+.multiselect-clear {
+    @apply dark:bg-gray-900;
+}

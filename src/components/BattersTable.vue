@@ -1,23 +1,21 @@
 <template>
   <slot name="header"></slot>
-  <table :class="{ [bgClass]: true, [textClass]: true }" class="players-table table-auto text-center mb-4">
-    <slot name="caption"></slot>
-    <thead>
-      <tr>
-        <th
-          class="cursor-pointer"
-          scope="col"
-          v-for="header in batterHeaders"
-          :key="header.field"
-          @click="sort(header.field)"
-        >
-          <span>{{ header.label }}</span>
-          <Chevron v-if="sortField === header.field" class="inline" :isUp="sortDirection === 'asc'"/>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="player in sortedPlayers" :key="player.jerseyNumber">
+  <SortableTable
+    :items="batters"
+    :headers="batterHeaders"
+    :sortField="sortField"
+    :sortDirection="sortDirection"
+    :valueGetter="valueGetter"
+    :bgClass="bgClass"
+    :textClass="textClass"
+    @update-sort="update"
+    class="players-table"
+  >
+    <template v-slot:header="slotProps">
+      <span>{{ slotProps.header.label }}</span>
+    </template>
+    <template v-slot:rows="slotProps">
+      <tr v-for="player in slotProps.sortedItems" :key="player.jerseyNumber">
         <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
         <td>{{ player.position.abbreviation }}</td>
         <td>{{ player.person.fullName }}</td>
@@ -34,14 +32,16 @@
         <td>{{ player.stats.batting.hitByPitch }}</td>
         <td>{{ player.stats.batting.avg }}</td>
       </tr>
-    </tbody>
-  </table>
+    </template>
+  </SortableTable>
 </template>
 
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-import Chevron from '@/components/Chevron'
+import SortableTable from '@/components/SortableTable'
+import { updateSort } from '@/util/sort'
 
 export default {
   name: 'BattersTable',
@@ -60,24 +60,24 @@ export default {
     }
   },
   components: {
-    Chevron
+    SortableTable
   },
   setup(props) {
     const { batters } = toRefs(props)
+    const { t } = useI18n()
 
     const sortField = ref('battingOrder')
     const sortDirection = ref('asc')
 
-    const sortedPlayers = computed(() => [...batters.value].sort((a, b) => {
-      let modifier = 1;
-      if (sortDirection.value === 'desc') {
-        modifier = -1;
-      }
+    const update = ({ direction, field }) => updateSort(sortField, sortDirection, field, direction)
 
+    watch(batters, () => updateSort(sortField, sortDirection, 'battingOrder', 'asc'))
+
+    const valueGetter = (a, b, sortField) => {
       let valueA = null
       let valueB = null
 
-      switch (sortField.value) {
+      switch (sortField) {
         case 'battingOrder':
           valueA = a.battingOrder
           valueB = b.battingOrder
@@ -140,34 +140,18 @@ export default {
           break
       }
 
-      if (valueA < valueB){
-        return -1 * modifier;
-      }
-
-      if (valueA > valueB) {
-        return modifier;
-      }
-
-      return 0;
-    }))
-
-    const sort = field => {
-      if (field === sortField.value) {
-        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
-      }
-
-      sortField.value = field
+      return { valueA, valueB }
     }
 
     return {
-      sort,
-      sortedPlayers,
       sortField,
       sortDirection,
+      valueGetter,
+      update,
       batterHeaders: [
         { label: '', field: 'battingOrder' },
         { label: 'POS', field: 'position.abbreviation' },
-        { label: 'Name', field: 'person.fullName' },
+        { label: t('playerTable.name'), field: 'person.fullName' },
         { label: '#', field: 'jerseyNumber' },
         { label: 'AB', field: 'stats.batting.atBats' },
         { label: 'H', field: 'stats.batting.hits' },
@@ -185,22 +169,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.players-table {
-  @apply border-collapse border border-white border-opacity-50;
-}
-
-.players-table th,
-.players-table td {
-  @apply pr-3 pl-3;
-}
-
-.players-table td {
-  @apply border-l border-r border-white border-opacity-60;
-}
-
-.players-table th {
-  @apply border-b border-white border-opacity-60;
-}
-</style>

@@ -4,7 +4,6 @@ import numbro from 'numbro'
 import { all, hash } from 'rsvp'
 import { createStore } from 'vuex'
 
-import createScorebugObj from '@/util/createScorebugObj'
 import teamMap from '@/util/teamMap'
 
 // Create a new store instance.
@@ -12,13 +11,69 @@ export default createStore({
   state() {
     return {
       games: [],
+      leagueLeaders: [],
       apiHost: 'https://statsapi.mlb.com/api/v1',
-      format: format,
+      format,
     }
   },
   getters: {
     getGame: state => gamePk => state.games.find(g => g.gamePk === gamePk),
-    scorebugGames: state => state.games.map(game => createScorebugObj(game)).filter(v => v),
+    scorebugGames: state => state.games.map(game => {
+      if (!game) return null
+
+      const isOver = game.schedule.status.abstractGameCode === 'F'
+      const isPregame = game.schedule.status.abstractGameCode === 'P'
+
+      const obj = {
+        gamePk: game.gamePk,
+        isTop: game.lineScore.isTopInning,
+        inProgress: game.inProgress,
+        home: {
+          team: game.home.short,
+          bgClass: game.home.bgClass,
+          textClass: game.home.textClass,
+          score: game.lineScore.teams.home.runs || 0,
+          currentPlayer: null
+        },
+        away: {
+          team: game.away.short,
+          bgClass: game.away.bgClass,
+          textClass: game.away.textClass,
+          score: game.lineScore.teams.away.runs || 0,
+          currentPlayer: null
+        }
+      }
+
+      if (obj.isTop) {
+        obj.home.currentPlayer = game.boxScore.teams.home.players[`ID${(game.lineScore.defense.pitcher || {}).id}`]
+        obj.away.currentPlayer = game.boxScore.teams.away.players[`ID${(game.lineScore.offense.batter || {}).id}`]
+        obj.away.order = obj.away.currentPlayer ? `${Math.floor(Number(obj.away.currentPlayer.battingOrder) / 100)}.` : ''
+      } else {
+        obj.home.currentPlayer = game.boxScore.teams.home.players[`ID${(game.lineScore.offense.batter || {}).id}`]
+        obj.away.currentPlayer = game.boxScore.teams.away.players[`ID${(game.lineScore.defense.pitcher || {}).id}`]
+        obj.home.order = obj.home.currentPlayer ? `${Math.floor(Number(obj.home.currentPlayer.battingOrder) / 100)}.` : ''
+      }
+
+      if (isOver || isPregame) {
+        obj.inning = game.schedule.status.abstractGameState
+        obj.displaySide = false
+        obj.batterCount = null
+        obj.outs = [false, false]
+        obj.runners = [{ num: 1, runner: false }, { num: 2, runner: false }, { num: 3, runner: false }]
+      } else {
+        obj.inning = game.lineScore.currentInning
+        obj.displaySide = true
+        obj.batterCount = `${game.lineScore.balls}-${game.lineScore.strikes}`
+        obj.outs = [game.lineScore.outs >= 1, game.lineScore.outs >= 2]
+        obj.runners = [{ num: 1, runner: !!game.lineScore.offense.first }, { num: 2, runner: !!game.lineScore.offense.second }, { num: 3, runner: !!game.lineScore.offense.third }]
+      }
+
+      if (isPregame) {
+        obj.batterCount = state.format(game.gameTime, 'hh:mm a')
+      }
+
+      return obj
+    }).filter(v => v),
     getScorebug: (state, getters) => gamePk => getters.scorebugGames.find(g => g,gamePk === gamePk),
     getTeamBattersForGame: (state, getters) => (gamePk, team) => {
       const game = getters.getGame(gamePk)
@@ -108,9 +163,9 @@ export default createStore({
       obj.home.errors = sumField(obj.home.innings, 'errors')
       obj.away.errors = sumField(obj.away.innings, 'errors')
 
-      const isOver = game.schedule.status.statusCode === 'F' || game.schedule.status.statusCode === 'DR' || game.schedule.status.statusCode === 'O'
+      const isOver = game.schedule.status.abstractGameCode
 
-      obj.isPregame = game.schedule.status.statusCode === 'P' || game.schedule.status.statusCode === 'S'
+      obj.isPregame = game.schedule.status.abstractGameCode === 'P'
       obj.inProgress = game.inProgress
       obj.status = game.schedule.status.abstractGameState
 
@@ -122,26 +177,29 @@ export default createStore({
       obj.away.batters = game.boxScore.teams.away.batters.map(id => game.boxScore.teams.away.players[`ID${id}`])
 
       return obj
-    }
+    },
+    getLeagueLeaders: state => state.leagueLeaders
   },
   mutations: {
     updateGames(state, newGames) {
       state.games.splice(0, state.games.length)
       newGames.forEach((g, i) => (state.games[i] = g));
+    },
+    updateLeagueLeaders(state, newLeaders) {
+      state.leagueLeaders = newLeaders
     }
   },
   actions: {
     async updateGames({ commit, state }) {
-      // const date = format(new Date(), 'yyyy-MM-dd')
-      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1/*, date*/ } }).then(({ data: { dates: [{ games }] } }) => games)
+      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1 } }).then(({ data: { dates: [{ games }] } }) => games)
       const gameData = await all(scheduleData.map(d => {
         const homeTeam = teamMap.find(t => t.id === d.teams.home.team.id)
         const awayTeam = teamMap.find(t => t.id === d.teams.away.team.id)
 
         const schedule = scheduleData.find(s => s.gamePk === d.gamePk)
 
-        const isOver = schedule.status.statusCode === 'F' || schedule.status.statusCode === 'DR' || schedule.status.statusCode === 'O'
-        const isPregame = schedule.status.statusCode === 'P' || schedule.status.statusCode === 'S'
+        const isOver = schedule.status.abstractGameCode === 'F'
+        const isPregame = schedule.status.abstractGameCode === 'P'
 
         const colorConflict = (homeTeam.conflicts || []).includes(awayTeam.short)
         let teamPriority = 'home';
@@ -191,6 +249,11 @@ export default createStore({
       const sorted = gameData.sort((a, b) => compareAsc(a.gameTime, b.gameTime))
 
       commit('updateGames', sorted)
+    },
+    async updateLeagueLeaders({ commit, state }, { statGroup, type }) {
+      if (!statGroup && !type) return commit('updateLeagueLeaders', [])
+      return axios.get(`${state.apiHost}/stats/leaders?sportId=1&statGroup=${statGroup}&playerPool=qualified&statType=season&leaderCategories=${type}&limit=25`)
+        .then(({ data: { leagueLeaders: [{ leaders = [] }] } }) => commit('updateLeagueLeaders', leaders))
     }
   }
 })

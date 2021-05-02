@@ -8,10 +8,10 @@
         :textClass="game.away.textClass"
       >
         <template v-slot:header>
-          <h4 class="font-bold text-lg text-center">{{ game.away.name }} - Batters</h4>
+          <h4 class="font-bold text-lg text-center">{{ t('playerTable.battersTitle', { team: game.away.name }) }}</h4>
         </template>
         <template v-slot:caption>
-          <caption class="sr-only">Away Batters</caption>
+          <caption class="sr-only">{{ t('playerTable.awayBatters') }}</caption>
         </template>
       </BattersTable>
       <div class="inline-block">
@@ -22,10 +22,10 @@
           :textClass="game.away.textClass"
         >
           <template v-slot:header>
-            <h4 class="font-bold text-lg text-center">{{ game.away.name }} - Pitchers</h4>
+            <h4 class="font-bold text-lg text-center">{{ t('playerTable.pitchersTitle', { team: game.away.name }) }}</h4>
           </template>
           <template v-slot:caption>
-            <caption class="sr-only">Away Pitchers</caption>
+            <caption class="sr-only">{{ t('playerTable.awayPitchers') }}</caption>
           </template>
         </PitchersTable>
       </div>
@@ -38,10 +38,10 @@
         :textClass="game.home.textClass"
       >
         <template v-slot:header>
-          <h4 class="font-bold text-lg text-center">{{ game.home.name }} - Batters</h4>
+          <h4 class="font-bold text-lg text-center">{{ t('playerTable.battersTitle', { team: game.home.name }) }}</h4>
         </template>
         <template v-slot:caption>
-          <caption class="sr-only">Home Batters</caption>
+          <caption class="sr-only">{{ t('playerTable.homeBatters') }}</caption>
         </template>
       </BattersTable>
       <div class="inline-block">
@@ -52,10 +52,10 @@
           :textClass="game.home.textClass"
         >
           <template v-slot:header>
-            <h4 class="font-bold text-lg text-center">{{ game.home.name }} - Pitchers</h4>
+            <h4 class="font-bold text-lg text-center">{{ t('playerTable.pitchersTitle', { team: game.home.name }) }}</h4>
           </template>
           <template v-slot:caption>
-            <caption class="sr-only">Home Pitchers</caption>
+            <caption class="sr-only">{{ t('playerTable.homePitchers') }}</caption>
           </template>
         </PitchersTable>
       </div>
@@ -69,6 +69,7 @@ import { useStore } from 'vuex'
 
 import BattersTable from '@/components/BattersTable'
 import PitchersTable from '@/components/PitchersTable'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'Players',
@@ -85,6 +86,7 @@ export default {
   setup(props) {
     const { gamePk } = toRefs(props)
     const store = useStore()
+    const { t } = useI18n()
 
     const game = computed(() => store.getters.getGame(gamePk.value))
 
@@ -95,6 +97,7 @@ export default {
     const awayPitchers = computed(() => store.getters.getTeamPitchersForGame(gamePk.value, 'away'))
 
     return {
+      t,
       game,
       homeBatters,
       awayBatters,

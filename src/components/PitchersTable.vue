@@ -1,23 +1,21 @@
 <template>
   <slot name="header"></slot>
-  <table :class="{ [bgClass]: true, [textClass]: true }" class="players-table table-auto text-center text-white">
-    <slot name="caption"></slot>
-    <thead>
-      <tr>
-        <th
-          class="cursor-pointer"
-          scope="col"
-          v-for="header in pitcherHeaders"
-          :key="header"
-          @click="sort(header.field)"
-        >
-          {{ header.label }}
-          <Chevron v-if="sortField === header.field" class="inline" :isUp="sortDirection === 'asc'"/>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="player in sortedPlayers" :key="player.jerseyNumber">
+  <SortableTable
+    :items="pitchers"
+    :headers="pitcherHeaders"
+    :sortField="sortField"
+    :sortDirection="sortDirection"
+    :valueGetter="valueGetter"
+    :bgClass="bgClass"
+    :textClass="textClass"
+    @update-sort="update"
+    class="players-table"
+  >
+    <template v-slot:header="slotProps">
+      <span>{{ slotProps.header.label }}</span>
+    </template>
+    <template v-slot:rows="slotProps">
+      <tr v-for="player in slotProps.sortedItems" :key="player.jerseyNumber">
         <td>{{ player.index }}</td>
         <td>{{ player.person.fullName }}</td>
         <td>{{ player.jerseyNumber }}</td>
@@ -29,14 +27,16 @@
         <td>{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
         <td>{{ player.stats.pitching.era }}</td>
       </tr>
-    </tbody>
-  </table>
+    </template>
+  </SortableTable>
 </template>
 
 <script>
-import { computed, ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-import Chevron from '@/components/Chevron'
+import SortableTable from '@/components/SortableTable'
+import { updateSort } from '@/util/sort'
 
 export default {
   name: 'PitchersTable',
@@ -55,24 +55,24 @@ export default {
     }
   },
   components: {
-    Chevron
+    SortableTable
   },
   setup(props) {
     const { pitchers } = toRefs(props)
+    const { t } = useI18n()
 
     const sortField = ref('index')
     const sortDirection = ref('asc')
 
-    const sortedPlayers = computed(() => [...pitchers.value].sort((a, b) => {
-      let modifier = 1;
-      if (sortDirection.value === 'desc') {
-        modifier = -1;
-      }
+    const update = ({ direction, field }) => updateSort(sortField, sortDirection, field, direction)
 
+    watch(pitchers, () => updateSort(sortField, sortDirection, 'index', 'asc'))
+
+    const valueGetter = (a, b, sortField) => {
       let valueA = null
       let valueB = null
 
-      switch (sortField.value) {
+      switch (sortField) {
         case 'index':
           valueA = a.index
           valueB = b.index
@@ -115,33 +115,17 @@ export default {
           break
       }
 
-      if (valueA < valueB){
-        return -1 * modifier;
-      }
-
-      if (valueA > valueB) {
-        return modifier;
-      }
-
-      return 0;
-    }))
-
-    const sort = field => {
-      if (field === sortField.value) {
-        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
-      }
-
-      sortField.value = field
+      return { valueA, valueB }
     }
 
     return {
-      sort,
-      sortedPlayers,
       sortField,
       sortDirection,
+      valueGetter,
+      update,
       pitcherHeaders: [
         { label: '', field: 'index' },
-        { label: 'Name', field: 'person.fullName' },
+        { label: t('playerTable.name'), field: 'person.fullName' },
         { label: '#', field: 'jerseyNumber' },
         { label: 'IP', field: 'stats.pitching.inningsPitched' },
         { label: 'H', field: 'stats.pitching.hits' },
@@ -155,22 +139,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.players-table {
-  @apply border-collapse border border-white border-opacity-50;
-}
-
-.players-table th,
-.players-table td {
-  @apply pr-3 pl-3;
-}
-
-.players-table td {
-  @apply border-l border-r border-white border-opacity-60;
-}
-
-.players-table th {
-  @apply border-b border-white border-opacity-60;
-}
-</style>

@@ -61,10 +61,11 @@ module.exports = {
         '42': '10.5rem',
         '46': '11.5rem',
         'content': 'calc(100vh - 12.5rem)',
-        'home': 'calc(100vh - 2rem)'
+        'home': 'calc(100vh - 2rem)',
+        'leaders': 'calc(100vh - 6.5rem)'
       },
-      width: {
-        'home': '11.315px'
+      minHeight: {
+        'select': '42px'
       },
       fontFamily: {
         'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'

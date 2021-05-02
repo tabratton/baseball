@@ -29,7 +29,7 @@
       </tbody>
     </table>
     <div class="flex w-full justify-between mt-2 text-sm font-bold">
-      <span v-if="boxscore.isPregame">Starts at {{ boxscore.gameTime }}</span>
+      <span v-if="boxscore.isPregame">{{ t('boxscore.starts', { time: boxscore.gameTime }) }}</span>
       <span class="mr-2">{{ boxscore.winningPitcher }}</span>
       <span class="mr-2">{{ boxscore.losingPitcher }}</span>
       <span>{{ boxscore.save }}</span>
@@ -41,6 +41,7 @@
 import { format } from 'date-fns'
 import { computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'Boxscore',
@@ -53,6 +54,7 @@ export default {
   setup(props) {
     const { gamePk } = toRefs(props)
     const store = useStore()
+    const { t } = useI18n()
 
     const boxscore = computed(() => store.getters.getBoxScore(gamePk.value))
 
@@ -63,6 +65,7 @@ export default {
     })
 
     return {
+      t,
       format,
       boxscore,
       headers
