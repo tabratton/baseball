@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row items-start justify-center">
-    <div class="m-2">
+  <div class="flex flex-row flex-wrap items-center justify-start md:items-start md:justify-center">
+    <div class="m-2 flex flex-col items-center">
       <BattersTable
         v-if="game"
         :batters="awayBatters"
@@ -30,7 +30,7 @@
         </PitchersTable>
       </div>
     </div>
-    <div class="m-2">
+    <div class="m-2 flex flex-col items-center">
       <BattersTable
         v-if="game"
         :batters="homeBatters"

@@ -61,7 +61,7 @@ module.exports = {
         '42': '10.5rem',
         '46': '11.5rem',
         'content': 'calc(100vh - 12.5rem)',
-        'home': '11.315px'
+        'home': 'calc(100vh - 2rem)'
       },
       width: {
         'home': '11.315px'

@@ -1,6 +1,6 @@
 <template>
-  <div class="home h-screen w-screen flex flex-row items-center">
-    <ScorebugList class="w-full shadow-md overflow-auto flex flex-row flex-wrap justify-center p-12 m-12"/>
+  <div class="home h-home overflow-auto w-screen flex flex-row items-start lg:items-center">
+    <ScorebugList class="w-full shadow-md overflow-auto flex flex-row flex-wrap justify-center p-6 m-6"/>
   </div>
 </template>
 
