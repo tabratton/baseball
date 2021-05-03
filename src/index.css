@@ -24,7 +24,7 @@ th, td {
 }
 
 .multiselect-input {
-    @apply border-0 border-b-2 border-red-800 p-2 dark:bg-gray-900 min-h-select;
+    @apply border-0 border-b-2 border-red-800 p-2 pl-0 dark:bg-gray-900 min-h-select;
 }
 
 .multiselect-option {

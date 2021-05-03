@@ -9,9 +9,11 @@
         :maxHeight="320"
         :options="types"
         :object="true"
+        :searchable="true"
+        trackBy="label"
       >
         <template v-slot:singlelabel="{ value }">
-          {{ value.category }} - {{ value.key }}
+          <span class="multiselect-single-label">{{ value.category }} - {{ value.key }}</span>
         </template>
         <template v-slot:option="{ option }">
           {{ option.category }} - {{ option.key }}
@@ -19,7 +21,7 @@
       </multiselect>
     </div>
     <div class="h-leaders w-full flex flex-row items-start justify-center overflow-auto p-4 mb-12">
-      <table class="leaders-table table-auto bg-red-800 text-white" v-if="leagueLeaders.length">
+      <table class="leaders-table-american table-auto mr-8" v-if="americanLeagueLeaders.length">
         <thead>
           <tr>
             <th class="border-b border-white border-opacity-75" scope="col">
@@ -37,7 +39,33 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in leagueLeaders" :key="player.fullName">
+          <tr v-for="player in americanLeagueLeaders" :key="player.fullName">
+            <td>{{player.rank}}</td>
+            <td>{{player.team.name}}</td>
+            <td>{{player.person.fullName}}</td>
+            <td>{{player.value}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="leaders-table-national table-auto" v-if="nationalLeagueLeaders.length">
+        <thead>
+          <tr>
+            <th class="border-b border-white border-opacity-75" scope="col">
+              {{ t('leagueLeaders.rank') }}
+            </th>
+            <th class="border-b border-white border-opacity-75" scope="col">
+              {{ t('leagueLeaders.team') }}
+            </th>
+            <th class="border-b border-white border-opacity-75" scope="col">
+              {{ t('leagueLeaders.name') }}
+            </th>
+            <th class="border-b border-white border-opacity-75" scope="col">
+              {{ t('leagueLeaders.value') }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="player in nationalLeagueLeaders" :key="player.fullName">
             <td>{{player.rank}}</td>
             <td>{{player.team.name}}</td>
             <td>{{player.person.fullName}}</td>
@@ -122,7 +150,7 @@ export default {
       { key: "hitBatsman", category: "pitching" },
       { key: "hitsPer9Inn", category: "pitching" },
       { key: "holds", category: "pitching" },
-      { key: "innings", category: "pitching" },
+      { key: "innings", category: "fielding" },
       { key: "inningsPitched", category: "pitching" },
       { key: "passedBalls", category: "fielding" },
       { key: "pickoffs", category: "pitching" },
@@ -138,30 +166,46 @@ export default {
       { key: "strikeoutsPer9Inn", category: "pitching" },
       { key: "strikeoutWalkRatio", category: "pitching" },
       { key: "throwingErrors", category: "fielding" },
-      { key: "totalBattersFaced", category: "piitching" },
+      { key: "totalBattersFaced", category: "pitching" },
       { key: "triplePlays", category: "fielding" },
       { key: "walksPer9Inn", category: "pitching" },
       { key: "winPercentage", category: "pitching" }
-    ].sort((a, b) => a.category.localeCompare(b.category))
+    ]
+        .map(t => {t.label = `${t.category} ${t.key}`;return t;})
+        .sort((a, b) => a.category.localeCompare(b.category))
 
     const fetchLeaders = () => store.dispatch('updateLeagueLeaders', selectedType.value ? { statGroup: selectedType.value.category, type: selectedType.value.key } : {})
 
     watch(selectedType, () => fetchLeaders())
 
-    const leagueLeaders = computed(() => store.getters.getLeagueLeaders)
+    const americanLeagueLeaders = computed(() => store.getters.getLeagueLeaders.american)
+    const nationalLeagueLeaders = computed(() => store.getters.getLeagueLeaders.national)
 
     return {
       t,
       selectedType,
       types,
-      leagueLeaders
+      americanLeagueLeaders,
+      nationalLeagueLeaders
     }
   }
 }
 </script>
 
 <style scoped>
-.leaders-table tbody tr:nth-child(odd) {
+.leaders-table-american {
+  @apply bg-red-800 text-white;
+}
+
+.leaders-table-american tbody tr:nth-child(odd) {
   @apply bg-red-700;
+}
+
+.leaders-table-national {
+  @apply bg-blue-800 text-white;
+}
+
+.leaders-table-national tbody tr:nth-child(odd) {
+  @apply bg-blue-700;
 }
 </style>

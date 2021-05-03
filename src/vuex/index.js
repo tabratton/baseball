@@ -11,7 +11,7 @@ export default createStore({
   state() {
     return {
       games: [],
-      leagueLeaders: [],
+      leagueLeaders: { american: [], national: [] },
       apiHost: 'https://statsapi.mlb.com/api/v1',
       format,
     }
@@ -186,7 +186,8 @@ export default createStore({
       newGames.forEach((g, i) => (state.games[i] = g));
     },
     updateLeagueLeaders(state, newLeaders) {
-      state.leagueLeaders = newLeaders
+      state.leagueLeaders.american = newLeaders.american
+      state.leagueLeaders.national = newLeaders.national
     }
   },
   actions: {
@@ -251,9 +252,23 @@ export default createStore({
       commit('updateGames', sorted)
     },
     async updateLeagueLeaders({ commit, state }, { statGroup, type }) {
-      if (!statGroup && !type) return commit('updateLeagueLeaders', [])
-      return axios.get(`${state.apiHost}/stats/leaders?sportId=1&statGroup=${statGroup}&playerPool=qualified&statType=season&leaderCategories=${type}&limit=25`)
-        .then(({ data: { leagueLeaders: [{ leaders = [] }] } }) => commit('updateLeagueLeaders', leaders))
+      if (!statGroup && !type) return commit('updateLeagueLeaders', { american: [], national: [] })
+
+      let url = `${state.apiHost}/stats/leaders?sportId=1&statGroup=${statGroup}&statType=season&leaderCategories=${type}&limit=10`
+
+      const noneQualified = ['saves', 'blownSaves', 'holds', 'saveOpportunities']
+
+      if (!noneQualified.includes(type)) {
+        url += '&playerPool=qualified'
+      }
+
+      return hash({
+        american: axios.get(`${url}&leagueId=103`)
+          .then(({ data: { leagueLeaders: [{ leaders = [] }] } }) => leaders),
+        national: axios.get(`${url}&leagueId=104`)
+          .then(({ data: { leagueLeaders: [{ leaders = [] }] } }) => leaders)
+      })
+        .then(leagueLeaders => commit('updateLeagueLeaders', leagueLeaders))
     }
   }
 })
