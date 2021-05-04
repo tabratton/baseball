@@ -21,7 +21,7 @@
       </multiselect>
     </div>
     <div class="h-leaders w-full flex flex-row items-start justify-center overflow-auto p-4 mb-12">
-      <table class="leaders-table-american table-auto mr-8" v-if="americanLeagueLeaders.length">
+      <table class="leaders-table-american table-auto mr-8 text-center" v-if="americanLeagueLeaders.length">
         <thead>
           <tr>
             <th class="border-b border-white border-opacity-75" scope="col">
@@ -41,13 +41,13 @@
         <tbody>
           <tr v-for="player in americanLeagueLeaders" :key="player.fullName">
             <td>{{player.rank}}</td>
-            <td>{{player.team.name}}</td>
+            <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
             <td>{{player.person.fullName}}</td>
             <td>{{player.value}}</td>
           </tr>
         </tbody>
       </table>
-      <table class="leaders-table-national table-auto" v-if="nationalLeagueLeaders.length">
+      <table class="leaders-table-national table-auto text-center" v-if="nationalLeagueLeaders.length">
         <thead>
           <tr>
             <th class="border-b border-white border-opacity-75" scope="col">
@@ -67,7 +67,7 @@
         <tbody>
           <tr v-for="player in nationalLeagueLeaders" :key="player.fullName">
             <td>{{player.rank}}</td>
-            <td>{{player.team.name}}</td>
+            <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
             <td>{{player.person.fullName}}</td>
             <td>{{player.value}}</td>
           </tr>
@@ -78,11 +78,12 @@
 </template>
 
 <script>
+import Multiselect from '@vueform/multiselect'
 import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 
-import Multiselect from '@vueform/multiselect'
+import teamMap from '@/util/teamMap';
 
 export default {
   name: 'LeagueLeaders',
@@ -169,7 +170,8 @@ export default {
       { key: "totalBattersFaced", category: "pitching" },
       { key: "triplePlays", category: "fielding" },
       { key: "walksPer9Inn", category: "pitching" },
-      { key: "winPercentage", category: "pitching" }
+      { key: "winPercentage", category: "pitching" },
+      { key: "battingAverage", category: "hitting" }
     ]
         .map(t => {t.label = `${t.category} ${t.key}`;return t;})
         .sort((a, b) => a.category.localeCompare(b.category))
@@ -182,6 +184,7 @@ export default {
     const nationalLeagueLeaders = computed(() => store.getters.getLeagueLeaders.national)
 
     return {
+      teamMap,
       t,
       selectedType,
       types,
