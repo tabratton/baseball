@@ -5,12 +5,13 @@
         class="w-full md:w-1/2 xl:w-1/4"
         v-model="selectedType"
         :placeholder="t('leagueLeaders.selectPrompt')"
-        valueProp="key"
+        valueProp="id"
         :maxHeight="320"
-        :options="types"
+        :options="filteredTypes"
         :object="true"
         :searchable="true"
-        trackBy="label"
+        @search-change="updateSearch"
+        :filterResults="false"
       >
         <template v-slot:singlelabel="{ value }">
           <span class="multiselect-single-label">{{ value.label }}</span>
@@ -79,6 +80,7 @@
 
 <script>
 import Multiselect from '@vueform/multiselect'
+import Fuse from 'fuse.js'
 import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
@@ -95,102 +97,122 @@ export default {
     const { t } = useI18n()
 
     const selectedType = ref(null)
+    const searchText = ref('')
 
     const types = [
-      { key: "assists", category: 'fielding' },
-      { key: "shutouts", category: "pitching" },
-      { key: "homeRuns", category: "hitting" },
-      { key: "homeRuns", category: "pitching" },
-      { key: "sacrificeBunts", category: "hitting" },
-      { key: "sacrificeFlies", category: "hitting" },
-      { key: "runs", category: "hitting" },
-      { key: "groundoutToFlyoutRatio", category: "pitching" },
-      { key: "groundoutToFlyoutRatio", category: "hitting" },
-      { key: "stolenBases", category: "hitting" },
-      { key: "groundOuts", category: "hitting" },
-      { key: "numberOfPitches", category: "pitching" },
-      { key: "onBasePercentage", category: "hitting" },
-      { key: "caughtStealing", category: "hitting" },
-      { key: "groundIntoDoublePlays", category: "hitting" },
-      { key: "totalBases", category: "hitting" },
-      { key: "earnedRunAverage", category: "pitching" },
-      { key: "fieldingPercentage", category: "fielding" },
-      { key: "walksAndHitsPerInningPitched", category: "pitching" },
-      { key: "hitByPitches", category: "hitting" },
-      { key: "gamesPlayed", category: "fielding" },
-      { key: "gamesPlayed", category: "pitching" },
-      { key: "gamesPlayed", category: "hitting" },
-      { key: "walks", category: "hitting" },
-      { key: "walks", category: "pitching" },
-      { key: "sluggingPercentage", category: "hitting" },
-      { key: "onBasePlusSlugging", category: "hitting" },
-      { key: "runsBattedIn", category: "hitting" },
-      { key: "triples", category: "hitting" },
-      { key: "extraBaseHits", category: "hitting" },
-      { key: "hits", category: "hitting" },
-      { key: "atBats", category: "hitting" },
-      { key: "strikeouts", category: "hitting" },
-      { key: "strikeouts", category: "pitching" },
-      { key: "doubles", category: "hitting" },
-      { key: "totalPlateAppearances", category: "hitting" },
-      { key: "intentionalWalks", category: "hitting" },
-      { key: "wins", category: "pitching" },
-      { key: "losses", category: "pitching" },
-      { key: "saves", category: "pitching" },
-      { key: "wildPitch", category: "pitching" },
-      { key: "airOuts", category: "pitching" },
-      { key: "balk", category: "pitching" },
-      { key: "blownSaves", category: "pitching" },
-      { key: "catcherEarnedRunAverage", category: "fielding" },
-      { key: "catchersInterference", category: "fielding" },
-      { key: "completeGames", category: "pitching" },
-      { key: "doublePlays", category: "fielding" },
-      { key: "earnedRun", category: "pitching" },
-      { key: "errors", category: "fielding" },
-      { key: "gamesStarted", category: "pitching" },
-      { key: "hitBatsman", category: "pitching" },
-      { key: "hitsPer9Inn", category: "pitching" },
-      { key: "holds", category: "pitching" },
-      { key: "innings", category: "fielding" },
-      { key: "inningsPitched", category: "pitching" },
-      { key: "passedBalls", category: "fielding" },
-      { key: "pickoffs", category: "pitching" },
-      { key: "pickoffs", category: "catching" },
-      { key: "pitchesPerInning", category: "pitching" },
-      { key: "putOuts", category: "fielding" },
-      { key: "rangeFactorPerGame", category: "fielding" },
-      { key: "rangeFactorPer9Inn", category: "fielding" },
-      { key: "saveOpportunities", category: "pitching" },
-      { key: "stolenBasePercentage", category: "pitching" },
-      { key: "stolenBasePercentage", category: "hitting" },
-      { key: "stolenBasePercentage", category: "catching" },
-      { key: "strikeoutsPer9Inn", category: "pitching" },
-      { key: "strikeoutWalkRatio", category: "pitching" },
-      { key: "throwingErrors", category: "fielding" },
-      { key: "totalBattersFaced", category: "pitching" },
-      { key: "triplePlays", category: "fielding" },
-      { key: "walksPer9Inn", category: "pitching" },
-      { key: "winPercentage", category: "pitching" },
-      { key: "battingAverage", category: "hitting" }
+      { typeName: "assists", category: 'fielding' },
+      { typeName: "shutouts", category: "pitching" },
+      { typeName: "homeRuns", category: "hitting" },
+      { typeName: "homeRuns", category: "pitching" },
+      { typeName: "sacrificeBunts", category: "hitting" },
+      { typeName: "sacrificeFlies", category: "hitting" },
+      { typeName: "runs", category: "hitting" },
+      { typeName: "groundoutToFlyoutRatio", category: "pitching" },
+      { typeName: "groundoutToFlyoutRatio", category: "hitting" },
+      { typeName: "stolenBases", category: "hitting" },
+      { typeName: "groundOuts", category: "hitting" },
+      { typeName: "numberOfPitches", category: "pitching" },
+      { typeName: "onBasePercentage", category: "hitting" },
+      { typeName: "caughtStealing", category: "hitting" },
+      { typeName: "groundIntoDoublePlays", category: "hitting" },
+      { typeName: "totalBases", category: "hitting" },
+      { typeName: "earnedRunAverage", category: "pitching" },
+      { typeName: "fieldingPercentage", category: "fielding" },
+      { typeName: "walksAndHitsPerInningPitched", category: "pitching" },
+      { typeName: "hitByPitches", category: "hitting" },
+      { typeName: "gamesPlayed", category: "fielding" },
+      { typeName: "gamesPlayed", category: "pitching" },
+      { typeName: "gamesPlayed", category: "hitting" },
+      { typeName: "walks", category: "hitting" },
+      { typeName: "walks", category: "pitching" },
+      { typeName: "sluggingPercentage", category: "hitting" },
+      { typeName: "onBasePlusSlugging", category: "hitting" },
+      { typeName: "runsBattedIn", category: "hitting" },
+      { typeName: "triples", category: "hitting" },
+      { typeName: "extraBaseHits", category: "hitting" },
+      { typeName: "hits", category: "hitting" },
+      { typeName: "atBats", category: "hitting" },
+      { typeName: "strikeouts", category: "hitting" },
+      { typeName: "strikeouts", category: "pitching" },
+      { typeName: "doubles", category: "hitting" },
+      { typeName: "totalPlateAppearances", category: "hitting" },
+      { typeName: "intentionalWalks", category: "hitting" },
+      { typeName: "wins", category: "pitching" },
+      { typeName: "losses", category: "pitching" },
+      { typeName: "saves", category: "pitching" },
+      { typeName: "wildPitch", category: "pitching" },
+      { typeName: "airOuts", category: "pitching" },
+      { typeName: "balk", category: "pitching" },
+      { typeName: "blownSaves", category: "pitching" },
+      { typeName: "catcherEarnedRunAverage", category: "fielding" },
+      { typeName: "catchersInterference", category: "fielding" },
+      { typeName: "completeGames", category: "pitching" },
+      { typeName: "doublePlays", category: "fielding" },
+      { typeName: "earnedRun", category: "pitching" },
+      { typeName: "errors", category: "fielding" },
+      { typeName: "gamesStarted", category: "pitching" },
+      { typeName: "hitBatsman", category: "pitching" },
+      { typeName: "hitsPer9Inn", category: "pitching" },
+      { typeName: "holds", category: "pitching" },
+      { typeName: "innings", category: "fielding" },
+      { typeName: "inningsPitched", category: "pitching" },
+      { typeName: "passedBalls", category: "fielding" },
+      { typeName: "pickoffs", category: "pitching" },
+      { typeName: "pickoffs", category: "catching" },
+      { typeName: "pitchesPerInning", category: "pitching" },
+      { typeName: "putOuts", category: "fielding" },
+      { typeName: "rangeFactorPerGame", category: "fielding" },
+      { typeName: "rangeFactorPer9Inn", category: "fielding" },
+      { typeName: "saveOpportunities", category: "pitching" },
+      { typeName: "stolenBasePercentage", category: "pitching" },
+      { typeName: "stolenBasePercentage", category: "hitting" },
+      { typeName: "stolenBasePercentage", category: "catching" },
+      { typeName: "strikeoutsPer9Inn", category: "pitching" },
+      { typeName: "strikeoutWalkRatio", category: "pitching" },
+      { typeName: "throwingErrors", category: "fielding" },
+      { typeName: "totalBattersFaced", category: "pitching" },
+      { typeName: "triplePlays", category: "fielding" },
+      { typeName: "walksPer9Inn", category: "pitching" },
+      { typeName: "winPercentage", category: "pitching" },
+      { typeName: "battingAverage", category: "hitting" }
     ]
         .map(type => {
-          type.label = `${t(`leagueLeaders.${type.category}`)} - ${t(`leagueLeaders.leaderTypes.${type.key}`)}`;
+          type.label = `${t(`leagueLeaders.${type.category}`)} - ${t(`leagueLeaders.leaderTypes.${type.typeName}`)}`;
+          type.id = `${type.category}_${type.typeName}`
           return type;
         })
         .sort((a, b) => a.category.localeCompare(b.category))
 
-    const fetchLeaders = () => store.dispatch('updateLeagueLeaders', selectedType.value ? { statGroup: selectedType.value.category, type: selectedType.value.key } : {})
+    const fetchLeaders = () => store.dispatch('updateLeagueLeaders', selectedType.value ? { statGroup: selectedType.value.category, type: selectedType.value.typeName } : {})
 
     watch(selectedType, () => fetchLeaders())
 
     const americanLeagueLeaders = computed(() => store.getters.getLeagueLeaders.american)
     const nationalLeagueLeaders = computed(() => store.getters.getLeagueLeaders.national)
 
+    const updateSearch = query => {
+      searchText.value = query
+    }
+
+    const filteredTypes = computed(() => {
+      if (searchText.value === '') return types
+      const options = {
+        keys: ['typeName', 'label', 'category'],
+        findAllMatches: true
+      };
+      const fuse = new Fuse(types, options);
+      return fuse.search(searchText.value).map(result => result.item)
+    })
+
+    console.log(filteredTypes)
+
     return {
       teamMap,
       t,
       selectedType,
-      types,
+      searchText,
+      updateSearch,
+      filteredTypes,
       americanLeagueLeaders,
       nationalLeagueLeaders
     }
