@@ -4,7 +4,7 @@
       <multiselect
         class="w-full md:w-1/2 xl:w-1/4"
         v-model="selectedType"
-        placeholder="Select..."
+        :placeholder="t('leagueLeaders.selectPrompt')"
         valueProp="key"
         :maxHeight="320"
         :options="types"
@@ -13,10 +13,10 @@
         trackBy="label"
       >
         <template v-slot:singlelabel="{ value }">
-          <span class="multiselect-single-label">{{ value.category }} - {{ value.key }}</span>
+          <span class="multiselect-single-label">{{ value.label }}</span>
         </template>
         <template v-slot:option="{ option }">
-          {{ option.category }} - {{ option.key }}
+          {{ option.label }}
         </template>
       </multiselect>
     </div>
@@ -173,7 +173,10 @@ export default {
       { key: "winPercentage", category: "pitching" },
       { key: "battingAverage", category: "hitting" }
     ]
-        .map(t => {t.label = `${t.category} ${t.key}`;return t;})
+        .map(type => {
+          type.label = `${t(`leagueLeaders.${type.category}`)} - ${t(`leagueLeaders.leaderTypes.${type.key}`)}`;
+          return type;
+        })
         .sort((a, b) => a.category.localeCompare(b.category))
 
     const fetchLeaders = () => store.dispatch('updateLeagueLeaders', selectedType.value ? { statGroup: selectedType.value.category, type: selectedType.value.key } : {})

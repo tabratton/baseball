@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 function getContrastYIQ(hex) {
   hex = hex.replace('#', '')
   const r = parseInt(hex.substr(0, 2), 16)
@@ -50,7 +52,10 @@ module.exports = {
   darkMode: 'media',
   theme: {
     extend: {
-      colors: mlbColors,
+      colors: {
+        gray: colors.warmGray,
+        ...mlbColors
+      },
       boxShadow: {
         'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       },
