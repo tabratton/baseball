@@ -8,7 +8,7 @@
         :textClass="game.away.textClass"
       >
         <template v-slot:header>
-          <h4 class="font-bold text-lg text-center">{{ t('playerTable.battersTitle', { team: game.away.name }) }}</h4>
+          <h4 class="font-bold text-lg text-center bg-gray-900 w-full p-2">{{ t('playerTable.battersTitle', { team: game.away.name }) }}</h4>
         </template>
         <template v-slot:caption>
           <caption class="sr-only">{{ t('playerTable.awayBatters') }}</caption>
@@ -22,7 +22,7 @@
           :textClass="game.away.textClass"
         >
           <template v-slot:header>
-            <h4 class="font-bold text-lg text-center">{{ t('playerTable.pitchersTitle', { team: game.away.name }) }}</h4>
+            <h4 class="font-bold text-lg text-center bg-gray-900 w-full p-2">{{ t('playerTable.pitchersTitle', { team: game.away.name }) }}</h4>
           </template>
           <template v-slot:caption>
             <caption class="sr-only">{{ t('playerTable.awayPitchers') }}</caption>
@@ -38,7 +38,7 @@
         :textClass="game.home.textClass"
       >
         <template v-slot:header>
-          <h4 class="font-bold text-lg text-center">{{ t('playerTable.battersTitle', { team: game.home.name }) }}</h4>
+          <h4 class="font-bold text-lg text-center bg-gray-900 w-full p-2">{{ t('playerTable.battersTitle', { team: game.home.name }) }}</h4>
         </template>
         <template v-slot:caption>
           <caption class="sr-only">{{ t('playerTable.homeBatters') }}</caption>
@@ -52,7 +52,7 @@
           :textClass="game.home.textClass"
         >
           <template v-slot:header>
-            <h4 class="font-bold text-lg text-center">{{ t('playerTable.pitchersTitle', { team: game.home.name }) }}</h4>
+            <h4 class="font-bold text-lg text-center bg-gray-900 w-full p-2">{{ t('playerTable.pitchersTitle', { team: game.home.name }) }}</h4>
           </template>
           <template v-slot:caption>
             <caption class="sr-only">{{ t('playerTable.homePitchers') }}</caption>

@@ -3,7 +3,7 @@
     <table class="table-auto w-full text-white text-center">
       <slot name="caption"></slot>
       <thead>
-        <tr class="bg-black">
+        <tr class="bg-gray-900">
           <th scope="col">{{ boxscore.status }}</th>
           <th scope="col" v-for="header in headers" :key="header">
             {{ header }}

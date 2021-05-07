@@ -8,7 +8,8 @@ export default {
     team: 'Team',
     currentPlayers: 'Current Pitcher and Batter',
     player: 'Player',
-    stat: 'Stat'
+    stat: 'Stat',
+    batterStats: '{hits} for {atBats}'
   },
   boxscore: {
     starts: 'Starts at {time}'

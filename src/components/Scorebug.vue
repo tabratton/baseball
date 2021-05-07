@@ -86,12 +86,12 @@
       <tbody>
         <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
           <td class="text-right">{{ game.isTop ? `${game.away.order} ${game.away.currentPlayer.person.fullName}` : game.away.currentPlayer.person.fullName }}</td>
-          <td class="text-right">{{ game.isTop ? `${game.away.currentPlayer.stats.batting.hits}-${game.away.currentPlayer.stats.batting.atBats}` : `${game.away.currentPlayer.stats.pitching.pitchesThrown}P` }}</td>
+          <td class="text-right">{{ game.isTop ? t('scorebug.batterStats', { hits: game.away.currentPlayer.stats.batting.hits, atBats: game.away.currentPlayer.stats.batting.atBats }) : `${game.away.currentPlayer.stats.pitching.pitchesThrown}P` }}</td>
         </tr>
 
         <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
           <td class="text-right">{{ game.isTop ? game.home.currentPlayer.person.fullName : `${game.home.order} ${game.home.currentPlayer.person.fullName}` }}</td>
-          <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : `${game.home.currentPlayer.stats.batting.hits}-${game.home.currentPlayer.stats.batting.atBats}` }}</td>
+          <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : t('scorebug.batterStats', { hits: game.home.currentPlayer.stats.batting.hits, atBats: game.home.currentPlayer.stats.batting.atBats }) }}</td>
         </tr>
         <tr class="bg-gray-900">
           <td class="p-5"></td>
