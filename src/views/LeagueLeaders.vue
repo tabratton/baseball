@@ -144,8 +144,8 @@ export default {
       { typeName: "airOuts", category: "pitching" },
       { typeName: "balk", category: "pitching" },
       { typeName: "blownSaves", category: "pitching" },
-      { typeName: "catcherEarnedRunAverage", category: "fielding" },
-      { typeName: "catchersInterference", category: "fielding" },
+      { typeName: "catcherEarnedRunAverage", category: "fielding", displayCategory: "catching" },
+      { typeName: "catchersInterference", category: "fielding", displayCategory: "catching" },
       { typeName: "completeGames", category: "pitching" },
       { typeName: "doublePlays", category: "fielding" },
       { typeName: "earnedRun", category: "pitching" },
@@ -177,7 +177,7 @@ export default {
       { typeName: "battingAverage", category: "hitting" }
     ]
         .map(type => {
-          type.label = `${t(`leagueLeaders.${type.category}`)} - ${t(`leagueLeaders.leaderTypes.${type.typeName}`)}`;
+          type.label = `${t(`leagueLeaders.leaderTypes.${type.typeName}`)} (${t(`leagueLeaders.${type.displayCategory || type.category}`)})`;
           type.id = `${type.category}_${type.typeName}`
           return type;
         })
