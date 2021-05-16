@@ -25,7 +25,7 @@
         >
         <select
           v-model="selectedLocale"
-          class="bg-red-800 border-none placeholder-white placeholder-opacity-75 focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0"
+          class="bg-transparent border-none placeholder-white placeholder-opacity-75 focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0"
         >
           <option value="enUS">English (US)</option>
           <option value="es">Spanish</option>

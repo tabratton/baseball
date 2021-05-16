@@ -43,7 +43,11 @@
           <tr v-for="player in americanLeagueLeaders" :key="player.fullName">
             <td>{{player.rank}}</td>
             <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
-            <td>{{player.person.fullName}}</td>
+            <td>
+              <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+                {{ player.person.fullName }}
+              </router-link>
+            </td>
             <td>{{player.value}}</td>
           </tr>
         </tbody>
@@ -69,7 +73,11 @@
           <tr v-for="player in nationalLeagueLeaders" :key="player.fullName">
             <td>{{player.rank}}</td>
             <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
-            <td>{{player.person.fullName}}</td>
+            <td>
+              <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+                {{ player.person.fullName }}
+              </router-link>
+            </td>
             <td>{{player.value}}</td>
           </tr>
         </tbody>

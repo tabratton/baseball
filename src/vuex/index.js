@@ -11,6 +11,7 @@ export default createStore({
   state() {
     return {
       games: [],
+      players: {},
       leagueLeaders: { american: [], national: [] },
       apiHost: 'https://statsapi.mlb.com/api/v1',
       locale: localStorage.locale || 'enUS'
@@ -177,7 +178,8 @@ export default createStore({
 
       return obj
     },
-    getLeagueLeaders: state => state.leagueLeaders
+    getLeagueLeaders: state => state.leagueLeaders,
+    getPlayer: state => playerId => state.players[playerId] || {}
   },
   mutations: {
     updateGames(state, newGames) {
@@ -191,6 +193,9 @@ export default createStore({
     updateLocale(state, newLocale) {
       localStorage.locale = newLocale
       state.locale = newLocale
+    },
+    savePlayer(state, player) {
+      state.players[player.id] = player
     }
   },
   actions: {
@@ -272,8 +277,13 @@ export default createStore({
           .then(({ data: { leagueLeaders: [{ leaders = [] }] } }) => leaders)
       })
         .then(leagueLeaders => commit('updateLeagueLeaders', leagueLeaders))
+    },
+    async getPlayer({ commit, state }, playerID) {
+      const player = await axios
+        .get(`${state.apiHost}/people/${playerID}?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career],currentTeam)`)
+        .then(({ data: { people: [person] } }) => person)
+
+      commit('savePlayer', player)
     }
   }
 })
-
-// https://statsapi.mlb.com/api/v1/people/592206?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career],currentTeam)
