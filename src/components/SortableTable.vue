@@ -94,7 +94,7 @@ export default {
 
       f = field
 
-      emit('updateSort', { direction: dir, field: f })
+      emit('updateSort', { d: dir, f: f })
     }
 
     return {

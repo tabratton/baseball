@@ -6,11 +6,15 @@
 
 <script>
 import ScorebugList from '@/components/ScorebugList.vue'
+import useScorebugData from '@/composables/useScorebugData'
 
 export default {
   name: 'Home',
   components: {
     ScorebugList
+  },
+  setup() {
+    useScorebugData()
   }
 }
 </script>

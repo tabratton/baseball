@@ -74,6 +74,14 @@ module.exports = {
       },
       fontFamily: {
         'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'
+      },
+      stroke: {
+        black: colors.black,
+        white: colors.white
+      },
+      fill: {
+        black: colors.black,
+        white: colors.white
       }
     },
   },

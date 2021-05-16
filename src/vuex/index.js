@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { compareAsc, format, parseISO } from 'date-fns'
+import { compareAsc, parseISO } from 'date-fns'
 import numbro from 'numbro'
 import { all, hash } from 'rsvp'
 import { createStore } from 'vuex'
@@ -13,10 +13,11 @@ export default createStore({
       games: [],
       leagueLeaders: { american: [], national: [] },
       apiHost: 'https://statsapi.mlb.com/api/v1',
-      format,
+      locale: localStorage.locale || 'enUS'
     }
   },
   getters: {
+    getLocale: state => state.locale,
     getGame: state => gamePk => state.games.find(g => g.gamePk === gamePk),
     scorebugGames: state => state.games.map(game => {
       if (!game) return null
@@ -28,6 +29,8 @@ export default createStore({
         gamePk: game.gamePk,
         isTop: game.lineScore.isTopInning,
         inProgress: game.inProgress,
+        isPregame,
+        gameTime: game.gameTime,
         home: {
           team: game.home.short,
           bgClass: game.home.bgClass,
@@ -66,10 +69,6 @@ export default createStore({
         obj.batterCount = `${game.lineScore.balls}-${game.lineScore.strikes}`
         obj.outs = [game.lineScore.outs >= 1, game.lineScore.outs >= 2]
         obj.runners = [{ num: 1, runner: !!game.lineScore.offense.first }, { num: 2, runner: !!game.lineScore.offense.second }, { num: 3, runner: !!game.lineScore.offense.third }]
-      }
-
-      if (isPregame) {
-        obj.batterCount = state.format(game.gameTime, 'hh:mm a')
       }
 
       return obj
@@ -125,7 +124,7 @@ export default createStore({
       if (!game) return null
 
       const obj = {
-        gameTime: state.format(game.gameTime, 'h:mm a'),
+        gameTime: game.gameTime,
         home: {
           name: game.home.name,
           bgClass: game.home.bgClass,
@@ -188,6 +187,10 @@ export default createStore({
     updateLeagueLeaders(state, newLeaders) {
       state.leagueLeaders.american = newLeaders.american
       state.leagueLeaders.national = newLeaders.national
+    },
+    updateLocale(state, newLocale) {
+      localStorage.locale = newLocale
+      state.locale = newLocale
     }
   },
   actions: {
@@ -272,3 +275,5 @@ export default createStore({
     }
   }
 })
+
+// https://statsapi.mlb.com/api/v1/people/592206?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career],currentTeam)

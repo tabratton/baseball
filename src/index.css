@@ -47,3 +47,7 @@ th, td {
 .multiselect-clear {
     @apply dark:bg-gray-900;
 }
+
+a:hover {
+    @apply underline;
+}

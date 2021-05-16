@@ -18,7 +18,11 @@
       <tr v-for="player in slotProps.sortedItems" :key="player.jerseyNumber">
         <td>{{ Number.isInteger(Number(player.battingOrder) / 100) ? `${Number(player.battingOrder) / 100}.` : '' }}</td>
         <td>{{ player.position.abbreviation }}</td>
-        <td>{{ player.person.fullName }}</td>
+        <td>
+          <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+            {{ player.person.fullName }}
+          </router-link>
+        </td>
         <td>{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.batting.atBats }}</td>
         <td>{{ player.stats.batting.hits }}</td>
@@ -37,11 +41,11 @@
 </template>
 
 <script>
-import { ref, toRefs, watch } from 'vue'
+import { toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import SortableTable from '@/components/SortableTable'
-import { updateSort } from '@/util/sort'
+import useSortableTable from '@/composables/useSortableTable'
 
 export default {
   name: 'BattersTable',
@@ -66,12 +70,7 @@ export default {
     const { batters } = toRefs(props)
     const { t } = useI18n()
 
-    const sortField = ref('battingOrder')
-    const sortDirection = ref('asc')
-
-    const update = ({ direction, field }) => updateSort(sortField, sortDirection, field, direction)
-
-    watch(batters, () => updateSort(sortField, sortDirection, 'battingOrder', 'asc'))
+    const { sortField, sortDirection, update } = useSortableTable(batters, 'battingOrder', 'asc')
 
     const valueGetter = (a, b, sortField) => {
       let valueA = null

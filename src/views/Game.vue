@@ -20,6 +20,7 @@ import Players from '@/components/Players'
 import Boxscore from '@/components/Boxscore'
 import Scorebug from '@/components/Scorebug'
 import ScorebugList from '@/components/ScorebugList'
+import useScorebugData from '@/composables/useScorebugData'
 
 export default {
   name: 'Game',
@@ -35,6 +36,8 @@ export default {
 
     const gamePk = computed(() => route.params.gamepk)
     const scorebug = computed(() => store.getters.getScorebug(gamePk.value))
+
+    useScorebugData()
 
     return {
       gamePk,

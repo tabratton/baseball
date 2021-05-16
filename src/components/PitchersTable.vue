@@ -17,7 +17,11 @@
     <template v-slot:rows="slotProps">
       <tr v-for="player in slotProps.sortedItems" :key="player.jerseyNumber">
         <td>{{ player.index }}</td>
-        <td>{{ player.person.fullName }}</td>
+        <td>
+          <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+            {{ player.person.fullName }}
+          </router-link>
+        </td>
         <td>{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.pitching.inningsPitched }}</td>
         <td>{{ player.stats.pitching.hits }}</td>
@@ -32,11 +36,11 @@
 </template>
 
 <script>
-import { ref, toRefs, watch } from 'vue'
+import { toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import SortableTable from '@/components/SortableTable'
-import { updateSort } from '@/util/sort'
+import useSortableTable from '@/composables/useSortableTable'
 
 export default {
   name: 'PitchersTable',
@@ -61,12 +65,7 @@ export default {
     const { pitchers } = toRefs(props)
     const { t } = useI18n()
 
-    const sortField = ref('index')
-    const sortDirection = ref('asc')
-
-    const update = ({ direction, field }) => updateSort(sortField, sortDirection, field, direction)
-
-    watch(pitchers, () => updateSort(sortField, sortDirection, 'index', 'asc'))
+    const { sortField, sortDirection, update } = useSortableTable(pitchers, 'index', 'asc')
 
     const valueGetter = (a, b, sortField) => {
       let valueA = null

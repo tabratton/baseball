@@ -204,8 +204,6 @@ export default {
       return fuse.search(searchText.value).map(result => result.item)
     })
 
-    console.log(filteredTypes)
-
     return {
       teamMap,
       t,

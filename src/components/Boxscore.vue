@@ -29,7 +29,7 @@
       </tbody>
     </table>
     <div class="flex w-full justify-between mt-2 text-sm font-bold">
-      <span v-if="boxscore.isPregame">{{ t('boxscore.starts', { time: boxscore.gameTime }) }}</span>
+      <span v-if="boxscore.isPregame">{{ t('boxscore.starts', { time: dateFormat(boxscore.gameTime, 'h:mm a') }) }}</span>
       <span class="mr-2">{{ boxscore.winningPitcher }}</span>
       <span class="mr-2">{{ boxscore.losingPitcher }}</span>
       <span>{{ boxscore.save }}</span>
@@ -38,10 +38,11 @@
 </template>
 
 <script>
-import { format } from 'date-fns'
 import { computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
+
+import useDateFormat from '@/composables/useDateFormat'
 
 export default {
   name: 'Boxscore',
@@ -64,9 +65,11 @@ export default {
       return hs
     })
 
+    const { dateFormat } = useDateFormat()
+
     return {
       t,
-      format,
+      dateFormat,
       boxscore,
       headers
     }

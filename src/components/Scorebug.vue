@@ -37,7 +37,7 @@
             </span>
           </td>
           <td v-else>{{ game.inning }}</td>
-          <td class="text-right pl-4">{{ game.batterCount ? game.batterCount : '' }}</td>
+          <td class="text-right pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -127,11 +127,12 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ref, toRefs } from 'vue'
 
 import Chevron from '@/components/Chevron'
-import { useI18n } from 'vue-i18n'
+import useDateFormat from '@/composables/useDateFormat'
 
 export default {
   name: 'Scorebug',
@@ -159,8 +160,11 @@ export default {
 
     const goToBoxscore = () => router.push(`/game/${game.value.gamePk}`)
 
+    const { dateFormat } = useDateFormat()
+
     return {
       t,
+      dateFormat,
       goToBoxscore,
       playerInfoExpanded,
       togglePlayerInfoExpanded
