@@ -3,6 +3,7 @@
     <div class="w-full flex items-center justify-center p-4">
       <multiselect
         class="w-full md:w-1/2 xl:w-1/4"
+        id="leaderTypes"
         v-model="selectedType"
         :placeholder="t('leagueLeaders.selectPrompt')"
         valueProp="id"
@@ -21,67 +22,73 @@
         </template>
       </multiselect>
     </div>
-    <div class="h-leaders w-full flex flex-row items-start justify-center overflow-auto p-4 mb-12">
-      <table class="leaders-table-american table-auto mr-8 text-center" v-if="americanLeagueLeaders.length">
-        <thead>
-          <tr>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.rank') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.team') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.name') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.value') }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in americanLeagueLeaders" :key="player.fullName">
-            <td>{{player.rank}}</td>
-            <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
-            <td>
-              <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
-                {{ player.person.fullName }}
-              </router-link>
-            </td>
-            <td>{{player.value}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="leaders-table-national table-auto text-center" v-if="nationalLeagueLeaders.length">
-        <thead>
-          <tr>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.rank') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.team') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.name') }}
-            </th>
-            <th class="border-b border-white border-opacity-75" scope="col">
-              {{ t('leagueLeaders.value') }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in nationalLeagueLeaders" :key="player.fullName">
-            <td>{{player.rank}}</td>
-            <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
-            <td>
-              <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
-                {{ player.person.fullName }}
-              </router-link>
-            </td>
-            <td>{{player.value}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="h-leaders w-full flex flex-row flex-wrap justify-center overflow-y-auto p-4 mb-12">
+      <div v-if="nationalLeagueLeaders.length" class="m-4">
+        <h4>American League Leaders</h4>
+        <table class="leaders-table-american table-auto text-center">
+          <thead>
+            <tr>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.rank') }}
+              </th>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.team') }}
+              </th>
+              <th class="border-b border-white border-opacity-75 whitespace-nowrap" scope="col">
+                {{ t('leagueLeaders.name') }}
+              </th>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.value') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="player in americanLeagueLeaders" :key="player.fullName">
+              <td>{{player.rank}}</td>
+              <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
+              <td class="whitespace-nowrap">
+                <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+                  {{ player.person.fullName }}
+                </router-link>
+              </td>
+              <td>{{player.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-if="nationalLeagueLeaders.length" class="m-4">
+        <h4>National League Leaders</h4>
+        <table class="leaders-table-national table-auto text-center">
+          <thead>
+            <tr>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.rank') }}
+              </th>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.team') }}
+              </th>
+              <th class="border-b border-white border-opacity-75 whitespace-nowrap" scope="col">
+                {{ t('leagueLeaders.name') }}
+              </th>
+              <th class="border-b border-white border-opacity-75" scope="col">
+                {{ t('leagueLeaders.value') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="player in nationalLeagueLeaders" :key="player.fullName">
+              <td>{{player.rank}}</td>
+              <td>{{teamMap.find(team => team.id === player.team.id).short}}</td>
+              <td class="whitespace-nowrap">
+                <router-link :to="{ name: 'Player', params: { playerId: player.person.id }}">
+                  {{ player.person.fullName }}
+                </router-link>
+              </td>
+              <td>{{player.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

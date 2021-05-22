@@ -70,7 +70,8 @@ module.exports = {
         'leaders': 'calc(100vh - 6.5rem)'
       },
       minHeight: {
-        'select': '42px'
+        'leader-select': '42px',
+        'locale-select': '32px'
       },
       fontFamily: {
         'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'

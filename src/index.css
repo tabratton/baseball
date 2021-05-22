@@ -10,6 +10,10 @@ th, td {
     @apply border-collapse border border-white border-opacity-50 mb-4;
 }
 
+h4 {
+    @apply dark:text-white font-bold text-lg text-center w-full p-2
+}
+
 .players-table th,
 .players-table td {
     @apply pr-3 pl-3;
@@ -23,29 +27,57 @@ th, td {
     @apply border-b border-white border-opacity-60;
 }
 
-.multiselect-input {
-    @apply border-0 border-b-2 border-red-800 p-2 pl-0 dark:bg-gray-900 min-h-select;
+#leaderTypes .multiselect-input {
+    @apply border-0 border-b-2 border-red-800 p-1 pl-0 dark:bg-gray-900 min-h-leader-select;
 }
 
-.multiselect-option {
-    @apply p-2 min-h-0 cursor-pointer dark:text-white;
+#leaderTypes .multiselect-options .multiselect-option {
+    @apply cursor-pointer dark:text-white;
+    min-height: 32px;
+    padding: 8px
 }
 
-.multiselect-option.is-selected,
-.multiselect-option.is-selected.is-pointed {
+#leaderTypes .multiselect-options .multiselect-option.is-selected,
+#leaderTypes .multiselect-options .multiselect-option.is-selected.is-pointed {
     @apply bg-red-800;
 }
 
-.multiselect-option.is-pointed {
+#leaderTypes .multiselect-options .multiselect-option.is-pointed {
     @apply dark:bg-gray-600;
 }
 
-.multiselect-options {
+#leaderTypes .multiselect-options {
     @apply dark:bg-gray-900 border-0;
 }
 
-.multiselect-clear {
+#leaderTypes .multiselect-clear {
     @apply dark:bg-gray-900;
+}
+
+#localeSelect .multiselect-input {
+    @apply border-0 p-0 bg-red-800;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+}
+
+#localeSelect .multiselect-options .multiselect-option {
+    @apply cursor-pointer dark:text-white;
+    min-height: 32px;
+    padding: 8px
+}
+
+#localeSelect .multiselect-options .multiselect-option.is-selected,
+#localeSelect .multiselect-options .multiselect-option.is-selected.is-pointed {
+    @apply bg-red-800;
+}
+
+#localeSelect .multiselect-options .multiselect-option.is-pointed {
+    @apply dark:bg-gray-600;
+}
+
+#localeSelect .multiselect-options {
+    @apply dark:bg-gray-900 border-0;
 }
 
 a:hover {

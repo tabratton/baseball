@@ -1,9 +1,9 @@
 <template>
-  <div class="player h-home w-screen">
-    <div class="w-full flex items-center justify-center p-4">
-      <div v-if="player.id" class="bg-gray-800 rounded-md w-1/2">
+  <div class="player h-home w-screen overflow-y-auto">
+    <div class="w-full flex items-center justify-center p-4 overflow-y-auto">
+      <div v-if="player.id" class="bg-gray-800 rounded-md m-4 w-full xl:w-3/4">
         <div class="w-full pt-6 pl-6 font-bold text-2xl">{{player.fullName}} (#{{player.primaryNumber}})</div>
-        <div class="w-full pl-6 italic text-sm">Nickname - {{player.nickName}}</div>
+        <div class="w-full pl-6 italic text-sm" v-if="player.nickName">Nickname - {{player.nickName}}</div>
         <div class="flex flex-row">
           <div class="flex flex-col p-6">
             <span>Bats: {{player.batSide.code}}</span>

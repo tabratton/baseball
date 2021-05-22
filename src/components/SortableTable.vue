@@ -5,6 +5,7 @@
       <tr>
         <th
           class="cursor-pointer"
+          :class="{ [header.class]: true }"
           scope="col"
           v-for="header in headers"
           :key="header.field"

@@ -12,24 +12,39 @@
         <polygon class="stroke-white fill-white" points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
       </svg>
       <div class="flex flex-row">
+        <!-- TODO: Do something about search -->
+        <input
+          class="p-1 pl-2 w-24 bg-transparent placeholder-white placeholder-opacity-75 border-none focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0 hidden"
+          type="text"
+          :placeholder="t('navbar.search')"
+        >
         <button
           class="hover:bg-white hover:bg-opacity-10 p-2 leading-4 focus:outline-none mr-2"
           @click="goToLeagueLeaders"
         >
           {{ t('navbar.leagueLeaders') }}
         </button>
-        <input
-          class="p-1 pl-2 bg-transparent placeholder-white placeholder-opacity-75 border-none focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0"
-          type="text"
-          :placeholder="t('navbar.search')"
-        >
-        <select
+        <multiselect
+          class="w-32"
+          id="localeSelect"
           v-model="selectedLocale"
-          class="bg-transparent border-none placeholder-white placeholder-opacity-75 focus:bg-white focus:bg-opacity-10 focus:outline-none focus:border-none focus:ring-0"
+          :valueProp="'value'"
+          :trackBy="label"
+          :maxHeight="320"
+          :options="options"
+          :object="true"
+          :mode="'single'"
+          :caret="true"
+          :canDeselect="false"
+          :searchable="true"
         >
-          <option value="enUS">English (US)</option>
-          <option value="es">Spanish</option>
-        </select>
+          <template v-slot:singlelabel="{ value }">
+            <span class="multiselect-single-label">{{ value.label }}</span>
+          </template>
+          <template v-slot:option="{ option }">
+            {{ option.label }}
+          </template>
+        </multiselect>
       </div>
     </div>
     <router-view class="content"></router-view>
@@ -37,32 +52,48 @@
 </template>
 
 <script>
+import Multiselect from '@vueform/multiselect'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'App',
+  components: {
+    Multiselect
+  },
   setup() {
     const store = useStore()
     const router = useRouter()
     const { t, locale } = useI18n({ useScope: 'global' })
-    const selectedLocale = ref(store.getters.getLocale)
+    const selectedLocale = ref({ label: 'English', value: 'enUS' })
 
     const goHome = () => router.push('/')
     const goToLeagueLeaders = () => router.push('/league-leaders')
 
-    watch(selectedLocale, () => {
-      store.commit('updateLocale', selectedLocale.value)
-      locale.value = selectedLocale.value
+    const updateLocale = l => {
+      store.commit('updateLocale', l)
+      locale.value = l.value
+    }
+
+    watch(selectedLocale, () => updateLocale(selectedLocale.value))
+
+    updateLocale(selectedLocale.value)
+
+    const options = computed(() => {
+      return [
+        { label: 'English', value: 'enUS' },
+        { label: 'Spanish', value: 'es'}
+      ]
     })
 
     return {
       goHome,
       goToLeagueLeaders,
       selectedLocale,
-      t
+      t,
+      options
     }
   }
 }

@@ -14,7 +14,7 @@ export default createStore({
       players: {},
       leagueLeaders: { american: [], national: [] },
       apiHost: 'https://statsapi.mlb.com/api/v1',
-      locale: localStorage.locale || 'enUS'
+      locale: {}
     }
   },
   getters: {

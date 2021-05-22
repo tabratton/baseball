@@ -23,18 +23,18 @@
             {{ player.person.fullName }}
           </router-link>
         </td>
-        <td>{{ player.jerseyNumber }}</td>
+        <td class="hidden md:table-cell">{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.batting.atBats }}</td>
         <td>{{ player.stats.batting.hits }}</td>
         <td>{{ player.stats.batting.runs }}</td>
         <td>{{ player.stats.batting.baseOnBalls }}</td>
         <td>{{ player.stats.batting.rbi }}</td>
-        <td>{{ player.stats.batting.singles }}</td>
-        <td>{{ player.stats.batting.doubles }}</td>
-        <td>{{ player.stats.batting.triples }}</td>
+        <td class="hidden md:table-cell">{{ player.stats.batting.singles }}</td>
+        <td class="hidden md:table-cell">{{ player.stats.batting.doubles }}</td>
+        <td class="hidden md:table-cell">{{ player.stats.batting.triples }}</td>
         <td>{{ player.stats.batting.homeRuns }}</td>
-        <td>{{ player.stats.batting.hitByPitch }}</td>
-        <td>{{ player.stats.batting.avg }}</td>
+        <td class="hidden md:table-cell">{{ player.stats.batting.hitByPitch }}</td>
+        <td class="hidden md:table-cell">{{ player.stats.batting.avg }}</td>
       </tr>
     </template>
   </SortableTable>
@@ -72,11 +72,11 @@ export default {
 
     const { sortField, sortDirection, update } = useSortableTable(batters, 'battingOrder', 'asc')
 
-    const valueGetter = (a, b, sortField) => {
+    const valueGetter = (a, b, sf) => {
       let valueA = null
       let valueB = null
 
-      switch (sortField) {
+      switch (sf) {
         case 'battingOrder':
           valueA = a.battingOrder
           valueB = b.battingOrder
@@ -151,18 +151,18 @@ export default {
         { label: '', field: 'battingOrder' },
         { label: 'POS', field: 'position.abbreviation' },
         { label: t('playerTable.name'), field: 'person.fullName' },
-        { label: '#', field: 'jerseyNumber' },
+        { label: '#', field: 'jerseyNumber', class: 'hidden md:table-cell' },
         { label: 'AB', field: 'stats.batting.atBats' },
         { label: 'H', field: 'stats.batting.hits' },
         { label: 'R', field: 'stats.batting.runs' },
         { label: 'BB', field: 'stats.batting.baseOnBalls' },
         { label: 'RBI', field: 'stats.batting.rbi' },
-        { label: '1B', field: 'stats.batting.singles' },
-        { label: '2B', field: 'stats.batting.doubles' },
-        { label: '3B', field: 'stats.batting.triples' },
+        { label: '1B', field: 'stats.batting.singles', class: 'hidden md:table-cell' },
+        { label: '2B', field: 'stats.batting.doubles', class: 'hidden md:table-cell' },
+        { label: '3B', field: 'stats.batting.triples', class: 'hidden md:table-cell' },
         { label: 'HR', field: 'stats.batting.homeRuns' },
-        { label: 'HBP', field: 'stats.batting.hitByPitch' },
-        { label: 'AVG', field: 'stats.batting.avg' }
+        { label: 'HBP', field: 'stats.batting.hitByPitch', class: 'hidden md:table-cell' },
+        { label: 'AVG', field: 'stats.batting.avg', class: 'hidden md:table-cell' }
       ]
     }
   }

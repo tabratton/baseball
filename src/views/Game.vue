@@ -1,12 +1,12 @@
 <template>
   <div class="game w-screen">
     <ScorebugList class="shadow-md flex flex-row overflow-y-hidden overflow-x-auto p-2"/>
-    <div class="overflow-auto p-4 h-content">
-      <div class="flex flex-col md:flex-row items-center justify-center">
+    <div class="overflow-y-auto p-4 w-full h-content">
+      <div class="flex flex-row flex-wrap items-center justify-center">
         <Scorebug v-if="scorebug && scorebug.inProgress" :game="scorebug" :disableClick="true"/>
         <Boxscore :gamePk="gamePk"/>
       </div>
-      <Players :gamePk="gamePk"/>
+      <Players class="w-full" :gamePk="gamePk"/>
     </div>
   </div>
 </template>
