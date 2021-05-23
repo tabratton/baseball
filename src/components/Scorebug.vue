@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{ 'cursor-pointer': !disableClick }"
-    class="scorebug flex m-2 rounded h-30"
+    class="scorebug flex m-2 rounded h-32"
   >
     <table
-      class="table-auto text-white rounded"
+      class="table-auto text-gray-100"
       @click="goToBoxscore()"
     >
       <caption class="sr-only">{{ t('scorebug.score') }}</caption>
@@ -16,28 +16,28 @@
       </thead>
       <tbody>
         <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
-          <td class="pr-4">{{ game.away.team }}</td>
-          <td class="pl-4 text-right">
+          <td class="pl-2 pr-2 sm:pr-4">{{ game.away.team }}</td>
+          <td class="pl-2 pr-2 sm:pl-4 text-right">
             {{ game.away.score }}
           </td>
         </tr>
 
         <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
-          <td class="pr-4">{{ game.home.team }}</td>
-          <td class="pl-4 text-right">
+          <td class="pl-2 pr-2 sm:pr-4">{{ game.home.team }}</td>
+          <td class="pl-2 pr-2  sm:pl-4 text-right">
             {{ game.home.score }}
           </td>
         </tr>
 
         <tr class="bg-gray-900">
-          <td class="pl-0 pr-4" v-if="game.displaySide">
+          <td class="pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
               <Chevron :isUp="game.isTop"/>
               <span>{{ game.inning }}</span>
             </span>
           </td>
           <td v-else>{{ game.inning }}</td>
-          <td class="text-right pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
+          <td class="text-right pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -73,7 +73,7 @@
     </div>
     <table
       v-if="playerInfoExpanded && game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
-      class="table-auto w-full text-white rounded"
+      class="table-auto w-full text-gray-100 rounded"
       @click="goToBoxscore()"
     >
       <caption class="sr-only">{{ t('scorebug.currentPlayers') }}</caption>
@@ -101,7 +101,7 @@
     </table>
     <div
       v-if="game.inProgress"
-      class="text-white bg-gray-900 pt-2 pr-1 pl-1"
+      class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1"
       @click="togglePlayerInfoExpanded"
     >
       <div class="cursor-pointer">

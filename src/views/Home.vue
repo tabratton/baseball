@@ -1,20 +1,46 @@
 <template>
-  <div class="home h-home overflow-auto w-screen flex flex-row items-start lg:items-center">
-    <ScorebugList class="shadow-md overflow-auto flex flex-row flex-wrap justify-center p-2 m-2 md:p-6 md:m-6"/>
+  <div class="home h-home overflow-auto w-screen flex flex-col items-start lg:items-center">
+    <div class="p-4 pb-0">
+      <date-picker v-model="date" color="red" :locale="locale" is-dark>
+        <template v-slot="{ inputValue, inputEvents }">
+          <input
+            id="date"
+            class="bg-gray-800 text-white w-full p-2 appearance-none border-none rounded-l focus:outline-none"
+            :value="inputValue"
+            v-on="inputEvents"
+          />
+        </template>
+      </date-picker>
+    </div>
+    <ScorebugList class="shadow-md overflow-auto flex flex-row flex-wrap justify-center p-2 md:p-4" :date="date"/>
   </div>
 </template>
 
 <script>
+import { DatePicker } from 'v-calendar';
+import { useStore } from 'vuex'
+import { computed, ref, watch } from 'vue'
+
 import ScorebugList from '@/components/ScorebugList.vue'
-import useScorebugData from '@/composables/useScorebugData'
 
 export default {
   name: 'Home',
   components: {
+    DatePicker,
     ScorebugList
   },
   setup() {
-    useScorebugData()
+    const store = useStore()
+    const date = ref(store.getters.getDate)
+
+    const locale = computed(() => store.getters.getLocale)
+
+    watch(date, () => store.commit('updateDate', date.value))
+
+    return {
+      date,
+      locale
+    }
   }
 }
 </script>

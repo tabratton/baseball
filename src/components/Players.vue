@@ -14,7 +14,7 @@
           <caption class="sr-only">{{ t('playerTable.awayBatters') }}</caption>
         </template>
       </BattersTable>
-      <div class="inline-block">
+      <div class="inline-block flex flex-col items-center">
         <PitchersTable
           v-if="game"
           :pitchers="awayPitchers"
@@ -44,7 +44,7 @@
           <caption class="sr-only">{{ t('playerTable.homeBatters') }}</caption>
         </template>
       </BattersTable>
-      <div class="inline-block">
+      <div class="inline-block flex flex-col items-center">
         <PitchersTable
           v-if="game"
           :pitchers="homePitchers"

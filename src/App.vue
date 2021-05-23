@@ -1,6 +1,6 @@
 <template>
   <div class="app-grid">
-    <div class="navbar flex flex-row items-center justify-between bg-red-800 shadow-lg text-white">
+    <div class="navbar flex flex-row items-center justify-between bg-red-800 shadow-lg text-gray-100">
       <svg
         class="ml-4 cursor-pointer"
         viewBox="189.848 157.915 17 17.119"
@@ -67,13 +67,13 @@ export default {
     const store = useStore()
     const router = useRouter()
     const { t, locale } = useI18n({ useScope: 'global' })
-    const selectedLocale = ref({ label: 'English', value: 'enUS' })
+    const selectedLocale = ref({ label: 'English', value: 'en-US' })
 
     const goHome = () => router.push('/')
     const goToLeagueLeaders = () => router.push('/league-leaders')
 
     const updateLocale = l => {
-      store.commit('updateLocale', l)
+      store.commit('updateLocale', l.value)
       locale.value = l.value
     }
 
@@ -83,7 +83,7 @@ export default {
 
     const options = computed(() => {
       return [
-        { label: 'English', value: 'enUS' },
+        { label: 'English', value: 'en-US' },
         { label: 'Spanish', value: 'es'}
       ]
     })

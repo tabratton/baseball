@@ -2,6 +2,7 @@ import en from './en'
 import es from './es'
 
 export default {
-  enUS: en,
+  en,
+  'en-US': en,
   es
 }

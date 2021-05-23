@@ -1,6 +1,6 @@
 <template>
   <div class="boxscore m-2" v-if="boxscore">
-    <table class="table-auto w-full text-white text-center">
+    <table class="table-auto w-full text-gray-100 text-center">
       <slot name="caption"></slot>
       <thead>
         <tr class="bg-gray-900">

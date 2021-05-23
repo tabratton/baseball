@@ -22,14 +22,14 @@
             {{ player.person.fullName }}
           </router-link>
         </td>
-        <td class="hidden md:table-cell">{{ player.jerseyNumber }}</td>
+        <td class="hidden lg:table-cell">{{ player.jerseyNumber }}</td>
         <td>{{ player.stats.pitching.inningsPitched }}</td>
         <td>{{ player.stats.pitching.hits }}</td>
         <td>{{ player.stats.pitching.earnedRuns }}</td>
         <td>{{ player.stats.pitching.strikeOuts }}</td>
         <td>{{ player.stats.pitching.baseOnBalls }}</td>
-        <td class="hidden md:table-cell">{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
-        <td class="hidden md:table-cell">{{ player.stats.pitching.era }}</td>
+        <td class="hidden lg:table-cell">{{ player.stats.pitching.balls }}/{{ player.stats.pitching.strikes }}</td>
+        <td class="hidden lg:table-cell">{{ player.stats.pitching.era }}</td>
       </tr>
     </template>
   </SortableTable>
@@ -125,14 +125,14 @@ export default {
       pitcherHeaders: [
         { label: '', field: 'index' },
         { label: t('playerTable.name'), field: 'person.fullName' },
-        { label: '#', field: 'jerseyNumber', class: 'hidden md:table-cell' },
+        { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
         { label: 'IP', field: 'stats.pitching.inningsPitched' },
         { label: 'H', field: 'stats.pitching.hits' },
         { label: 'ER', field: 'stats.pitching.earnedRuns' },
         { label: 'K', field: 'stats.pitching.strikeOuts' },
         { label: 'BB', field: 'stats.pitching.baseOnBalls' },
-        { label: 'B/S', field: 'stats.pitching.ballsAndStrikes', class: 'hidden md:table-cell' },
-        { label: 'ERA', field: 'stats.pitching.era', class: 'hidden md:table-cell' }
+        { label: 'B/S', field: 'stats.pitching.ballsAndStrikes', class: 'hidden lg:table-cell' },
+        { label: 'ERA', field: 'stats.pitching.era', class: 'hidden lg:table-cell' }
       ]
     }
   }

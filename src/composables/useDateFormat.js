@@ -4,7 +4,7 @@ import { enUS, es } from 'date-fns/locale'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 
-const locales = { enUS, es }
+const locales = { 'en-US': enUS, es }
 
 export default function useDateFormat() {
   const store = useStore()

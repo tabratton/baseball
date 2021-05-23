@@ -14,20 +14,31 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 import Scorebug from '@/components/Scorebug.vue'
+import useScorebugListData from '@/composables/useScorebugListData'
+import { format } from 'date-fns'
 
 export default {
   name: 'ScorebugList',
   components: {
     Scorebug
   },
-  setup() {
+  props: {
+    date: {
+      type: Date,
+      required: true
+    }
+  },
+  setup(props) {
     const store = useStore()
+    const { date } = toRefs(props)
 
-    const games = computed(() => store.getters.scorebugGames)
+    useScorebugListData(date)
+
+    const games = computed(() => store.getters.scorebugGames(format(date.value, 'yyyy-MM-dd')))
     const inProgress = computed(() => games.value.filter(game => game.inProgress).sort((a, b) => a.inning > b.inning ? 1 : (a.inning === b.inning ? 0 : -1)))
     const notInProgress = computed(() => games.value.filter(game => !game.inProgress))
 
