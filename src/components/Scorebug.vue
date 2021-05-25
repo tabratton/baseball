@@ -30,14 +30,14 @@
         </tr>
 
         <tr class="bg-gray-900">
-          <td class="pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
+          <td class="py-3 pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
               <Chevron :isUp="game.isTop"/>
               <span>{{ game.inning }}</span>
             </span>
           </td>
-          <td v-else>{{ game.inning }}</td>
-          <td class="text-right pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
+          <td class="py-3" v-else>{{ game.inning }}</td>
+          <td class="text-right py-3 pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -94,17 +94,13 @@
           <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : t('scorebug.batterStats', { hits: game.home.currentPlayer.stats.batting.hits, atBats: game.home.currentPlayer.stats.batting.atBats }) }}</td>
         </tr>
         <tr class="bg-gray-900">
-          <td class="p-5"></td>
-          <td class="p-5"></td>
+          <td class="py-6"></td>
+          <td class="py-6"></td>
         </tr>
       </tbody>
     </table>
-    <div
-      v-if="game.inProgress"
-      class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1"
-      @click="togglePlayerInfoExpanded"
-    >
-      <div class="cursor-pointer">
+    <div v-if="game.inProgress" class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1">
+      <div class="cursor-pointer" @click="togglePlayerInfoExpanded">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             v-if="!playerInfoExpanded"
