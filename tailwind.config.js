@@ -60,14 +60,14 @@ module.exports = {
         'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       },
       height: {
-        '30': '7.5rem',
-        '34': '8.5rem',
-        '38': '9.5rem',
-        '42': '10.5rem',
-        '46': '11.5rem',
+        '33': '8.25rem',
         'content': 'calc(100vh - 12.5rem)',
         'home': 'calc(100vh - 2rem)',
         'leaders': 'calc(100vh - 6.5rem)'
+      },
+      padding: {
+        '2.5': '0.625rem',
+        '5.5': '1.375rem'
       },
       minHeight: {
         'leader-select': '42px',

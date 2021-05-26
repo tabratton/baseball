@@ -36,11 +36,12 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import SortableTable from '@/components/SortableTable'
 import useSortableTable from '@/composables/useSortableTable'
+import useTranslationsInSetup from '@/composables/useTranslationsInSetup'
 
 export default {
   name: 'PitchersTable',
@@ -117,12 +118,9 @@ export default {
       return { valueA, valueB }
     }
 
-    return {
-      sortField,
-      sortDirection,
-      valueGetter,
-      update,
-      pitcherHeaders: [
+    const pitcherHeaders = ref([])
+    const setPitcherHeaders = () => {
+      pitcherHeaders.value = [
         { label: '', field: 'index' },
         { label: t('playerTable.name'), field: 'person.fullName' },
         { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
@@ -134,6 +132,17 @@ export default {
         { label: 'B/S', field: 'stats.pitching.ballsAndStrikes', class: 'hidden lg:table-cell' },
         { label: 'ERA', field: 'stats.pitching.era', class: 'hidden lg:table-cell' }
       ]
+    }
+
+    const { watchFunc } = useTranslationsInSetup()
+    watchFunc(setPitcherHeaders)
+
+    return {
+      sortField,
+      sortDirection,
+      valueGetter,
+      update,
+      pitcherHeaders
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="home h-home overflow-auto w-screen flex flex-col items-start lg:items-center">
-    <div class="p-4 pb-0">
+    <div class="m-4 mb-0">
       <date-picker v-model="date" color="red" :locale="locale" is-dark>
         <template v-slot="{ inputValue, inputEvents }">
           <input
@@ -12,7 +12,7 @@
         </template>
       </date-picker>
     </div>
-    <ScorebugList class="shadow-md overflow-auto flex flex-row flex-wrap justify-center p-2 md:p-4" :date="date"/>
+    <ScorebugList class="shadow-md overflow-auto flex flex-row flex-wrap justify-center p-2 md:p-4 m-8 mt-4" :date="date"/>
   </div>
 </template>
 

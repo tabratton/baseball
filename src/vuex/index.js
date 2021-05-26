@@ -231,7 +231,7 @@ export default createStore({
       obj.home.errors = sumField(obj.home.innings, 'errors')
       obj.away.errors = sumField(obj.away.innings, 'errors')
 
-      const isOver = game.schedule.status.abstractGameCode
+      const isOver = game.schedule.status.abstractGameCode === 'F'
 
       obj.isPregame = game.schedule.status.abstractGameCode === 'P'
       obj.inProgress = game.inProgress

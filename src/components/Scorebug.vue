@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{ 'cursor-pointer': !disableClick }"
-    class="scorebug flex m-2 rounded h-32"
+    class="scorebug flex m-2 rounded h-33"
   >
     <table
       class="table-auto text-gray-100"
@@ -16,28 +16,28 @@
       </thead>
       <tbody>
         <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
-          <td class="pl-2 pr-2 sm:pr-4">{{ game.away.team }}</td>
-          <td class="pl-2 pr-2 sm:pl-4 text-right">
+          <td class="py-2.5 pl-2 pr-2 sm:pr-4">{{ game.away.team }}</td>
+          <td class="py-2.5 pl-2 pr-2 sm:pl-4 text-right">
             {{ game.away.score }}
           </td>
         </tr>
 
         <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
-          <td class="pl-2 pr-2 sm:pr-4">{{ game.home.team }}</td>
-          <td class="pl-2 pr-2  sm:pl-4 text-right">
+          <td class="py-2.5 pl-2 pr-2 sm:pr-4">{{ game.home.team }}</td>
+          <td class="py-2.5 pl-2 pr-2  sm:pl-4 text-right">
             {{ game.home.score }}
           </td>
         </tr>
 
         <tr class="bg-gray-900">
-          <td class="py-3 pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
+          <td class="py-2.5 pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
             <span class="flex items-center justify-start w-full">
               <Chevron :isUp="game.isTop"/>
               <span>{{ game.inning }}</span>
             </span>
           </td>
-          <td class="py-3" v-else>{{ game.inning }}</td>
-          <td class="text-right py-3 pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
+          <td class="py-2.5" v-else>{{ game.inning }}</td>
+          <td class="text-right py-2.5 pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -85,17 +85,16 @@
       </thead>
       <tbody>
         <tr :class="`${game.away.bgClass} ${game.away.textClass}`">
-          <td class="text-right">{{ game.isTop ? `${game.away.order} ${game.away.currentPlayer.person.fullName}` : game.away.currentPlayer.person.fullName }}</td>
-          <td class="text-right">{{ game.isTop ? t('scorebug.batterStats', { hits: game.away.currentPlayer.stats.batting.hits, atBats: game.away.currentPlayer.stats.batting.atBats }) : `${game.away.currentPlayer.stats.pitching.pitchesThrown}P` }}</td>
+          <td class="py-2.5 text-right">{{ game.isTop ? `${game.away.order} ${game.away.currentPlayer.person.fullName}` : game.away.currentPlayer.person.fullName }}</td>
+          <td class="py-2.5 text-right">{{ game.isTop ? t('scorebug.batterStats', { hits: game.away.currentPlayer.stats.batting.hits, atBats: game.away.currentPlayer.stats.batting.atBats }) : `${game.away.currentPlayer.stats.pitching.pitchesThrown}P` }}</td>
         </tr>
-
         <tr :class="`${game.home.bgClass} ${game.home.textClass}`">
-          <td class="text-right">{{ game.isTop ? game.home.currentPlayer.person.fullName : `${game.home.order} ${game.home.currentPlayer.person.fullName}` }}</td>
-          <td class="text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : t('scorebug.batterStats', { hits: game.home.currentPlayer.stats.batting.hits, atBats: game.home.currentPlayer.stats.batting.atBats }) }}</td>
+          <td class="py-2.5 text-right">{{ game.isTop ? game.home.currentPlayer.person.fullName : `${game.home.order} ${game.home.currentPlayer.person.fullName}` }}</td>
+          <td class="py-2.5 text-right">{{ game.isTop ? `${game.home.currentPlayer.stats.pitching.pitchesThrown}P` : t('scorebug.batterStats', { hits: game.home.currentPlayer.stats.batting.hits, atBats: game.home.currentPlayer.stats.batting.atBats }) }}</td>
         </tr>
         <tr class="bg-gray-900">
-          <td class="py-6"></td>
-          <td class="py-6"></td>
+          <td class="py-5.5"></td>
+          <td class="py-5.5"></td>
         </tr>
       </tbody>
     </table>

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 th, td {
-    @apply p-1 sm:p-2;
+    @apply p-2;
 }
 
 .players-table {
