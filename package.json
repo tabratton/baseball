@@ -15,7 +15,7 @@
     "@vueform/multiselect": "^1.5.0",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
-    "core-js": "^3.12.1",
+    "core-js": "^3.13.0",
     "date-fns": "^2.21.3",
     "fuse.js": "^6.4.6",
     "mlb-stats-api": "^1.4.0",
