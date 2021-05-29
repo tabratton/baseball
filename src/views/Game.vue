@@ -36,7 +36,7 @@ export default {
 
     const gamePk = computed(() => route.params.gamepk)
 
-    const fetchData = () => store.dispatch('getGame', gamePk.value)
+    const fetchData = () => store.dispatch('fetchGame', gamePk.value)
     fetchData()
 
     watch(gamePk, () => fetchData())

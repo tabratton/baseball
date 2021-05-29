@@ -2,10 +2,9 @@
   <slot name="header"></slot>
   <SortableTable
     :items="batters"
-    :headers="batterHeaders"
+    :headers="headers"
     :sortField="sortField"
     :sortDirection="sortDirection"
-    :valueGetter="valueGetter"
     :bgClass="bgClass"
     :textClass="textClass"
     @update-sort="update"
@@ -41,12 +40,11 @@
 </template>
 
 <script>
-import { ref, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import SortableTable from '@/components/SortableTable'
 import useSortableTable from '@/composables/useSortableTable'
-import useTranslationsInSetup from '@/composables/useTranslationsInSetup'
 
 export default {
   name: 'BattersTable',
@@ -73,106 +71,29 @@ export default {
 
     const { sortField, sortDirection, update } = useSortableTable(batters, 'battingOrder', 'asc')
 
-    const valueGetter = (a, b, sf) => {
-      let valueA = null
-      let valueB = null
-
-      switch (sf) {
-        case 'battingOrder':
-          valueA = a.battingOrder
-          valueB = b.battingOrder
-          break
-        case 'position.abbreviation':
-          valueA = a.position.abbreviation
-          valueB = b.position.abbreviation
-          break
-        case 'person.fullName':
-          valueA = a.person.fullName
-          valueB = b.person.fullName
-          break
-        case 'jerseyNumber':
-          valueA = Number(a.jerseyNumber)
-          valueB = Number(b.jerseyNumber)
-          break
-        case 'stats.batting.atBats':
-          valueA = Number(a.stats.batting.atBats)
-          valueB = Number(b.stats.batting.atBats)
-          break
-        case 'stats.batting.hits':
-          valueA = Number(a.stats.batting.hits)
-          valueB = Number(b.stats.batting.hits)
-          break
-        case 'stats.batting.runs':
-          valueA = Number(a.stats.batting.runs)
-          valueB = Number(b.stats.batting.runs)
-          break
-        case 'stats.batting.baseOnBalls':
-          valueA = Number(a.stats.batting.baseOnBalls)
-          valueB = Number(b.stats.batting.baseOnBalls)
-          break
-        case 'stats.batting.rbi':
-          valueA = Number(a.stats.batting.rbi)
-          valueB = Number(b.stats.batting.rbi)
-          break
-        case 'stats.batting.singles':
-          valueA = Number(a.stats.batting.singles)
-          valueB = Number(b.stats.batting.singles)
-          break
-        case 'stats.batting.doubles':
-          valueA = Number(a.stats.batting.doubles)
-          valueB = Number(b.stats.batting.doubles)
-          break
-        case 'stats.batting.triples':
-          valueA = Number(a.stats.batting.triples)
-          valueB = Number(b.stats.batting.triples)
-          break
-        case 'stats.batting.homeRuns':
-          valueA = Number(a.stats.batting.homeRuns)
-          valueB = Number(b.stats.batting.homeRuns)
-          break
-        case 'stats.batting.hitByPitch':
-          valueA = Number(a.stats.batting.hitByPitch)
-          valueB = Number(b.stats.batting.hitByPitch)
-          break
-        case 'stats.batting.avg':
-          valueA = Number(a.stats.batting.avg)
-          valueB = Number(b.stats.batting.avg)
-          break
-      }
-
-      return { valueA, valueB }
-    }
-
-    const batterHeaders = ref([])
-    const setBatterHeaders = () => {
-      batterHeaders.value = [
-        { label: '', field: 'battingOrder' },
-        { label: 'POS', field: 'position.abbreviation' },
-        { label: t('playerTable.name'), field: 'person.fullName' },
-        { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
-        { label: 'AB', field: 'stats.batting.atBats' },
-        { label: 'H', field: 'stats.batting.hits' },
-        { label: 'R', field: 'stats.batting.runs' },
-        { label: 'BB', field: 'stats.batting.baseOnBalls' },
-        { label: 'RBI', field: 'stats.batting.rbi' },
-        { label: '1B', field: 'stats.batting.singles', class: 'hidden lg:table-cell' },
-        { label: '2B', field: 'stats.batting.doubles', class: 'hidden lg:table-cell' },
-        { label: '3B', field: 'stats.batting.triples', class: 'hidden lg:table-cell' },
-        { label: 'HR', field: 'stats.batting.homeRuns' },
-        { label: 'HBP', field: 'stats.batting.hitByPitch', class: 'hidden lg:table-cell' },
-        { label: 'AVG', field: 'stats.batting.avg', class: 'hidden lg:table-cell' }
-      ]
-    }
-
-    const { watchFunc } = useTranslationsInSetup()
-    watchFunc(setBatterHeaders)
+    const headers = computed(() => [
+      { label: '', field: 'battingOrder' },
+      { label: 'POS', field: 'position.abbreviation' },
+      { label: t('playerTable.name'), field: 'person.fullName' },
+      { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
+      { label: 'AB', field: 'stats.batting.atBats' },
+      { label: 'H', field: 'stats.batting.hits' },
+      { label: 'R', field: 'stats.batting.runs' },
+      { label: 'BB', field: 'stats.batting.baseOnBalls' },
+      { label: 'RBI', field: 'stats.batting.rbi' },
+      { label: '1B', field: 'stats.batting.singles', class: 'hidden lg:table-cell' },
+      { label: '2B', field: 'stats.batting.doubles', class: 'hidden lg:table-cell' },
+      { label: '3B', field: 'stats.batting.triples', class: 'hidden lg:table-cell' },
+      { label: 'HR', field: 'stats.batting.homeRuns' },
+      { label: 'HBP', field: 'stats.batting.hitByPitch', class: 'hidden lg:table-cell' },
+      { label: 'AVG', field: 'stats.batting.avg', class: 'hidden lg:table-cell' }
+    ])
 
     return {
       sortField,
       sortDirection,
-      valueGetter,
       update,
-      batterHeaders
+      headers
     }
   }
 }

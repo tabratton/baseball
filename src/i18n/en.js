@@ -1,7 +1,17 @@
 export default {
+  locales: {
+    'en-US': 'English',
+    'es': 'Spanish',
+  },
   navbar: {
     search: 'search...',
-    leagueLeaders: 'League Leaders'
+    leagueLeaders: 'League Leaders',
+    standings: 'Standings'
+  },
+  status: {
+    L: 'Live',
+    F: 'Final',
+    P: 'Preview'
   },
   scorebug: {
     score: 'Score',
@@ -33,6 +43,8 @@ export default {
     pitching: 'Pitching',
     catching: 'Catching',
     fielding: 'Fielding',
+    national: 'National League Leaders',
+    american: 'American League Leaders',
     leaderTypes: {
       assists: 'Assists',
       shutouts: 'Shutouts',
@@ -100,6 +112,98 @@ export default {
       walksPer9Inn: 'BB/9',
       winPercentage: 'W %',
       battingAverage: 'Batting Average'
+    }
+  },
+  player: {
+    playerInfo: {
+      nickname: 'Nickname - {nickname}',
+      bats: 'Bats: {bats}',
+      throws: 'Throws: {throws}',
+      height: 'Height: {height}',
+      weight: 'Weight: {weight}lbs.',
+      age: 'Age: {age}',
+      birthday: 'Birthday: {birthday}',
+      birthplace: 'Birthplace: {birthplace}',
+      drafted: 'Drafted: {drafted}',
+      debut: 'First MLB Game: {debut}'
+    },
+    stats: {
+      gamesPlayed: 'Games Played',
+      plateAppearances: 'PA',
+      atBats: 'AB',
+      avg: 'AVG',
+      hits: 'Hits',
+      doubles: 'Doubles',
+      triples: 'Triples',
+      homeRuns: 'Home Runs',
+      runs: 'Runs',
+      rbi: 'RBI',
+      baseOnBalls: 'BB',
+      intentionalWalks: 'IBB',
+      hitByPitch: 'HBP',
+      obp: 'OBP',
+      slg: 'SLG',
+      ops: 'OPS',
+      groundOuts: 'Ground Outs',
+      airOuts: 'Air Outs',
+      strikeOuts: 'Strikeouts',
+      groundIntoDoublePlay: 'GIDP',
+      totalBases: 'Total Bases',
+      leftOnBase: 'Left on Base',
+      caughtStealing: 'Caught Stealing',
+      stolenBases: 'Stolen Bases',
+      stolenBasePercentage: 'Stolen Base %',
+      sacBunts: 'Sac Bunts',
+      sacFlies: 'Sac Flies',
+      numberOfPitches: '# of Pitches',
+      babip: 'BABIP',
+      groundOutsToAirouts: 'Ground Outs/Air Outs',
+      atBatsPerHomeRun: 'AB/HR',
+      balks: 'Balks',
+      battersFaced: 'Batters Faced',
+      completeGames: 'Complete Games',
+      earnedRuns: 'Earned Runs',
+      era: 'ERA',
+      gamesFinished: 'Games Finished',
+      gamesPitched: 'Games Pitched',
+      gamesStarted: 'Games Started',
+      hitBatsmen: 'Hit Batsmen',
+      hitsPer9Inn: 'Hits/9',
+      holds: 'Holds',
+      homeRunsPer9: 'Home Runs/9',
+      inheritedRunners: 'Inherited Runners',
+      inheritedRunnersScored: 'Inherited Runners Scored',
+      inningsPitched: 'Innings Pitched',
+      loses: 'Loses',
+      pickoffs: 'Pickoffs',
+      pitchesPerInning: 'Pitches/Inning',
+      runsScoredPer9: 'Runs Scored/9',
+      saveOpportunities: 'Save Opportunities',
+      saves: 'Saves',
+      shutouts: 'Shutouts',
+      strikePercentage: 'Strike %',
+      strikeoutWalkRatio: 'Strikeout/BB',
+      strikeoutsPer9Inn: 'Strikeouts/9',
+      strikes: 'Strikes',
+      walksPer9Inn: 'BB/9',
+      whip: 'WHIP',
+      wildPitches: 'Wild Pitches',
+      winPercentage: 'Win Percentage',
+      wins: 'Wins'
+    }
+  },
+  standings: {
+    american: {
+      title: 'American League',
+      ALW: 'West',
+      ALC: 'Central',
+      ALE: 'East',
+    },
+    national: {
+      title: 'National League',
+      NLW: 'West',
+      NLC: 'Central',
+      NLE: 'East'
     }
   }
 }

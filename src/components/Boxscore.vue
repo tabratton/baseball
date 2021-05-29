@@ -4,7 +4,7 @@
       <slot name="caption"></slot>
       <thead>
         <tr class="bg-gray-900">
-          <th scope="col">{{ boxscore.status }}</th>
+          <th scope="col">{{ t(`status.${boxscore.statusCode}`) }}</th>
           <th scope="col" v-for="header in headers" :key="header">
             {{ header }}
           </th>

@@ -9,7 +9,7 @@ const locales = { 'en-US': enUS, es }
 export default function useDateFormat() {
   const store = useStore()
 
-  const dateFormat = computed(() => (date, formatStr = 'PP') => {
+  const dateFormat = computed(() => (date, formatStr = 'PPP') => {
     return format(date, formatStr, { locale: locales[store.getters.getLocale] })
   })
 

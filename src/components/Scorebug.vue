@@ -30,13 +30,13 @@
         </tr>
 
         <tr class="bg-gray-900">
-          <td class="py-2.5 pl-0 pr-2 sm:pr-4" v-if="game.displaySide">
+          <td class="py-2.5 pl-0 pr-2 sm:pr-4" v-if="game.inProgress">
             <span class="flex items-center justify-start w-full">
               <Chevron :isUp="game.isTop"/>
               <span>{{ game.inning }}</span>
             </span>
           </td>
-          <td class="py-2.5" v-else>{{ game.inning }}</td>
+          <td class="py-2.5" v-else>{{ t(`status.${game.statusCode}`) }}</td>
           <td class="text-right py-2.5 pl-2 sm:pl-4">{{ game.isPregame ? dateFormat(game.gameTime, 'hh:mm a') : game.batterCount }}</td>
         </tr>
       </tbody>

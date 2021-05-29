@@ -46,10 +46,6 @@ export default {
       type: String,
       required: true
     },
-    valueGetter: {
-      type: Function,
-      required: true
-    },
     bgClass: {
       type: String,
       required: true
@@ -63,7 +59,7 @@ export default {
     Chevron
   },
   setup(props, { emit }) {
-    const { items, sortDirection, sortField, valueGetter } = toRefs(props)
+    const { items, sortDirection, sortField } = toRefs(props)
 
     const sortedItems = computed(() => [...items.value].sort((a, b) => {
       let modifier = 1;
@@ -71,7 +67,10 @@ export default {
         modifier = -1;
       }
 
-      const { valueA, valueB } = valueGetter.value(a, b, sortField.value)
+      const keyList = sortField.value.split('.')
+
+      const valueA = keyList.reduce((obj, key) => obj[key], a)
+      const valueB = keyList.reduce((obj, key) => obj[key], b)
 
       if (valueA < valueB){
         return -1 * modifier;

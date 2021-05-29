@@ -14,8 +14,8 @@ import messages from './i18n'
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'enUS', // set locale
-  fallbackLocale: 'enUS', // set fallback locale
+  locale: 'en-US', // set locale
+  fallbackLocale: 'en-US', // set fallback locale
   messages, // set locale messages
   // If you need to specify other options, you can set other options
   // ...

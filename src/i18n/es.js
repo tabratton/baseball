@@ -1,7 +1,13 @@
 export default {
   navbar: {
     search: 'buscar...',
-    leagueLeaders: 'Líderes de la liga'
+    leagueLeaders: 'Líderes de la liga',
+    standings: 'Posiciones'
+  },
+  status: {
+    L: 'Vivo',
+    F: 'Final',
+    P: 'Preestreno'
   },
   scorebug: {
     score: 'Puntaje',
@@ -33,6 +39,8 @@ export default {
     pitching: 'Cabeceo',
     catching: 'Atrapando',
     fielding: 'Fildeo',
+    national: 'Líderes de la Liga Nacional',
+    american: 'Líderes de la Liga Americana',
     leaderTypes: {
       assists: 'Asiste',
       shutouts: 'Shutouts',
@@ -100,6 +108,98 @@ export default {
       walksPer9Inn: 'BB/9',
       winPercentage: 'W %',
       battingAverage: 'Promedio de bateo'
+    }
+  },
+  player: {
+    playerInfo: {
+      nickname: 'Apodo: {nickname}',
+      bats: 'Murciélagos: {bats}',
+      throws: 'Lanzamientos: {throws}',
+      height: 'Altura: {height}',
+      weight: 'Peso: {weight} libras.',
+      age: 'Edad: {age}',
+      birthday: 'Cumpleaños: {birthday}',
+      birthplace: 'Lugar de nacimiento: {birthplace}',
+      drafted: 'Redactado: {drafted}',
+      debut: 'Primer partido de la MLB: {debut}'
+    },
+    stats: {
+      gamesPlayed: 'Juegos jugados',
+      plateAppearances: 'PA',
+      atBats: 'AB',
+      avg: 'AVG',
+      hits: 'Hits',
+      doubles: 'Dobles',
+      triples: 'Triples',
+      homeRuns: 'Jonrones',
+      runs: 'Carreras',
+      rbi: 'RBI',
+      baseOnBalls: 'BB',
+      intentionalWalks: 'IBB',
+      hitByPitch: 'HBP',
+      obp: 'OBP',
+      slg: 'SLG',
+      ops: 'OPS',
+      groundOuts: 'Salidas a tierra',
+      airOuts: 'Salidas de aire',
+      strikeOuts: 'Ponches',
+      groundIntoDoublePlay: 'GIDP',
+      totalBases: 'Bases totales',
+      leftOnBase: 'Izquierda en la base',
+      caughtStealing: 'Atrapado robando',
+      stolenBases: 'Bases robadas',
+      stolenBasePercentage: '% De base robada',
+      sacBunts: 'Toques de sacrificio',
+      sacFlies: 'Sacrificio de moscas',
+      numberOfPitches: '# de Parcelas',
+      babip: 'BABIP',
+      groundOutsToAirouts: 'Salidas de tierra / salidas de aire',
+      atBatsPerHomeRun: 'AB/HR',
+      balks: 'Balks',
+      battersFaced: 'Bateadores enfrentados',
+      completeGames: 'Juegos completos',
+      earnedRuns: 'Carreras ganadas',
+      era: 'ERA',
+      gamesFinished: 'Juegos terminados',
+      gamesPitched: 'Juegos lanzadas',
+      gamesStarted: 'Juegos iniciados',
+      hitBatsmen: 'Golpear bateadores',
+      hitsPer9Inn: 'Visitas / 9',
+      holds: 'Sostiene',
+      homeRunsPer9: 'Jonrones / 9',
+      inheritedRunners: 'Corredores heredados',
+      inheritedRunnersScored: 'Corredores heredados puntuados',
+      inningsPitched: 'Entradas lanzadas',
+      loses: 'Pierde',
+      pickoffs: 'Pickoffs',
+      pitchesPerInning: 'Lanzamientos / Entrada',
+      runsScoredPer9: 'Carreras anotadas / 9',
+      saveOpportunities: 'Ahorre oportunidades',
+      saves: 'Ahorra',
+      shutouts: 'Shutouts',
+      strikePercentage: 'Huelga %',
+      strikeoutWalkRatio: 'Ponches / BB',
+      strikeoutsPer9Inn: 'Ponches / 9',
+      strikes: 'Huelgas',
+      walksPer9Inn: 'BB/9',
+      whip: 'WHIP',
+      wildPitches: 'Parcelas salvajes',
+      winPercentage: 'Porcentaje de ganancia',
+      wins: 'Gana'
+    }
+  },
+  standings: {
+    american: {
+      title: 'Liga Americana',
+      ALW: 'Oeste',
+      ALC: 'Central',
+      ALE: 'Este',
+    },
+    national: {
+      title: 'Liga Nacional',
+      NLW: 'Oeste',
+      NLC: 'Central',
+      NLE: 'Este'
     }
   }
 }

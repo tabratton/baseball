@@ -8,7 +8,6 @@ import teamMap from '@/util/teamMap'
 
 const createScorebug = gameData => {
   if (!gameData) return null
-  const isOver = gameData.schedule.status.abstractGameCode === 'F'
   const isPregame = gameData.schedule.status.abstractGameCode === 'P'
 
   const obj = {
@@ -44,13 +43,7 @@ const createScorebug = gameData => {
     obj.home.order = obj.home.currentPlayer ? `${Math.floor(Number(obj.home.currentPlayer.battingOrder) / 100)}.` : ''
   }
 
-  if (isOver || isPregame) {
-    obj.inning = gameData.schedule.status.abstractGameState
-    obj.displaySide = false
-    obj.batterCount = null
-    obj.outs = [false, false]
-    obj.runners = [{ num: 1, runner: false }, { num: 2, runner: false }, { num: 3, runner: false }]
-  } else {
+  if (obj.inProgress) {
     obj.inning = gameData.lineScore.currentInning
     obj.displaySide = true
     obj.batterCount = `${gameData.lineScore.balls}-${gameData.lineScore.strikes}`
@@ -59,6 +52,12 @@ const createScorebug = gameData => {
       num: 2,
       runner: !!gameData.lineScore.offense.second
     }, { num: 3, runner: !!gameData.lineScore.offense.third }]
+  } else {
+    obj.statusCode = gameData.schedule.status.abstractGameCode
+    obj.displaySide = false
+    obj.batterCount = null
+    obj.outs = [false, false]
+    obj.runners = [{ num: 1, runner: false }, { num: 2, runner: false }, { num: 3, runner: false }]
   }
 
   return obj
@@ -125,8 +124,9 @@ export default createStore({
       games: [],
       players: {},
       leagueLeaders: { american: [], national: [] },
+      standings: { american: [], national: [] },
       apiHost: 'https://statsapi.mlb.com/api/v1',
-      locale: {},
+      locale: localStorage.getItem('locale'),
       date: new Date()
     }
   },
@@ -231,12 +231,12 @@ export default createStore({
       obj.home.errors = sumField(obj.home.innings, 'errors')
       obj.away.errors = sumField(obj.away.innings, 'errors')
 
-      const isOver = game.schedule.status.abstractGameCode === 'F'
-
       obj.isPregame = game.schedule.status.abstractGameCode === 'P'
       obj.inProgress = game.inProgress
       obj.status = game.schedule.status.abstractGameState
+      obj.statusCode = game.schedule.status.abstractGameCode
 
+      const isOver = game.schedule.status.abstractGameCode === 'F'
       if (obj.home.runs > obj.away.runs && !obj.home.innings[game.schedule.scheduledInnings - 1].runs && isOver) {
         obj.home.innings[game.schedule.scheduledInnings - 1].runs = 'x'
       }
@@ -247,7 +247,8 @@ export default createStore({
       return obj
     },
     getLeagueLeaders: state => state.leagueLeaders,
-    getPlayer: state => playerId => state.players[playerId] || {}
+    getPlayer: state => playerId => state.players[playerId] || {},
+    getStandings: state => state.standings
   },
   mutations: {
     updateGames(state, newGames) {
@@ -268,7 +269,7 @@ export default createStore({
       state.leagueLeaders.national = newLeaders.national
     },
     updateLocale(state, newLocale) {
-      localStorage.locale = newLocale
+      localStorage.setItem('locale', newLocale)
       state.locale = newLocale
     },
     savePlayer(state, player) {
@@ -276,20 +277,23 @@ export default createStore({
     },
     updateDate(state, date) {
       state.date = date
+    },
+    updateStandings(state, standings) {
+      state.standings = standings
     }
   },
   actions: {
-    async updateGamesForDay({ commit, state }, date) {
+    async fetchGamesForDay({ commit, state }, date) {
       const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1, date } }).then(({ data: { dates: [{ games }] } }) => games)
       const gameData = await all(scheduleData.map(d => getGame(d, state.apiHost)))
       commit('updateGames', gameData)
     },
-    async getGame({ commit, state }, gamePk) {
+    async fetchGame({ commit, state }, gamePk) {
       const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1, gamePk } }).then(({ data: { dates: [{ games }] } }) => games)
       const game = await getGame(scheduleData[0], state.apiHost)
       commit('updateGame', game)
     },
-    async updateLeagueLeaders({ commit, state }, { statGroup, type }) {
+    async fetchLeagueLeaders({ commit, state }, { statGroup, type }) {
       if (!statGroup && !type) return commit('updateLeagueLeaders', { american: [], national: [] })
 
       let url = `${state.apiHost}/stats/leaders?sportId=1&statGroup=${statGroup}&statType=season&leaderCategories=${type}&limit=10`
@@ -308,12 +312,43 @@ export default createStore({
       })
         .then(leagueLeaders => commit('updateLeagueLeaders', leagueLeaders))
     },
-    async getPlayer({ commit, state }, playerID) {
+    async fetchPlayer({ commit, state }, playerID) {
       const player = await axios
         .get(`${state.apiHost}/people/${playerID}?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career],currentTeam)`)
         .then(({ data: { people: [person] } }) => person)
 
       commit('savePlayer', player)
+    },
+    async fetchStandings({ commit, state }) {
+      const fetchDivisions = records => {
+        return all(
+          records.map(r => {
+            r.division = axios(`${state.apiHost}/divisions/${r.division.id}`).then(({ data: { divisions: [division] } }) => division)
+            return hash(r)
+          })
+        )
+      }
+
+      const americanStandings = await axios
+        .get(`${state.apiHost}/standings?leagueId=103`)
+        .then(({ data: { records }}) => fetchDivisions(records))
+
+      const nationalStandings = await axios
+        .get(`${state.apiHost}/standings?leagueId=104`)
+        .then(({ data: { records }}) => fetchDivisions(records))
+
+      commit('updateStandings', {
+        american: [
+          americanStandings.find(s => s.division.id === 200),
+          americanStandings.find(s => s.division.id === 202),
+          americanStandings.find(s => s.division.id === 201)
+        ],
+        national: [
+          nationalStandings.find(s => s.division.id === 203),
+          nationalStandings.find(s => s.division.id === 205),
+          nationalStandings.find(s => s.division.id === 204)
+        ]
+      })
     }
   }
 })

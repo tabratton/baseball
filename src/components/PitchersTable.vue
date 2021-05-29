@@ -2,10 +2,9 @@
   <slot name="header"></slot>
   <SortableTable
     :items="pitchers"
-    :headers="pitcherHeaders"
+    :headers="headers"
     :sortField="sortField"
     :sortDirection="sortDirection"
-    :valueGetter="valueGetter"
     :bgClass="bgClass"
     :textClass="textClass"
     @update-sort="update"
@@ -36,12 +35,11 @@
 </template>
 
 <script>
-import { ref, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import SortableTable from '@/components/SortableTable'
 import useSortableTable from '@/composables/useSortableTable'
-import useTranslationsInSetup from '@/composables/useTranslationsInSetup'
 
 export default {
   name: 'PitchersTable',
@@ -68,81 +66,24 @@ export default {
 
     const { sortField, sortDirection, update } = useSortableTable(pitchers, 'index', 'asc')
 
-    const valueGetter = (a, b, sf) => {
-      let valueA = null
-      let valueB = null
-
-      switch (sf) {
-        case 'index':
-          valueA = a.index
-          valueB = b.index
-          break
-        case 'person.fullName':
-          valueA = a.person.fullName
-          valueB = b.person.fullName
-          break
-        case 'jerseyNumber':
-          valueA = a.jerseyNumber
-          valueB = b.jerseyNumber
-          break
-        case 'stats.pitching.inningsPitched':
-          valueA = a.stats.pitching.inningsPitched
-          valueB = b.stats.pitching.inningsPitched
-          break
-        case 'stats.pitching.hits':
-          valueA = Number(a.stats.pitching.hits)
-          valueB = Number(b.stats.pitching.hits)
-          break
-        case 'stats.pitching.earnedRuns':
-          valueA = Number(a.stats.pitching.earnedRuns)
-          valueB = Number(b.stats.pitching.earnedRuns)
-          break
-        case 'stats.pitching.strikeOuts':
-          valueA = Number(a.stats.pitching.strikeOuts)
-          valueB = Number(b.stats.pitching.strikeOuts)
-          break
-        case 'stats.pitching.baseOnBalls':
-          valueA = Number(a.stats.pitching.baseOnBalls)
-          valueB = Number(b.stats.pitching.baseOnBalls)
-          break
-        case 'stats.pitching.ballsAndStrikes':
-          valueA = Number(a.stats.pitching.ballsAndStrikes)
-          valueB = Number(b.stats.pitching.ballsAndStrikes)
-          break
-        case 'stats.pitching.era':
-          valueA = Number(a.stats.pitching.era)
-          valueB = Number(b.stats.pitching.era)
-          break
-      }
-
-      return { valueA, valueB }
-    }
-
-    const pitcherHeaders = ref([])
-    const setPitcherHeaders = () => {
-      pitcherHeaders.value = [
-        { label: '', field: 'index' },
-        { label: t('playerTable.name'), field: 'person.fullName' },
-        { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
-        { label: 'IP', field: 'stats.pitching.inningsPitched' },
-        { label: 'H', field: 'stats.pitching.hits' },
-        { label: 'ER', field: 'stats.pitching.earnedRuns' },
-        { label: 'K', field: 'stats.pitching.strikeOuts' },
-        { label: 'BB', field: 'stats.pitching.baseOnBalls' },
-        { label: 'B/S', field: 'stats.pitching.ballsAndStrikes', class: 'hidden lg:table-cell' },
-        { label: 'ERA', field: 'stats.pitching.era', class: 'hidden lg:table-cell' }
-      ]
-    }
-
-    const { watchFunc } = useTranslationsInSetup()
-    watchFunc(setPitcherHeaders)
+    const headers = computed(() => [
+      { label: '', field: 'index' },
+      { label: t('playerTable.name'), field: 'person.fullName' },
+      { label: '#', field: 'jerseyNumber', class: 'hidden lg:table-cell' },
+      { label: 'IP', field: 'stats.pitching.inningsPitched' },
+      { label: 'H', field: 'stats.pitching.hits' },
+      { label: 'ER', field: 'stats.pitching.earnedRuns' },
+      { label: 'K', field: 'stats.pitching.strikeOuts' },
+      { label: 'BB', field: 'stats.pitching.baseOnBalls' },
+      { label: 'B/S', field: 'stats.pitching.ballsAndStrikes', class: 'hidden lg:table-cell' },
+      { label: 'ERA', field: 'stats.pitching.era', class: 'hidden lg:table-cell' }
+    ])
 
     return {
       sortField,
       sortDirection,
-      valueGetter,
       update,
-      pitcherHeaders
+      headers
     }
   }
 }

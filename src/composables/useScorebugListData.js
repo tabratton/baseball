@@ -7,7 +7,7 @@ export default function useScorebugListData(date, interval = 20000) {
   const timer = ref(null)
   const fetchData = computed(() => {
     const formatted = format(date.value, 'yyyy-MM-dd')
-    return () => store.dispatch('updateGamesForDay', formatted)
+    return () => store.dispatch('fetchGamesForDay', formatted)
   })
   fetchData.value()
 

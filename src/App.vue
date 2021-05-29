@@ -19,6 +19,12 @@
           :placeholder="t('navbar.search')"
         >
         <button
+            class="hover:bg-white hover:bg-opacity-10 p-2 leading-4 focus:outline-none mr-2"
+            @click="goToStandings"
+        >
+          {{ t('navbar.standings') }}
+        </button>
+        <button
           class="hover:bg-white hover:bg-opacity-10 p-2 leading-4 focus:outline-none mr-2"
           @click="goToLeagueLeaders"
         >
@@ -67,10 +73,13 @@ export default {
     const store = useStore()
     const router = useRouter()
     const { t, locale } = useI18n({ useScope: 'global' })
-    const selectedLocale = ref({ label: 'English', value: 'en-US' })
+
+    const defaultLocale = store.getters.getLocale || 'en-US'
+    const selectedLocale = ref({ label: t(`locales.${defaultLocale}`), value: defaultLocale })
 
     const goHome = () => router.push('/')
     const goToLeagueLeaders = () => router.push('/league-leaders')
+    const goToStandings = () => router.push('/standings')
 
     const updateLocale = l => {
       store.commit('updateLocale', l.value)
@@ -91,6 +100,7 @@ export default {
     return {
       goHome,
       goToLeagueLeaders,
+      goToStandings,
       selectedLocale,
       t,
       options

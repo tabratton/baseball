@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 dark:bg-black dark:bg-opacity-80 rounded">
+  <div class="bg-transparent rounded">
     <Scorebug
       v-for="g in inProgress"
       :key="g.gamePk"

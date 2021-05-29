@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Game from '../views/Game.vue'
 import LeagueLeaders from '../views/LeagueLeaders.vue'
 import Player from '../views/Player.vue'
+import Standings from '../views/Standings.vue'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/league-leaders',
     name: 'League Leaders',
     component: LeagueLeaders
+  },
+  {
+    path: '/standings',
+    name: 'Standings',
+    component: Standings
   },
   {
     path: '/player/:playerId',
