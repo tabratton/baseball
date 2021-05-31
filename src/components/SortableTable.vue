@@ -1,11 +1,11 @@
 <template>
-  <table :class="{ [bgClass]: true, [textClass]: true }" class="table-auto text-center">
+  <table :class="{ [bgClass]: !!bgClass, [textClass]: !!textClass }" class="table-auto text-center">
     <slot name="caption"></slot>
     <thead>
       <tr>
         <th
-          class="cursor-pointer"
-          :class="{ [header.class]: true }"
+          class="cursor-pointer whitespace-nowrap"
+          :class="{ [header.class]: !!header.class }"
           scope="col"
           v-for="header in headers"
           :key="header.field"

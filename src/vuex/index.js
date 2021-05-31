@@ -314,7 +314,7 @@ export default createStore({
     },
     async fetchPlayer({ commit, state }, playerID) {
       const player = await axios
-        .get(`${state.apiHost}/people/${playerID}?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career],currentTeam)`)
+        .get(`${state.apiHost}/people/${playerID}?hydrate=stats(group=[hitting,pitching,fielding],type=[season,career,yearByYear],currentTeam)`)
         .then(({ data: { people: [person] } }) => person)
 
       commit('savePlayer', player)

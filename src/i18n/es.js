@@ -124,6 +124,11 @@ export default {
       debut: 'Primer partido de la MLB: {debut}'
     },
     stats: {
+      career: 'Carrera profesional',
+      pitching: 'Cabeceo',
+      hitting: 'Golpeando',
+      fielding: 'Filmando',
+      season: 'Estación',
       gamesPlayed: 'Juegos jugados',
       plateAppearances: 'PA',
       atBats: 'AB',
@@ -185,7 +190,15 @@ export default {
       whip: 'WHIP',
       wildPitches: 'Parcelas salvajes',
       winPercentage: 'Porcentaje de ganancia',
-      wins: 'Gana'
+      wins: 'Gana',
+      seasonPOS: 'Temporada- POS',
+      games: 'Juegos',
+      assists: 'Asiste',
+      putOuts: 'Apagones',
+      chances: 'Posibilidades',
+      doublePlays: 'Reproducciones dobles',
+      errors: 'Errores',
+      rangeFactorPerGame: 'Factor de rango / G'
     }
   },
   standings: {

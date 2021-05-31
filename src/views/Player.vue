@@ -19,19 +19,80 @@
             <span>{{ t('player.playerInfo.debut', { debut: dateFormat(dateParse(player.mlbDebutDate)) }) }}</span>
           </div>
         </div>
-        <div class="w-full pl-6 pt-6 font-bold text-3xl text-center">{{ currentSeason }}</div>
+        <div class="flex items-center justify-center">
+          <span v-if="pitchingExists">
+            <input
+              class="m-4"
+              type="radio"
+              id="pitching"
+              name="statType"
+              value="pitching"
+              v-model="selectedStatType"
+            >
+            <label for="pitching">{{ t('player.stats.pitching') }}</label>
+          </span>
+
+          <span v-if="hittingExists">
+            <input
+              class="m-4"
+              type="radio"
+              id="hitting"
+              name="statType"
+              value="hitting"
+              v-model="selectedStatType"
+            >
+            <label for="hitting">{{ t('player.stats.hitting') }}</label>
+          </span>
+
+          <span v-if="fieldingExists">
+            <input
+              class="m-4"
+              type="radio"
+              id="fielding"
+              name="statType"
+              value="fielding"
+              v-model="selectedStatType"
+            >
+            <label for="fielding">{{ t('player.stats.fielding') }}</label>
+          </span>
+        </div>
+        <div class="w-full pl-6 pt-6 font-bold text-3xl text-center">{{ seasonStats.season }}</div>
         <div class="w-full pt-6 pb-6 flex flex-row flex-wrap justify-center">
-          <div v-for="stat in statTypes" :key="stat.field" class="flex flex-col items-center m-3">
-            <span class="font-bold">{{stat.label}}</span>
-            <span class="text-4xl font-bold">{{seasonStats[stat.field]}}</span>
+          <div v-for="stat in nonYearTypes" :key="stat.field" class="flex flex-col items-center m-3">
+            <span class="font-bold">{{ stat.label }}</span>
+            <span class="text-4xl font-bold">{{ stat.field.split('.').reduce((obj, key) => obj[key], seasonStats) }}</span>
           </div>
         </div>
-        <div class="w-full pl-6 pt-6 font-bold text-3xl text-center">Career</div>
-        <div class="w-full pt-6 pb-6 flex flex-row flex-wrap justify-center">
-          <div v-for="stat in statTypes" :key="stat.field" class="flex flex-col items-center m-3">
-            <span class="font-bold">{{stat.label}}</span>
-            <span class="text-4xl font-bold">{{careerStats[stat.field]}}</span>
-          </div>
+        <div class="overflow-x-auto m-4">
+          <SortableTable
+            :items="yearByYearStats"
+            :headers="statTypes"
+            :sortField="sortField"
+            :sortDirection="sortDirection"
+            @update-sort="update"
+            bgClass="bg-gray-800"
+            textClass="text-white"
+            class="player-table w-full"
+          >
+            <template v-slot:header="slotProps">
+              {{ slotProps.header.label }}
+            </template>
+            <template v-slot:rows="slotProps">
+              <tr v-for="year in slotProps.sortedItems" :key="selectedStatType === 'pitching' || selectedStatType === 'hitting' ? year.season : `${year.position.code}_${year.season}`">
+                <td
+                  :class="stat.field === 'season' ? 'season-col' : ''"
+                  v-for="(stat, index) in statTypes" :key="stat.field"
+                >
+                  {{ stat.field.split('.').reduce((obj, key) => obj[key], year) }}
+                  <span v-if="selectedStatType === 'fielding' && index === 0"> - {{ year.position.abbreviation }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="season-col">{{ t('player.stats.career') }}</td>
+                <td v-for="stat in nonYearTypes" :key="stat.field">{{ stat.field.split('.').reduce((obj, key) => obj[key], careerStats) }}</td>
+              </tr>
+            </template>
+          </SortableTable>
         </div>
       </div>
     </div>
@@ -40,142 +101,182 @@
 
 <script>
 import { parseISO } from 'date-fns'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
+import SortableTable from '@/components/SortableTable'
 import useDateFormat from '@/composables/useDateFormat'
+import useSortableTable from '@/composables/useSortableTable'
 
 export default {
   name: 'Player',
-  components: {},
+  components: {
+    SortableTable
+  },
   setup() {
     const store = useStore()
     const route = useRoute()
     const { t } = useI18n()
-    const getPlayer = () => store.dispatch('fetchPlayer', route.params.playerId)
-    getPlayer()
+    store.dispatch('fetchPlayer', route.params.playerId)
+
+    const selectedStatType = ref('fielding')
 
     const player = computed(() => store.getters.getPlayer(route.params.playerId))
-    const statType = computed(() => (player.value.primaryPosition || {}).code === '1' ? 'pitching' : 'hitting')
-    const seasonStats = computed(() => player.value.stats.find(s => s.type.displayName === 'season' && s.group.displayName === statType.value).splits[0].stat)
-    const careerStats = computed(() => player.value.stats.find(s => s.type.displayName === 'career' && s.group.displayName === statType.value).splits[0].stat)
-    const currentSeason = computed(() => player.value.stats.find(s => s.type.displayName === 'season' && s.group.displayName === statType.value).splits[0].season)
+    const seasonStats = computed(() => ((((player.value || {}).stats || []).find(s => s.type.displayName === 'season' && s.group.displayName === selectedStatType.value) || {}).splits || [])[0])
+    const careerStats = computed(() => ((((player.value || {}).stats || []).find(s => s.type.displayName === 'career' && s.group.displayName === selectedStatType.value) || {}).splits || [])[0])
+    const yearByYearStats = computed(() => (((player.value || {}).stats || []).find(s => s.type.displayName === 'yearByYear' && s.group.displayName === selectedStatType.value) || {}).splits)
+
+    const pitchingExists = computed(() => player.value.stats.find(s => s.group.displayName === 'pitching'))
+    const hittingExists = computed(() => player.value.stats.find(s => s.group.displayName === 'hitting'))
+    const fieldingExists = computed(() => player.value.stats.find(s => s.group.displayName === 'fielding'))
+
+    watch(player, () => {
+      selectedStatType.value = (player.value.primaryPosition || {}).code === '1' ? 'pitching' : 'hitting'
+    })
 
     const statTypes = computed(() => {
       let types
-      if (statType.value === 'pitching') {
+      if (selectedStatType.value === 'pitching') {
         types = [
-          { label: t('player.stats.wins'), field: 'wins' },
-          { label: t('player.stats.loses'), field: 'loses' },
-          { label: t('player.stats.winPercentage'), field: 'winPercentage' },
-          { label: t('player.stats.holds'), field: 'holds' },
-          { label: t('player.stats.saves'), field: 'saves' },
-          { label: t('player.stats.saveOpportunities'), field: 'saveOpportunities' },
-          { label: t('player.stats.gamesStarted'), field: 'gamesStarted' },
-          { label: t('player.stats.gamesPitched'), field: 'gamesPitched' },
-          { label: t('player.stats.gamesPlayed'), field: 'gamesPlayed' },
-          { label: t('player.stats.inningsPitched'), field: 'inningsPitched' },
-          { label: t('player.stats.strikeOuts'), field: 'strikeOuts' },
-          { label: t('player.stats.baseOnBalls'), field: 'baseOnBalls' },
-          { label: t('player.stats.intentionalWalks'), field: 'intentionalWalks' },
-          { label: t('player.stats.hitByPitch'), field: 'hitByPitch' },
-          { label: t('player.stats.era'), field: 'era' },
-          { label: t('player.stats.whip'), field: 'whip' },
-          { label: t('player.stats.strikeoutsPer9Inn'), field: 'strikeoutsPer9Inn' },
-          { label: t('player.stats.strikeoutWalkRatio'), field: 'strikeoutWalkRatio' },
-          { label: t('player.stats.completeGames'), field: 'completeGames' },
-          { label: t('player.stats.shutouts'), field: 'shutouts' },
-          { label: t('player.stats.avg'), field: 'avg' },
-          { label: t('player.stats.obp'), field: 'obp' },
-          { label: t('player.stats.slg'), field: 'slg' },
-          { label: t('player.stats.ops'), field: 'ops' },
-          { label: t('player.stats.hits'), field: 'hits' },
-          { label: t('player.stats.runs'), field: 'runs' },
-          { label: t('player.stats.earnedRuns'), field: 'earnedRuns' },
-          { label: t('player.stats.doubles'), field: 'doubles' },
-          { label: t('player.stats.triples'), field: 'triples' },
-          { label: t('player.stats.homeRuns'), field: 'homeRuns' },
-          { label: t('player.stats.battersFaced'), field: 'battersFaced' },
-          { label: t('player.stats.airOuts'), field: 'airOuts' },
-          { label: t('player.stats.groundOuts'), field: 'groundOuts' },
-          { label: t('player.stats.groundIntoDoublePlay'), field: 'groundIntoDoublePlay' },
-          { label: t('player.stats.groundOutsToAirouts'), field: 'groundOutsToAirouts' },
-          { label: t('player.stats.balks'), field: 'balks' },
-          { label: t('player.stats.stolenBases'), field: 'stolenBases' },
-          { label: t('player.stats.caughtStealing'), field: 'caughtStealing' },
-          { label: t('player.stats.stolenBasePercentage'), field: 'stolenBasePercentage' },
-          { label: t('player.stats.strikePercentage'), field: 'strikePercentage' },
-          { label: t('player.stats.inheritedRunners'), field: 'inheritedRunners' },
-          { label: t('player.stats.inheritedRunnersScored'), field: 'inheritedRunnersScored' },
-          { label: t('player.stats.numberOfPitches'), field: 'numberOfPitches' },
-          { label: t('player.stats.pitchesPerInning'), field: 'pitchesPerInning' },
-          { label: t('player.stats.pickoffs'), field: 'pickoffs' },
-          { label: t('player.stats.sacBunts'), field: 'sacBunts' },
-          { label: t('player.stats.sacFlies'), field: 'sacFlies' },
-          { label: t('player.stats.hitsPer9Inn'), field: 'hitsPer9Inn' },
-          { label: t('player.stats.homeRunsPer9'), field: 'homeRunsPer9' },
-          { label: t('player.stats.runsScoredPer9'), field: 'runsScoredPer9' },
-          { label: t('player.stats.walksPer9Inn'), field: 'walksPer9Inn' },
-          { label: t('player.stats.strikes'), field: 'strikes' },
-          { label: t('player.stats.wildPitches'), field: 'wildPitches' }
+          { label: t('player.stats.season'), field: 'season', class: 'sticky left-0 bg-gray-800' },
+          { label: t('player.stats.wins'), field: 'stat.wins' },
+          { label: t('player.stats.losses'), field: 'stat.losses' },
+          { label: t('player.stats.winPercentage'), field: 'stat.winPercentage' },
+          { label: t('player.stats.holds'), field: 'stat.holds' },
+          { label: t('player.stats.saves'), field: 'stat.saves' },
+          { label: t('player.stats.saveOpportunities'), field: 'stat.saveOpportunities' },
+          { label: t('player.stats.gamesStarted'), field: 'stat.gamesStarted' },
+          { label: t('player.stats.inningsPitched'), field: 'stat.inningsPitched' },
+          { label: t('player.stats.strikeOuts'), field: 'stat.strikeOuts' },
+          { label: t('player.stats.baseOnBalls'), field: 'stat.baseOnBalls' },
+          { label: t('player.stats.intentionalWalks'), field: 'stat.intentionalWalks' },
+          { label: t('player.stats.hitByPitch'), field: 'stat.hitByPitch' },
+          { label: t('player.stats.era'), field: 'stat.era' },
+          { label: t('player.stats.whip'), field: 'stat.whip' },
+          { label: t('player.stats.strikeoutsPer9Inn'), field: 'stat.strikeoutsPer9Inn' },
+          { label: t('player.stats.strikeoutWalkRatio'), field: 'stat.strikeoutWalkRatio' },
+          { label: t('player.stats.completeGames'), field: 'stat.completeGames' },
+          { label: t('player.stats.shutouts'), field: 'stat.shutouts' },
+          { label: t('player.stats.avg'), field: 'stat.avg' },
+          { label: t('player.stats.obp'), field: 'stat.obp' },
+          { label: t('player.stats.slg'), field: 'stat.slg' },
+          { label: t('player.stats.ops'), field: 'stat.ops' },
+          { label: t('player.stats.hits'), field: 'stat.hits' },
+          { label: t('player.stats.runs'), field: 'stat.runs' },
+          { label: t('player.stats.earnedRuns'), field: 'stat.earnedRuns' },
+          { label: t('player.stats.doubles'), field: 'stat.doubles' },
+          { label: t('player.stats.triples'), field: 'stat.triples' },
+          { label: t('player.stats.homeRuns'), field: 'stat.homeRuns' },
+          { label: t('player.stats.battersFaced'), field: 'stat.battersFaced' },
+          { label: t('player.stats.airOuts'), field: 'stat.airOuts' },
+          { label: t('player.stats.groundOuts'), field: 'stat.groundOuts' },
+          { label: t('player.stats.groundIntoDoublePlay'), field: 'stat.groundIntoDoublePlay' },
+          { label: t('player.stats.groundOutsToAirouts'), field: 'stat.groundOutsToAirouts' },
+          { label: t('player.stats.balks'), field: 'stat.balks' },
+          { label: t('player.stats.stolenBases'), field: 'stat.stolenBases' },
+          { label: t('player.stats.caughtStealing'), field: 'stat.caughtStealing' },
+          { label: t('player.stats.stolenBasePercentage'), field: 'stat.stolenBasePercentage' },
+          { label: t('player.stats.strikePercentage'), field: 'stat.strikePercentage' },
+          { label: t('player.stats.inheritedRunners'), field: 'stat.inheritedRunners' },
+          { label: t('player.stats.inheritedRunnersScored'), field: 'stat.inheritedRunnersScored' },
+          { label: t('player.stats.numberOfPitches'), field: 'stat.numberOfPitches' },
+          { label: t('player.stats.pitchesPerInning'), field: 'stat.pitchesPerInning' },
+          { label: t('player.stats.pickoffs'), field: 'stat.pickoffs' },
+          { label: t('player.stats.sacBunts'), field: 'stat.sacBunts' },
+          { label: t('player.stats.sacFlies'), field: 'stat.sacFlies' },
+          { label: t('player.stats.hitsPer9Inn'), field: 'stat.hitsPer9Inn' },
+          { label: t('player.stats.homeRunsPer9'), field: 'stat.homeRunsPer9' },
+          { label: t('player.stats.runsScoredPer9'), field: 'stat.runsScoredPer9' },
+          { label: t('player.stats.walksPer9Inn'), field: 'stat.walksPer9Inn' },
+          { label: t('player.stats.strikes'), field: 'stat.strikes' },
+          { label: t('player.stats.wildPitches'), field: 'stat.wildPitches' }
         ]
-      } else {
+      } else if (selectedStatType.value === 'hitting') {
         types = [
-          { label: t('player.stats.gamesPlayed'), field: 'gamesPlayed' },
-          { label: t('player.stats.plateAppearances'), field: 'plateAppearances' },
-          { label: t('player.stats.atBats'), field: 'atBats' },
-          { label: t('player.stats.avg'), field: 'avg' },
-          { label: t('player.stats.hits'), field: 'hits' },
-          { label: t('player.stats.doubles'), field: 'doubles' },
-          { label: t('player.stats.triples'), field: 'triples' },
-          { label: t('player.stats.homeRuns'), field: 'homeRuns' },
-          { label: t('player.stats.runs'), field: 'runs' },
-          { label: t('player.stats.rbi'), field: 'rbi' },
-          { label: t('player.stats.baseOnBalls'), field: 'baseOnBalls' },
-          { label: t('player.stats.intentionalWalks'), field: 'intentionalWalks' },
-          { label: t('player.stats.hitByPitch'), field: 'hitByPitch' },
-          { label: t('player.stats.obp'), field: 'obp' },
-          { label: t('player.stats.slg'), field: 'slg' },
-          { label: t('player.stats.ops'), field: 'ops' },
-          { label: t('player.stats.groundOuts'), field: 'groundOuts' },
-          { label: t('player.stats.airOuts'), field: 'airOuts' },
-          { label: t('player.stats.strikeOuts'), field: 'strikeOuts' },
-          { label: t('player.stats.groundIntoDoublePlay'), field: 'groundIntoDoublePlay' },
-          { label: t('player.stats.totalBases'), field: 'totalBases' },
-          { label: t('player.stats.leftOnBase'), field: 'leftOnBase' },
-          { label: t('player.stats.caughtStealing'), field: 'caughtStealing' },
-          { label: t('player.stats.stolenBases'), field: 'stolenBases' },
-          { label: t('player.stats.stolenBasePercentage'), field: 'stolenBasePercentage' },
-          { label: t('player.stats.sacBunts'), field: 'sacBunts' },
-          { label: t('player.stats.sacFlies'), field: 'sacFlies' },
-          { label: t('player.stats.numberOfPitches'), field: 'numberOfPitches' },
-          { label: t('player.stats.babip'), field: 'babip' },
-          { label: t('player.stats.groundOutsToAirouts'), field: 'groundOutsToAirouts' },
-          { label: t('player.stats.atBatsPerHomeRun'), field: 'atBatsPerHomeRun' }
+          { label: t('player.stats.season'), field: 'season', class: 'sticky left-0 bg-gray-800' },
+          { label: t('player.stats.gamesPlayed'), field: 'stat.gamesPlayed' },
+          { label: t('player.stats.plateAppearances'), field: 'stat.plateAppearances' },
+          { label: t('player.stats.atBats'), field: 'stat.atBats' },
+          { label: t('player.stats.avg'), field: 'stat.avg' },
+          { label: t('player.stats.hits'), field: 'stat.hits' },
+          { label: t('player.stats.doubles'), field: 'stat.doubles' },
+          { label: t('player.stats.triples'), field: 'stat.triples' },
+          { label: t('player.stats.homeRuns'), field: 'stat.homeRuns' },
+          { label: t('player.stats.runs'), field: 'stat.runs' },
+          { label: t('player.stats.rbi'), field: 'stat.rbi' },
+          { label: t('player.stats.baseOnBalls'), field: 'stat.baseOnBalls' },
+          { label: t('player.stats.intentionalWalks'), field: 'stat.intentionalWalks' },
+          { label: t('player.stats.hitByPitch'), field: 'stat.hitByPitch' },
+          { label: t('player.stats.obp'), field: 'stat.obp' },
+          { label: t('player.stats.slg'), field: 'stat.slg' },
+          { label: t('player.stats.ops'), field: 'stat.ops' },
+          { label: t('player.stats.groundOuts'), field: 'stat.groundOuts' },
+          { label: t('player.stats.airOuts'), field: 'stat.airOuts' },
+          { label: t('player.stats.strikeOuts'), field: 'stat.strikeOuts' },
+          { label: t('player.stats.groundIntoDoublePlay'), field: 'stat.groundIntoDoublePlay' },
+          { label: t('player.stats.totalBases'), field: 'stat.totalBases' },
+          { label: t('player.stats.leftOnBase'), field: 'stat.leftOnBase' },
+          { label: t('player.stats.caughtStealing'), field: 'stat.caughtStealing' },
+          { label: t('player.stats.stolenBases'), field: 'stat.stolenBases' },
+          { label: t('player.stats.stolenBasePercentage'), field: 'stat.stolenBasePercentage' },
+          { label: t('player.stats.sacBunts'), field: 'stat.sacBunts' },
+          { label: t('player.stats.sacFlies'), field: 'stat.sacFlies' },
+          { label: t('player.stats.numberOfPitches'), field: 'stat.numberOfPitches' },
+          { label: t('player.stats.babip'), field: 'stat.babip' },
+          { label: t('player.stats.groundOutsToAirouts'), field: 'stat.groundOutsToAirouts' },
+          { label: t('player.stats.atBatsPerHomeRun'), field: 'stat.atBatsPerHomeRun' }
+        ]
+      } else if (selectedStatType.value === 'fielding') {
+        types = [
+          { label: t('player.stats.seasonPOS'), field: 'season', class: 'sticky left-0 bg-gray-800' },
+          { label: t('player.stats.games'), field: 'stat.games' },
+          { label: t('player.stats.gamesStarted'), field: 'stat.gamesStarted' },
+          { label: t('player.stats.assists'), field: 'stat.assists' },
+          { label: t('player.stats.putOuts'), field: 'stat.putOuts' },
+          { label: t('player.stats.chances'), field: 'stat.chances' },
+          { label: t('player.stats.doublePlays'), field: 'stat.doublePlays' },
+          { label: t('player.stats.errors'), field: 'stat.errors' },
+          { label: t('player.stats.fielding'), field: 'stat.fielding' },
+          { label: t('player.stats.rangeFactorPerGame'), field: 'stat.rangeFactorPerGame' },
         ]
       }
 
       return types
     })
+    const nonYearTypes = computed(() => statTypes.value.filter(st => st.field !== 'season'))
 
     const { dateFormat } = useDateFormat()
+
+    const { sortField, sortDirection, update } = useSortableTable(yearByYearStats, 'season', 'asc')
 
     return {
       t,
       player,
       seasonStats,
       careerStats,
-      currentSeason,
+      yearByYearStats,
       statTypes,
+      selectedStatType,
+      nonYearTypes,
       dateFormat,
-      dateParse: parseISO
+      dateParse: parseISO,
+      sortField,
+      sortDirection,
+      update,
+      pitchingExists,
+      hittingExists,
+      fieldingExists
     }
   }
 }
 </script>
 
 <style scoped>
-
+.season-col {
+  position: sticky;
+  left: 0;
+  @apply bg-gray-800;
+}
 </style>
