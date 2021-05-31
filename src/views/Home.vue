@@ -1,5 +1,5 @@
 <template>
-  <div class="home h-home overflow-auto w-screen flex flex-col items-start lg:items-center">
+  <div class="home h-home overflow-auto w-screen flex flex-col items-center">
     <div class="m-4 mb-0">
       <date-picker v-model="date" color="red" :locale="locale" is-dark>
         <template v-slot="{ inputValue, inputEvents }">
