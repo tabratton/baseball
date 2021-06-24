@@ -23,7 +23,7 @@
     "postcss": "^7",
     "rsvp": "^4.8.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "v-calendar": "^3.0.0-alpha.4",
+    "v-calendar": "^3.0.0-alpha.5",
     "vue": "^3.1.2",
     "vue-cli-plugin-s3-deploy": "^4.0.0-rc4",
     "vue-i18n": "^9.1.6",
