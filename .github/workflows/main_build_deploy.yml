@@ -16,9 +16,6 @@ jobs:
         node-version: 14
     - uses: borales/actions-yarn@v2.3.0
       with:
-        cmd: install
-    - uses: borales/actions-yarn@v2.3.0
-      with:
         cmd: build
       env:
         CI: true
@@ -31,9 +28,6 @@ jobs:
       uses: actions/setup-node@v2.1.5
       with:
         node-version: 14
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: install
     - uses: borales/actions-yarn@v2.3.0
       with:
         cmd: build
