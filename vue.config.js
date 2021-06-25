@@ -13,11 +13,10 @@ module.exports = {
       assetMatch: '**',
       deployPath: '/',
       acl: 'public-read',
-      pwa: true,
-      pwaFiles: 'index.html',
+      pwa: false,
       enableCloudfront: true,
       cloudfrontId: 'EOMAUFJK3QTWB',
-      cloudfrontMatchers: '/index.html,/service-worker.js,/manifest.json',
+      cloudfrontMatchers: '/*',
       pluginVersion: '4.0.0-rc3',
       uploadConcurrency: 5,
       gzip: true
