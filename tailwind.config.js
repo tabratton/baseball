@@ -39,8 +39,11 @@ const mlbColors = {
   sf: { main: '#27251F', secondary: '#FD5A1E' },
   ari: { main: '#A71930', secondary: '#E3D4AD' },
   col: { main: '#33006F', secondary: '#C4CED4' },
-  lad: { main: '#005A9C', secondary: '#A5ACAF' }
+  lad: { main: '#005A9C', secondary: '#A5ACAF' },
+  nl: { main: '#002D72', secondary: '#D50032' },
+  al: { main: '#D50032', secondary: '#002D72' }
 }
+// TODO: Make highlight color variable for each team, apply to team name/borders/stuff for highlights
 
 Object.keys(mlbColors).forEach(key => {
   mlbColors[key]['text-main'] = getContrastYIQ(mlbColors[key].main)

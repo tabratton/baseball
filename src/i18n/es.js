@@ -4,6 +4,9 @@ export default {
     leagueLeaders: 'Líderes de la liga',
     standings: 'Posiciones'
   },
+  scorebugList: {
+    noGames: 'No juegos'
+  },
   status: {
     L: 'Vivo',
     F: 'Final',

@@ -70,10 +70,10 @@ const getGame = (schedule, host) => {
   const isOver = schedule.status.abstractGameCode === 'F'
   const isPregame = schedule.status.abstractGameCode === 'P'
 
-  const colorConflict = (homeTeam.conflicts || []).includes(awayTeam.short)
+  const colorConflict = (homeTeam?.conflicts || []).includes(awayTeam?.short)
   let teamPriority = 'home';
 
-  if ((awayTeam.priority || Number.MAX_SAFE_INTEGER) < (homeTeam.priority || Number.MAX_SAFE_INTEGER)) {
+  if ((awayTeam?.priority || Number.MAX_SAFE_INTEGER) < (homeTeam?.priority || Number.MAX_SAFE_INTEGER)) {
     teamPriority = 'away'
   }
 
@@ -85,16 +85,16 @@ const getGame = (schedule, host) => {
     gameTime: parseISO(schedule.gameDate),
     inProgress: !isOver && !isPregame,
     home: {
-      short: homeTeam.short.toUpperCase(),
-      name: homeTeam.name,
-      bgClass: homeTeam.mainBackground,
-      textClass: homeTeam.mainText
+      short: homeTeam?.short.toUpperCase(),
+      name: homeTeam?.name,
+      bgClass: homeTeam?.mainBackground,
+      textClass: homeTeam?.mainText
     },
     away: {
-      short: awayTeam.short.toUpperCase(),
-      name: awayTeam.name,
-      bgClass:awayTeam.mainBackground,
-      textClass: awayTeam.mainText
+      short: awayTeam?.short.toUpperCase(),
+      name: awayTeam?.name,
+      bgClass:awayTeam?.mainBackground,
+      textClass: awayTeam?.mainText
     }
   }
 
@@ -102,15 +102,15 @@ const getGame = (schedule, host) => {
 
   if (colorConflict) {
     if (teamPriority === 'home') {
-      gameObj.home.bgClass = homeTeam.mainBackground;
-      gameObj.home.textClass = homeTeam.mainText;
-      gameObj.away.bgClass = awayTeam.secondaryBackground;
-      gameObj.away.textClass = awayTeam.secondaryText;
+      gameObj.home.bgClass = homeTeam?.mainBackground;
+      gameObj.home.textClass = homeTeam?.mainText;
+      gameObj.away.bgClass = awayTeam?.secondaryBackground;
+      gameObj.away.textClass = awayTeam?.secondaryText;
     } else {
-      gameObj.home.bgClass = homeTeam.secondaryBackground;
-      gameObj.home.textClass = homeTeam.secondaryText;
-      gameObj.away.bgClass = awayTeam.mainBackground;
-      gameObj.away.textClass = awayTeam.mainText;
+      gameObj.home.bgClass = homeTeam?.secondaryBackground;
+      gameObj.home.textClass = homeTeam?.secondaryText;
+      gameObj.away.bgClass = awayTeam?.mainBackground;
+      gameObj.away.textClass = awayTeam?.mainText;
     }
   }
 
@@ -284,7 +284,7 @@ export default createStore({
   },
   actions: {
     async fetchGamesForDay({ commit, state }, date) {
-      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1, date } }).then(({ data: { dates: [{ games }] } }) => games)
+      const scheduleData = await axios.get(`${state.apiHost}/schedule`, { params: { sportId: 1, date } }).then(({ data: { dates: [dateData] } }) => dateData?.games || [])
       const gameData = await all(scheduleData.map(d => getGame(d, state.apiHost)))
       commit('updateGames', gameData)
     },
@@ -329,6 +329,15 @@ export default createStore({
         )
       }
 
+      const addTeamMapData = ({ teamRecords }) => {
+        teamRecords.forEach(tr => {
+          tr.team = {
+            ...tr.team,
+            ...teamMap.find(t => t.id === tr.team.id)
+          };
+        })
+      }
+
       const americanStandings = await axios
         .get(`${state.apiHost}/standings?leagueId=103`)
         .then(({ data: { records }}) => fetchDivisions(records))
@@ -336,6 +345,9 @@ export default createStore({
       const nationalStandings = await axios
         .get(`${state.apiHost}/standings?leagueId=104`)
         .then(({ data: { records }}) => fetchDivisions(records))
+
+      americanStandings.forEach(addTeamMapData)
+      nationalStandings.forEach(addTeamMapData)
 
       commit('updateStandings', {
         american: [

@@ -8,6 +8,9 @@ export default {
     leagueLeaders: 'League Leaders',
     standings: 'Standings'
   },
+  scorebugList: {
+    noGames: 'No Games :('
+  },
   status: {
     L: 'Live',
     F: 'Final',

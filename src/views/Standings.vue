@@ -1,74 +1,74 @@
 <template>
-  <div class="standings h-home w-screen overflow-y-auto">
-    <div class="w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
-      <div class="bg-gray-800 rounded-md p-4 m-2" v-if="americanStandings">
-        <div class="text-center text-2xl font-bold">{{ t('standings.american.title') }}</div>
-        <div class="flex flex-row">
-          <div v-for="division in americanStandings" :key="division.division.id" class="m-2">
-            <div class="text-center font-bold">{{ t(`standings.american.${division.division.abbreviation}`) }}</div>
-            <SortableTable
-              :items="division.teamRecords"
-              :headers="headers"
-              :sortField="americanField"
-              :sortDirection="americanDirection"
-              bgClass="bg-gray-800"
-              textClass="text-white"
-              @update-sort="americanUpdate"
-            >
-              <template v-slot:header="slotProps">
-                <span>{{ slotProps.header.label }}</span>
-              </template>
-              <template v-slot:rows="slotProps">
-                <tr v-for="record in slotProps.sortedItems" :key="record.team.name">
-                  <td>{{ record.divisionRank }}</td>
-                  <td>{{ record.team.name }}</td>
-                  <td>{{ record.leagueRecord.wins }}</td>
-                  <td>{{ record.leagueRecord.losses }}</td>
-                  <td>{{ record.leagueRecord.pct }}</td>
-                  <td>{{ record.gamesBack }}</td>
-                  <td>{{ record.wildCardGamesBack }}</td>
-                  <td>{{ record.runsScored }}</td>
-                  <td>{{ record.runsAllowed }}</td>
-                  <td>{{ record.runDifferential }}</td>
-                </tr>
-              </template>
-            </SortableTable>
-          </div>
+  <div class="standings h-home w-screen flex flex-col 2xl:items-center 2xl:justify-center p-4 overflow-auto">
+    <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="americanStandings">
+      <div class="text-center text-2xl font-bold mb-2">{{ t('standings.american.title') }}</div>
+      <div class="division-container">
+        <div v-for="division in americanStandings" :key="division.division.id" class="p-2 w-full flex-auto">
+          <div class="text-center font-bold">{{ t(`standings.american.${division.division.abbreviation}`) }}</div>
+          <SortableTable
+            :items="division.teamRecords"
+            :headers="headers"
+            :sortField="americanField"
+            :sortDirection="americanDirection"
+            bgClass="bg-gray-800"
+            textClass="text-white"
+            class="w-full"
+            @update-sort="americanUpdate"
+          >
+            <template v-slot:header="slotProps">
+              <span>{{ slotProps.header.label }}</span>
+            </template>
+            <template v-slot:rows="slotProps">
+              <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
+                <td>{{ record.divisionRank }}</td>
+                <td><abbr :title="record.team.name">{{ record.team.short }}</abbr></td>
+                <td>{{ record.leagueRecord.wins }}</td>
+                <td>{{ record.leagueRecord.losses }}</td>
+                <td>{{ record.leagueRecord.pct }}</td>
+                <td>{{ record.gamesBack }}</td>
+                <td>{{ record.wildCardGamesBack }}</td>
+                <td>{{ record.runsScored }}</td>
+                <td>{{ record.runsAllowed }}</td>
+                <td>{{ record.runDifferential }}</td>
+              </tr>
+            </template>
+          </SortableTable>
         </div>
       </div>
-      <div class="bg-gray-800 rounded-md p-4 m-2" v-if="nationalStandings">
-        <div class="text-center text-2xl font-bold">{{ t('standings.national.title') }}</div>
-        <div class="flex flex-row">
-          <div v-for="division in nationalStandings" :key="division.division.id" class="m-2">
-            <div class="text-center font-bold">{{ t(`standings.national.${division.division.abbreviation}`) }}</div>
-            <SortableTable
-                :items="division.teamRecords"
-                :headers="headers"
-                :sortField="nationalField"
-                :sortDirection="nationalDirection"
-                bgClass="bg-gray-800"
-                textClass="text-white"
-                @update-sort="nationalUpdate"
-            >
-              <template v-slot:header="slotProps">
-                <span>{{ slotProps.header.label }}</span>
-              </template>
-              <template v-slot:rows="slotProps">
-                <tr v-for="record in slotProps.sortedItems" :key="record.team.name">
-                  <td>{{ record.divisionRank }}</td>
-                  <td>{{ record.team.name }}</td>
-                  <td>{{ record.leagueRecord.wins }}</td>
-                  <td>{{ record.leagueRecord.losses }}</td>
-                  <td>{{ record.leagueRecord.pct }}</td>
-                  <td>{{ record.gamesBack }}</td>
-                  <td>{{ record.wildCardGamesBack }}</td>
-                  <td>{{ record.runsScored }}</td>
-                  <td>{{ record.runsAllowed }}</td>
-                  <td>{{ record.runDifferential }}</td>
-                </tr>
-              </template>
-            </SortableTable>
-          </div>
+    </div>
+    <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="nationalStandings">
+      <div class="text-center text-2xl font-bold mb-2">{{ t('standings.national.title') }}</div>
+      <div class="division-container">
+        <div v-for="division in nationalStandings" :key="division.division.id" class="p-2 w-full flex-auto">
+          <div class="text-center font-bold">{{ t(`standings.national.${division.division.abbreviation}`) }}</div>
+          <SortableTable
+              :items="division.teamRecords"
+              :headers="headers"
+              :sortField="nationalField"
+              :sortDirection="nationalDirection"
+              bgClass="bg-gray-800"
+              textClass="text-white"
+              class="w-full"
+              @update-sort="nationalUpdate"
+          >
+            <template v-slot:header="slotProps">
+              <span>{{ slotProps.header.label }}</span>
+            </template>
+            <template v-slot:rows="slotProps">
+              <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
+                <td>{{ record.divisionRank }}</td>
+                <td><abbr :title="record.team.name">{{ record.team.short }}</abbr></td>
+                <td>{{ record.leagueRecord.wins }}</td>
+                <td>{{ record.leagueRecord.losses }}</td>
+                <td>{{ record.leagueRecord.pct }}</td>
+                <td>{{ record.gamesBack }}</td>
+                <td>{{ record.wildCardGamesBack }}</td>
+                <td>{{ record.runsScored }}</td>
+                <td>{{ record.runsAllowed }}</td>
+                <td>{{ record.runDifferential }}</td>
+              </tr>
+            </template>
+          </SortableTable>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@ export default {
     const { sortField: nationalField, sortDirection: nationalDirection, update: nationalUpdate } = useSortableTable(nationalStandings, 'divisionRank', 'asc')
 
     const headers = computed(() => [
-      { label: 'Rank', field: 'divisionRank' },
+      { label: '#', field: 'divisionRank' },
       { label: 'Team', field: 'team.name' },
       { label: 'W', field: 'leagueRecord.wins' },
       { label: 'L', field: 'leagueRecord.losses' },
@@ -133,5 +133,13 @@ export default {
 <style scoped>
 table tbody tr:nth-child(odd) {
   @apply bg-gray-700;
+}
+
+abbr[title] {
+  @apply no-underline border-b-2 border-dotted border-white;
+}
+
+.division-container {
+  @apply overflow-y-auto flex flex-col 2xl:flex-row items-center;
 }
 </style>

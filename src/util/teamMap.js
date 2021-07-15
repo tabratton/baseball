@@ -28,5 +28,7 @@ export default [
   { id: 118, name: 'Kansas City Royals', short: 'KC', mainBackground: 'bg-kc-main', mainText: 'text-kc-text-main', secondaryBackground: 'bg-kc-secondary', secondaryText: 'text-kc-text-secondary' },
   { id: 119, name: 'Los Angeles Dodgers', short: 'LAD', mainBackground: 'bg-lad-main', mainText: 'text-lad-text-main', secondaryBackground: 'bg-lad-secondary', secondaryText: 'text-lad-text-secondary' },
   { id: 120, name: 'Washington Nationals', short: 'WSH', mainBackground: 'bg-wsh-main', mainText: 'text-wsh-text-main', secondaryBackground: 'bg-wsh-secondary', secondaryText: 'text-wsh-text-secondary' },
-  { id: 121, name: 'New York Mets', short: 'NYM', mainBackground: 'bg-nym-main', mainText: 'text-nym-text-main', secondaryBackground: 'bg-nym-secondary', secondaryText: 'text-nym-text-secondary' }
+  { id: 121, name: 'New York Mets', short: 'NYM', mainBackground: 'bg-nym-main', mainText: 'text-nym-text-main', secondaryBackground: 'bg-nym-secondary', secondaryText: 'text-nym-text-secondary' },
+  { id: 159, name: 'American League All-Stars', short: 'AL', mainBackground: 'bg-al-main', mainText: 'text-al-text-main', secondaryBackground: 'bg-al-secondary', secondaryText: 'text-al-text-secondary' },
+  { id: 160, name: 'National League All-Stars', short: 'NL', mainBackground: 'bg-nl-main', mainText: 'text-nl-text-main', secondaryBackground: 'bg-nl-secondary', secondaryText: 'text-nl-text-secondary' }
 ]
