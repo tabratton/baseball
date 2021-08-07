@@ -21,7 +21,12 @@
             <template v-slot:rows="slotProps">
               <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
                 <td>{{ record.divisionRank }}</td>
-                <td><abbr :title="record.team.name">{{ record.team.short }}</abbr></td>
+                <td class="flex items-center justify-center">
+                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.png`">
+                  <abbr :title="record.team.name">
+                    {{ record.team.short }}
+                  </abbr>
+                </td>
                 <td>{{ record.leagueRecord.wins }}</td>
                 <td>{{ record.leagueRecord.losses }}</td>
                 <td>{{ record.leagueRecord.pct }}</td>
@@ -57,7 +62,12 @@
             <template v-slot:rows="slotProps">
               <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
                 <td>{{ record.divisionRank }}</td>
-                <td><abbr :title="record.team.name">{{ record.team.short }}</abbr></td>
+                <td class="flex items-center justify-center">
+                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.png`">
+                  <abbr :title="record.team.name">
+                    {{ record.team.short }}
+                  </abbr>
+                </td>
                 <td>{{ record.leagueRecord.wins }}</td>
                 <td>{{ record.leagueRecord.losses }}</td>
                 <td>{{ record.leagueRecord.pct }}</td>
