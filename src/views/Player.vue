@@ -6,17 +6,35 @@
         <div class="w-full pl-6 italic text-md" v-if="player.nickName">{{ t('player.playerInfo.nickname', { nickname: player.nickName }) }}</div>
         <div class="flex flex-row">
           <div class="flex flex-col p-6">
-            <span>{{ t('player.playerInfo.bats', { bats: player.batSide.code }) }}</span>
-            <span>{{ t('player.playerInfo.throws', { throws: player.pitchHand.code }) }}</span>
-            <span>{{ t('player.playerInfo.height', { height: player.height }) }}</span>
-            <span>{{ t('player.playerInfo.weight', { weight: player.weight }) }}</span>
+            <span v-if="player.batSide.code">
+              {{ t('player.playerInfo.bats', { bats: player.batSide.code }) }}
+            </span>
+            <span v-if="player.pitchHand.code">
+              {{ t('player.playerInfo.throws', { throws: player.pitchHand.code }) }}
+            </span>
+            <span v-if="player.height">
+              {{ t('player.playerInfo.height', { height: player.height }) }}
+            </span>
+            <span v-if="player.weight">
+              {{ t('player.playerInfo.weight', { weight: player.weight }) }}
+            </span>
           </div>
           <div class="flex flex-col p-6">
-            <span>{{ t('player.playerInfo.age', { age: player.currentAge }) }}</span>
-            <span>{{ t('player.playerInfo.birthday', { birthday: dateFormat(dateParse(player.birthDate)) }) }}</span>
-            <span>{{ t('player.playerInfo.birthplace', { birthplace: [player.birthCity, player.birthStateProvince, player.birthCountry].filter(v => v).join(', ') }) }}</span>
-            <span>{{ t('player.playerInfo.drafted', { drafted: player.draftYear }) }}</span>
-            <span>{{ t('player.playerInfo.debut', { debut: dateFormat(dateParse(player.mlbDebutDate)) }) }}</span>
+            <span v-if="player.currentAge">
+              {{ t('player.playerInfo.age', { age: player.currentAge }) }}
+            </span>
+            <span v-if="player.birthDate">
+              {{ t('player.playerInfo.birthday', { birthday: dateFormat(dateParse(player.birthDate)) }) }}
+            </span>
+            <span v-if="player.birthCity || player.birthStateProvince || player.birthCountry">
+              {{ t('player.playerInfo.birthplace', { birthplace: [player.birthCity, player.birthStateProvince, player.birthCountry].filter(v => v).join(', ') }) }}
+            </span>
+            <span v-if="player.draftYear">
+              {{ t('player.playerInfo.drafted', { drafted: player.draftYear }) }}
+            </span>
+            <span v-if="player.mlbDebutDate">
+              {{ t('player.playerInfo.debut', { debut: dateFormat(dateParse(player.mlbDebutDate)) }) }}
+            </span>
           </div>
         </div>
         <div class="flex items-center justify-center">
@@ -273,7 +291,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .season-col {
   position: sticky;
   left: 0;

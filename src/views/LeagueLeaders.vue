@@ -223,9 +223,6 @@ export default {
       return fuse.value.search(searchText.value).map(result => result.item)
     })
 
-    console.log(types)
-    console.log(filteredTypes)
-
     return {
       teamMap,
       t,
@@ -240,7 +237,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="postcss">
 .leaders-table-american {
   @apply bg-red-800 text-white;
 }
@@ -255,5 +252,38 @@ export default {
 
 .leaders-table-national tbody tr:nth-child(odd) {
   @apply bg-blue-700;
+}
+
+#leaderTypes {
+  @apply border-0 border-b-2 border-red-800 p-1 pl-0 dark:bg-gray-900 min-h-leader-select;
+  --ms-dropdown-border-color: transparent;
+  --ms-border-color: transparent;
+  --ms-bg: transparent;
+  --ms-radius: 0;
+  --ms-ring-width: 0;
+  --ms-py: 0;
+}
+
+#leaderTypes .multiselect-options .multiselect-option {
+  @apply cursor-pointer dark:text-white;
+  min-height: 2rem;
+  padding: 0.5rem;
+}
+
+#leaderTypes .multiselect-options .multiselect-option.is-selected,
+#leaderTypes .multiselect-options .multiselect-option.is-selected.is-pointed {
+  @apply bg-red-800;
+}
+
+#leaderTypes .multiselect-options .multiselect-option.is-pointed {
+  @apply dark:bg-gray-600;
+}
+
+#leaderTypes .multiselect-dropdown {
+  @apply dark:bg-gray-900;
+}
+
+#leaderTypes .multiselect-clear {
+  @apply dark:bg-gray-900;
 }
 </style>

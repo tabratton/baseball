@@ -73,8 +73,8 @@ module.exports = {
         '5.5': '1.375rem'
       },
       minHeight: {
-        'leader-select': '42px',
-        'locale-select': '32px'
+        'leader-select': '2.625rem',
+        'locale-select': '2rem'
       },
       fontFamily: {
         'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'

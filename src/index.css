@@ -6,12 +6,12 @@ th, td {
     @apply p-2;
 }
 
-.players-table {
-    @apply border-collapse border border-white border-opacity-50 mb-4;
-}
-
 h4 {
     @apply dark:text-white font-bold text-lg text-center w-full p-2
+}
+
+.players-table {
+    @apply border-collapse border border-white border-opacity-50 mb-4;
 }
 
 .players-table th,
@@ -19,65 +19,12 @@ h4 {
     @apply p-1 sm:p-3;
 }
 
-.players-table td {
-    @apply border-l border-r border-white border-opacity-60;
-}
-
 .players-table th {
     @apply border-b border-white border-opacity-60;
 }
 
-#leaderTypes .multiselect-input {
-    @apply border-0 border-b-2 border-red-800 p-1 pl-0 dark:bg-gray-900 min-h-leader-select;
-}
-
-#leaderTypes .multiselect-options .multiselect-option {
-    @apply cursor-pointer dark:text-white;
-    min-height: 32px;
-    padding: 8px
-}
-
-#leaderTypes .multiselect-options .multiselect-option.is-selected,
-#leaderTypes .multiselect-options .multiselect-option.is-selected.is-pointed {
-    @apply bg-red-800;
-}
-
-#leaderTypes .multiselect-options .multiselect-option.is-pointed {
-    @apply dark:bg-gray-600;
-}
-
-#leaderTypes .multiselect-options {
-    @apply dark:bg-gray-900 border-0;
-}
-
-#leaderTypes .multiselect-clear {
-    @apply dark:bg-gray-900;
-}
-
-#localeSelect .multiselect-input {
-    @apply border-0 p-0 bg-red-800;
-    height: 32px;
-    min-height: 32px;
-    max-height: 32px;
-}
-
-#localeSelect .multiselect-options .multiselect-option {
-    @apply cursor-pointer dark:text-white;
-    min-height: 32px;
-    padding: 8px
-}
-
-#localeSelect .multiselect-options .multiselect-option.is-selected,
-#localeSelect .multiselect-options .multiselect-option.is-selected.is-pointed {
-    @apply bg-red-800;
-}
-
-#localeSelect .multiselect-options .multiselect-option.is-pointed {
-    @apply dark:bg-gray-600;
-}
-
-#localeSelect .multiselect-options {
-    @apply dark:bg-gray-900 border-0;
+.players-table td {
+    @apply border-l border-r border-white border-opacity-60;
 }
 
 a:hover {

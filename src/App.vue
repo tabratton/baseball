@@ -109,7 +109,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss">
 .app-grid {
   display: grid;
   grid-template:
@@ -126,7 +126,47 @@ export default {
   grid-area: content;
 }
 
-select option {
+#localeSelect {
+  --ms-dropdown-border-color: transparent;
+  --ms-border-color: transparent;
+  --ms-dropdown-bg: transparent;
+  --ms-bg: transparent;
+  --ms-radius: 0;
+  --ms-ring-width: 0;
+  --ms-py: 0;
+  height: 2rem;
+  min-height: 2rem;
+  max-height: 2rem;
+}
+
+#localeSelect .multiselect-search {
   @apply bg-red-800;
+}
+
+#localeSelect .multiselect-dropdown {
+  overflow-y: auto;
+}
+
+#localeSelect .multiselect-options .multiselect-option {
+  @apply cursor-pointer dark:text-white;
+  min-height: 2rem;
+  padding: 0.5rem;
+}
+
+#localeSelect .multiselect-options .multiselect-option.is-selected,
+#localeSelect .multiselect-options .multiselect-option.is-selected.is-pointed {
+  @apply bg-red-800;
+}
+
+#localeSelect .multiselect-options .multiselect-option.is-pointed {
+  @apply dark:bg-gray-600;
+}
+
+#localeSelect .multiselect-options {
+  @apply dark:bg-gray-900 border-0;
+}
+
+#localeSelect .multiselect-clear {
+  @apply hidden;
 }
 </style>
