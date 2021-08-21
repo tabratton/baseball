@@ -19,7 +19,7 @@
     "date-fns": "^2.23.0",
     "fuse.js": "^6.4.6",
     "mlb-stats-api": "^1.4.0",
-    "numbro": "^2.3.2",
+    "numbro": "^2.3.5",
     "postcss": "^7",
     "rsvp": "^4.8.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
