@@ -323,7 +323,7 @@ export default createStore({
       const fetchDivisions = records => {
         return all(
           records.map(r => {
-            r.division = axios(`${state.apiHost}/divisions/${r.division.id}`).then(({ data: { divisions: [division] } }) => division)
+            r.division = axios.get(`${state.apiHost}/divisions/${r.division.id}`).then(({ data: { divisions: [division] } }) => division)
             return hash(r)
           })
         )
@@ -338,12 +338,14 @@ export default createStore({
         })
       }
 
+      const year = format(new Date(), 'yyyy')
+
       const americanStandings = await axios
-        .get(`${state.apiHost}/standings?leagueId=103`)
+        .get(`${state.apiHost}/standings?leagueId=103&season=${year}`)
         .then(({ data: { records }}) => fetchDivisions(records))
 
       const nationalStandings = await axios
-        .get(`${state.apiHost}/standings?leagueId=104`)
+        .get(`${state.apiHost}/standings?leagueId=104&season=${year}`)
         .then(({ data: { records }}) => fetchDivisions(records))
 
       americanStandings.forEach(addTeamMapData)
