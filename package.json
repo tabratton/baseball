@@ -19,7 +19,7 @@
     "numbro": "^2.3.5",
     "rsvp": "^4.8.5",
     "v-calendar": "^3.0.0-alpha.5",
-    "vue": "^3.1.5",
+    "vue": "^3.2.6",
     "vue-cli-plugin-s3-deploy": "^4.0.0-rc4",
     "vue-i18n": "^9.1.7",
     "vue-router": "4",
