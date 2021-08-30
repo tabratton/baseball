@@ -39,7 +39,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.17.0",
     "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.8",
+    "tailwindcss": "^2.2.9",
     "vue-cli-plugin-s3-deploy": "^4.0.0-rc4"
   },
   "eslintConfig": {
