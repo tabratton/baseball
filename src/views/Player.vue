@@ -1,6 +1,6 @@
 <template>
   <div class="player h-home w-screen overflow-y-auto">
-    <div class="w-full flex items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
       <div v-if="player && player.id" class="bg-gray-800 rounded-md m-4 w-full xl:w-3/4">
         <div class="w-full pt-6 pl-6 font-bold text-2xl">{{ player.fullName }} - #{{ player.primaryNumber }}</div>
         <div class="w-full pl-6 italic text-md" v-if="player.nickName">{{ t('player.playerInfo.nickname', { nickname: player.nickName }) }}</div>
@@ -40,40 +40,42 @@
         <div class="flex items-center justify-center">
           <span v-if="pitchingExists">
             <input
-              class="m-4"
-              type="radio"
-              id="pitching"
-              name="statType"
-              value="pitching"
-              v-model="selectedStatType"
+                class="m-4"
+                type="radio"
+                id="pitching"
+                name="statType"
+                value="pitching"
+                v-model="selectedStatType"
             >
             <label for="pitching">{{ t('player.stats.pitching') }}</label>
           </span>
 
           <span v-if="hittingExists">
             <input
-              class="m-4"
-              type="radio"
-              id="hitting"
-              name="statType"
-              value="hitting"
-              v-model="selectedStatType"
+                class="m-4"
+                type="radio"
+                id="hitting"
+                name="statType"
+                value="hitting"
+                v-model="selectedStatType"
             >
             <label for="hitting">{{ t('player.stats.hitting') }}</label>
           </span>
 
           <span v-if="fieldingExists">
             <input
-              class="m-4"
-              type="radio"
-              id="fielding"
-              name="statType"
-              value="fielding"
-              v-model="selectedStatType"
+                class="m-4"
+                type="radio"
+                id="fielding"
+                name="statType"
+                value="fielding"
+                v-model="selectedStatType"
             >
             <label for="fielding">{{ t('player.stats.fielding') }}</label>
           </span>
         </div>
+      </div>
+      <div v-if="player && player.id" class="bg-gray-800 rounded-md m-4 w-full xl:w-3/4">
         <div class="w-full pl-6 pt-6 font-bold text-3xl text-center">{{ seasonStats.season }}</div>
         <div class="w-full pt-6 pb-6 flex flex-row flex-wrap justify-center">
           <div v-for="stat in nonYearTypes" :key="stat.field" class="flex flex-col items-center m-3">
@@ -81,28 +83,31 @@
             <span class="text-4xl font-bold">{{ stat.field.split('.').reduce((obj, key) => obj[key], seasonStats) }}</span>
           </div>
         </div>
+      </div>
+      <div v-if="player && player.id" class="bg-gray-800 rounded-md m-4 w-full xl:w-3/4">
         <div class="overflow-x-auto m-4">
           <SortableTable
-            :items="yearByYearStats"
-            :headers="statTypes"
-            :sortField="sortField"
-            :sortDirection="sortDirection"
-            @update-sort="update"
-            bgClass="bg-gray-800"
-            textClass="text-white"
-            class="player-table w-full"
+              :items="yearByYearStats"
+              :headers="statTypes"
+              :sortField="sortField"
+              :sortDirection="sortDirection"
+              @update-sort="update"
+              bgClass="bg-gray-800"
+              textClass="text-white"
+              class="player-table w-full"
           >
             <template v-slot:header="slotProps">
               {{ slotProps.header.label }}
             </template>
             <template v-slot:rows="slotProps">
-              <tr v-for="year in slotProps.sortedItems" :key="selectedStatType === 'pitching' || selectedStatType === 'hitting' ? year.season : `${year.position.code}_${year.season}`">
+              <tr v-for="year in slotProps.sortedItems" :key="`${year.team?.id}_${year.season}_${year.position?.code}`">
                 <td
-                  :class="stat.field === 'season' ? 'season-col' : ''"
-                  v-for="(stat, index) in statTypes" :key="stat.field"
+                    :class="stat.field === 'season' ? 'season-col' : ''"
+                    v-for="(stat, index) in statTypes" :key="stat.field"
                 >
                   {{ stat.field.split('.').reduce((obj, key) => obj[key], year) }}
                   <span v-if="selectedStatType === 'fielding' && index === 0"> - {{ year.position.abbreviation }}</span>
+                  <span v-if="index === 0 && year.team">- {{ year.team.short }}</span>
                 </td>
               </tr>
               <tr>
@@ -128,6 +133,8 @@ import SortableTable from '@/components/SortableTable'
 import useDateFormat from '@/composables/useDateFormat'
 import useSortableTable from '@/composables/useSortableTable'
 
+import teamMap from '@/util/teamMap'
+
 export default {
   name: 'Player',
   components: {
@@ -144,7 +151,18 @@ export default {
     const player = computed(() => store.getters.getPlayer(route.params.playerId))
     const seasonStats = computed(() => ((((player.value || {}).stats || []).find(s => s.type.displayName === 'season' && s.group.displayName === selectedStatType.value) || {}).splits || [])[0])
     const careerStats = computed(() => ((((player.value || {}).stats || []).find(s => s.type.displayName === 'career' && s.group.displayName === selectedStatType.value) || {}).splits || [])[0])
-    const yearByYearStats = computed(() => (((player.value || {}).stats || []).find(s => s.type.displayName === 'yearByYear' && s.group.displayName === selectedStatType.value) || {}).splits)
+    const yearByYearStats = computed(() => {
+      return (player.value?.stats || [])
+          .find(s => s.type.displayName === 'yearByYear' && s.group.displayName === selectedStatType.value)
+          ?.splits
+          .map(season => {
+            if (season.team) {
+              season.team.short = teamMap.find(team => team.id === season.team.id).short
+            }
+
+            return season
+          })
+    })
 
     const pitchingExists = computed(() => player.value.stats.find(s => s.group.displayName === 'pitching'))
     const hittingExists = computed(() => player.value.stats.find(s => s.group.displayName === 'hitting'))
@@ -296,5 +314,9 @@ export default {
   position: sticky;
   left: 0;
   @apply bg-gray-800;
+}
+
+td {
+  @apply border-t border-dashed;
 }
 </style>
