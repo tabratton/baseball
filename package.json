@@ -9,7 +9,7 @@
     "deploy": "vue-cli-service s3-deploy"
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.3",
+    "@popperjs/core": "^2.10.0",
     "@vueform/multiselect": "^2.1.0",
     "axios": "^0.21.1",
     "core-js": "^3.16.4",
