@@ -9,16 +9,16 @@
     "deploy": "vue-cli-service s3-deploy"
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.3",
+    "@popperjs/core": "^2.10.1",
     "@vueform/multiselect": "^2.1.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "core-js": "^3.16.4",
     "date-fns": "^2.23.0",
     "fuse.js": "^6.4.6",
     "numbro": "^2.3.5",
     "rsvp": "^4.8.5",
     "v-calendar": "^3.0.0-alpha.5",
-    "vue": "^3.2.6",
+    "vue": "^3.2.8",
     "vue-i18n": "^9.1.7",
     "vue-router": "4",
     "vuex": "^4.0.2"
@@ -28,7 +28,7 @@
     "@vue/cli-plugin-babel": "~5.0.0-beta.3",
     "@vue/cli-plugin-eslint": "~5.0.0-beta.3",
     "@vue/cli-service": "~5.0.0-beta.3",
-    "@vue/compiler-sfc": "^3.1.5",
+    "@vue/compiler-sfc": "^3.2.8",
     "@vue/eslint-config-standard": "6.1.0",
     "autoprefixer": "^10.3.4",
     "babel-eslint": "^10.1.0",
