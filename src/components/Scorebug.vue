@@ -52,7 +52,7 @@
             v-for="base in [game.runners.find(b => b.num === 2), game.runners.find(b => b.num === 1), game.runners.find(b => b.num === 3)]"
             :key="base.num"
             :class="{ 'active': base.runner }"
-            class="base"
+            class="base transition-colors duration-700"
           ></div>
           <svg class="transform -rotate-45 mt-3 ml-3" viewBox="189.848 157.915 17 17.119" width="17" height="17.119">
             <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034" style="paint-order: fill; fill: white; stroke: black;"></path>
@@ -62,18 +62,17 @@
       </div>
       <div class="flex justify-center items-center w-full">
         <div
-          :class="{ 'active': game.outs[0] }"
-          class="out-indicator"
-        ></div>
-        <div
-          :class="{ 'active': game.outs[1] }"
-          class="out-indicator"
+          v-for="(out, index) in game.outs"
+          :key="index"
+          :class="{ 'active': out }"
+          class="out-indicator transition-colors duration-700"
         ></div>
       </div>
     </div>
     <table
-      v-if="playerInfoExpanded && game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
-      class="table-auto w-full text-gray-100 rounded"
+      v-if="game.inProgress && game.home.currentPlayer && game.away.currentPlayer"
+      class="table-auto text-gray-100 rounded"
+      :class="{ 'table': playerInfoExpanded, 'hidden': !playerInfoExpanded }"
       @click="goToBoxscore()"
     >
       <caption class="sr-only">{{ t('scorebug.currentPlayers') }}</caption>
@@ -100,20 +99,19 @@
     </table>
     <div v-if="game.inProgress" class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1">
       <div class="cursor-pointer" @click="togglePlayerInfoExpanded">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          :class="{ 'transform rotate-180': playerInfoExpanded, }"
+          class="h-6 w-6 transition-transform"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
-            v-if="!playerInfoExpanded"
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
             d="M13 5l7 7-7 7M5 5l7 7-7 7"
-          />
-          <path
-            v-else
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
           />
         </svg>
       </div>
