@@ -12,7 +12,7 @@
         </template>
       </date-picker>
     </div>
-    <ScorebugList class="w-full shadow-md overflow-auto flex flex-row flex-wrap justify-center p-2 md:p-4" :date="date"/>
+    <ScorebugList class="w-full shadow-md overflow-auto flex flex-row flex-wrap md:justify-center p-2 md:p-4" :date="date"/>
   </div>
 </template>
 
