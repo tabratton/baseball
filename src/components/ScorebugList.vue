@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-transparent rounded">
+  <div class="rounded">
     <Scorebug
       v-for="g in inProgress"
       :key="g.gamePk"
