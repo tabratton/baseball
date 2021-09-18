@@ -1,13 +1,15 @@
 <template>
-  <div class="league-leaders h-home w-screen">
-    <div class="w-full flex items-center justify-center p-4">
+  <div class="league-leaders h-home w-screen flex flex-col items-center">
+    <div class="w-full md:w-1/2 xl:w-1/4 flex items-center justify-center p-4">
       <multiselect
-          class="w-full md:w-1/2 xl:w-1/4"
           id="leaderTypes"
           v-model="selectedType"
           :placeholder="t('leagueLeaders.selectPrompt')"
           valueProp="id"
           :maxHeight="320"
+          :groups="true"
+          :groupLabel="'categoryLabel'"
+          :groupOptions="'options'"
           :options="filteredTypes"
           :object="true"
           :searchable="true"
@@ -114,6 +116,24 @@ export default {
     const selectedType = ref(null)
     const searchText = ref('')
 
+    const createGroups = (groups, option) => {
+      let group = groups.find(g => g.category === option.category)
+      if (!group) {
+        group = {
+          category: option.category,
+          categoryLabel: t(`leagueLeaders.${option.category}`),
+          options: [],
+          disabled: false
+        }
+
+        groups.push(group)
+      }
+
+      console.log(groups)
+      group.options.push(option)
+      return groups
+    }
+
     const types = computed(() => {
       const list = [
         { typeName: 'assists', category: 'fielding' },
@@ -160,8 +180,8 @@ export default {
         { typeName: 'airOuts', category: 'pitching' },
         { typeName: 'balk', category: 'pitching' },
         { typeName: 'blownSaves', category: 'pitching' },
-        { typeName: 'catcherEarnedRunAverage', category: 'fielding', displayCategory: 'catching' },
-        { typeName: 'catchersInterference', category: 'fielding', displayCategory: 'catching' },
+        { typeName: 'catcherEarnedRunAverage', category: 'catching' },
+        { typeName: 'catchersInterference', category: 'catching' },
         { typeName: 'completeGames', category: 'pitching' },
         { typeName: 'doublePlays', category: 'fielding' },
         { typeName: 'earnedRun', category: 'pitching' },
@@ -192,13 +212,14 @@ export default {
         { typeName: 'winPercentage', category: 'pitching' },
         { typeName: 'battingAverage', category: 'hitting' }
       ].map(type => {
-        type.label = `${t(`leagueLeaders.leaderTypes.${type.typeName}`)} (${t(`leagueLeaders.${type.displayCategory || type.category}`)})`
+        type.label = t(`leagueLeaders.leaderTypes.${type.typeName}`)
         type.id = `${type.category}_${type.typeName}`
         return type
       })
 
       list.sort((a, b) => a.category.localeCompare(b.category))
-      return list
+
+      return list.reduce(createGroups, [])
     })
 
     const fetchLeaders = () => store.dispatch('fetchLeagueLeaders', selectedType.value ? { statGroup: selectedType.value.category, type: selectedType.value.typeName } : {})
@@ -215,12 +236,12 @@ export default {
         keys: ['typeName', 'label', 'category'],
         findAllMatches: true
       }
-      return new Fuse(types.value, options)
+      return new Fuse(types.value.reduce((accumulator, next) => accumulator.concat(next.options), []), options)
     })
 
     const filteredTypes = computed(() => {
       if (searchText.value === '') return types.value
-      return fuse.value.search(searchText.value).map(result => result.item)
+      return fuse.value.search(searchText.value).map(result => result.item).reduce(createGroups, [])
     })
 
     return {
@@ -255,35 +276,24 @@ export default {
 }
 
 #leaderTypes {
-  @apply border-0 border-b-2 border-red-800 p-1 pl-0 dark:bg-gray-900 min-h-leader-select;
-  --ms-dropdown-border-color: transparent;
-  --ms-border-color: transparent;
-  --ms-bg: transparent;
-  --ms-radius: 0;
-  --ms-ring-width: 0;
-  --ms-py: 0;
+  @apply border-b-2 p-2 pl-0;
+  --ms-max-height: 80vh;
+  --ms-group-label-py: theme('spacing.2');
+  --ms-group-label-px: theme('spacing.2');
+  --ms-border-color: theme('colors.red.800');
+  --ms-bg: theme('colors.gray.900');
+  --ms-option-px: theme('spacing.6');
 }
 
-#leaderTypes .multiselect-options .multiselect-option {
-  @apply cursor-pointer dark:text-white;
-  min-height: 2rem;
-  padding: 0.5rem;
-}
-
-#leaderTypes .multiselect-options .multiselect-option.is-selected,
-#leaderTypes .multiselect-options .multiselect-option.is-selected.is-pointed {
-  @apply bg-red-800;
-}
-
-#leaderTypes .multiselect-options .multiselect-option.is-pointed {
-  @apply dark:bg-gray-600;
+#leaderTypes input:focus {
+  @apply ring-0;
 }
 
 #leaderTypes .multiselect-dropdown {
-  @apply dark:bg-gray-900;
+  @apply max-h-[80vh];
 }
 
-#leaderTypes .multiselect-clear {
-  @apply dark:bg-gray-900;
+#leaderTypes .multiselect-group-label {
+  @apply dark:bg-red-900 text-white text-center text-base uppercase;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{ 'cursor-pointer': !disableClick }"
-    class="scorebug flex m-2 rounded h-33"
+    class="scorebug flex m-2 rounded h-[8.25rem]"
   >
     <table
       class="table-auto text-gray-100"

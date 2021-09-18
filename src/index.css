@@ -34,3 +34,19 @@ a:hover {
 .vc-container.vc-is-dark {
     @apply text-gray-100 bg-gray-900 border-gray-700 !important;
 }
+
+:root {
+    --ms-option-py: theme('spacing.2');
+    --ms-option-color-pointed: theme('colors.white');
+    --ms-option-color-selected: theme('colors.white');
+    --ms-option-color-selected-pointed: theme('colors.white');
+    --ms-option-bg-pointed: theme('colors.gray.600');
+    --ms-option-bg-selected: theme('colors.red.800');
+    --ms-option-bg-selected-pointed: theme('colors.red.800');
+    --ms-dropdown-bg: theme('colors.gray.900');
+    --ms-py: theme('spacing.0');
+    --ms-ring-width: theme('spacing.0');
+    --ms-radius: theme('spacing.0');
+    --ms-border-width: theme('spacing.0');
+    --ms-dropdown-border-color: transparent;
+}

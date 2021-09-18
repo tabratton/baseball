@@ -31,7 +31,6 @@
           {{ t('navbar.leagueLeaders') }}
         </button>
         <multiselect
-          class="w-32"
           id="localeSelect"
           v-model="selectedLocale"
           :valueProp="'value'"
@@ -127,43 +126,20 @@ export default {
 }
 
 #localeSelect {
-  --ms-dropdown-border-color: transparent;
+  @apply w-32 !important;
+  --ms-dropdown-border-radius: theme('spacing.0');
+  --ms-dropdown-border-width: theme('spacing.0');
   --ms-border-color: transparent;
-  --ms-dropdown-bg: transparent;
-  --ms-bg: transparent;
-  --ms-radius: 0;
-  --ms-ring-width: 0;
-  --ms-py: 0;
-  height: 2rem;
-  min-height: 2rem;
-  max-height: 2rem;
+  --ms-bg: theme('colors.red.800');
+  --ms-option-px: theme('spacing.2');
 }
 
-#localeSelect .multiselect-search {
-  @apply bg-red-800;
+#localeSelect input:focus {
+  @apply ring-0;
 }
 
 #localeSelect .multiselect-dropdown {
   overflow-y: auto;
-}
-
-#localeSelect .multiselect-options .multiselect-option {
-  @apply cursor-pointer dark:text-white;
-  min-height: 2rem;
-  padding: 0.5rem;
-}
-
-#localeSelect .multiselect-options .multiselect-option.is-selected,
-#localeSelect .multiselect-options .multiselect-option.is-selected.is-pointed {
-  @apply bg-red-800;
-}
-
-#localeSelect .multiselect-options .multiselect-option.is-pointed {
-  @apply dark:bg-gray-600;
-}
-
-#localeSelect .multiselect-options {
-  @apply dark:bg-gray-900 border-0;
 }
 
 #localeSelect .multiselect-clear {

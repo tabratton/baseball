@@ -10,7 +10,7 @@ function getContrastYIQ(hex) {
 }
 
 const mlbColors = {
-  nyy: { main: '#0C2340', secondary: '#E4002C' },
+  nyy: { main: '#FFFFFF', secondary: '#0C2340', 'text-main': '#0C2340' },
   tb: { main: '#092C5C', secondary: '#8FBCE6' },
   tor: { main: '#134A8E', secondary: '#E8291C' },
   bos: { main: '#BD3039', secondary: '#0C2340' },
@@ -46,8 +46,13 @@ const mlbColors = {
 // TODO: Make highlight color variable for each team, apply to team name/borders/stuff for highlights
 
 Object.keys(mlbColors).forEach(key => {
-  mlbColors[key]['text-main'] = getContrastYIQ(mlbColors[key].main)
-  mlbColors[key]['text-secondary'] = getContrastYIQ(mlbColors[key].secondary)
+  if (!mlbColors[key]['text-main']) {
+    mlbColors[key]['text-main'] = getContrastYIQ(mlbColors[key].main)
+  }
+
+  if (!mlbColors[key]['text-secondary']) {
+    mlbColors[key]['text-secondary'] = getContrastYIQ(mlbColors[key].secondary)
+  }
 })
 
 module.exports = {
@@ -64,7 +69,6 @@ module.exports = {
         'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       },
       height: {
-        '33': '8.25rem',
         'content': 'calc(100vh - 12.5rem)',
         'home': 'calc(100vh - 2rem)',
         'leaders': 'calc(100vh - 6.5rem)'
