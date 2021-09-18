@@ -97,24 +97,22 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="game.inProgress" class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1">
-      <div class="cursor-pointer" @click="togglePlayerInfoExpanded">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          :class="{ 'transform rotate-180': playerInfoExpanded, }"
-          class="h-6 w-6 transition-transform"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 5l7 7-7 7M5 5l7 7-7 7"
-          />
-        </svg>
-      </div>
+    <div v-if="game.inProgress" class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1 cursor-pointer" @click="togglePlayerInfoExpanded">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        :class="{ 'transform rotate-180': playerInfoExpanded }"
+        class="h-6 w-6 transition-transform"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 5l7 7-7 7M5 5l7 7-7 7"
+        />
+      </svg>
     </div>
   </div>
 </template>
