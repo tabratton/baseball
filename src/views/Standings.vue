@@ -144,7 +144,7 @@ export default {
       if (alDivision.value === id) {
         alDivision.value = null
       } else {
-        alDivision.value = null
+        nlDivision.value = null
         alDivision.value = id
       }
     }
