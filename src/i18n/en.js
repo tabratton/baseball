@@ -1,7 +1,7 @@
 export default {
   locales: {
     'en-US': 'English',
-    'es': 'Spanish',
+    'es': 'Español',
   },
   navbar: {
     search: 'search...',

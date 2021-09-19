@@ -1,11 +1,15 @@
 export default {
+  locales: {
+    'en-US': 'English',
+    'es': 'Español',
+  },
   navbar: {
     search: 'buscar...',
     leagueLeaders: 'Líderes de la liga',
     standings: 'Posiciones'
   },
   scorebugList: {
-    noGames: 'No juegos'
+    noGames: 'No juegos :('
   },
   status: {
     L: 'Vivo',
@@ -217,5 +221,8 @@ export default {
       NLC: 'Central',
       NLE: 'Este'
     }
+  },
+  diffChart: {
+    gamesPlayed: '{num} Juegos jugados'
   }
 }
