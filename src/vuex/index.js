@@ -125,6 +125,7 @@ export default createStore({
       players: {},
       leagueLeaders: { american: [], national: [] },
       standings: { american: [], national: [] },
+      diffs: [],
       apiHost: 'https://statsapi.mlb.com/api/v1',
       locale: localStorage.getItem('locale'),
       date: new Date()
@@ -248,7 +249,8 @@ export default createStore({
     },
     getLeagueLeaders: state => state.leagueLeaders,
     getPlayer: state => playerId => state.players[playerId] || {},
-    getStandings: state => state.standings
+    getStandings: state => state.standings,
+    getDiffs: state => state.diffs
   },
   mutations: {
     updateGames(state, newGames) {
@@ -280,6 +282,9 @@ export default createStore({
     },
     updateStandings(state, standings) {
       state.standings = standings
+    },
+    updateDiffs(state, diffs) {
+      state.diffs = diffs
     }
   },
   actions: {
@@ -363,6 +368,45 @@ export default createStore({
           nationalStandings.find(s => s.division.id === 204)
         ]
       })
+    },
+    async fetchWinDifferentials({ commit, state }) {
+      const year = format(new Date(), 'yyyy')
+      const { regularSeasonStartDate, regularSeasonEndDate } = await axios.get(`${state.apiHost}/seasons/${year}/?sportId=1`).then(({ data: { seasons: [season] } }) => season)
+
+      const diffs = await all(teamMap.map(team => {
+        return axios.get(`${state.apiHost}/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${regularSeasonEndDate}`)
+          .then(({ data: { dates = [] } }) => {
+            let diff = 0
+            let count = 0
+
+            const gamesAbove500 = dates
+              .map(d => d.games[0])
+              .filter(g => g.status.statusCode === 'F')
+              .map(g => {
+                if (g.teams.away.team.id === team.id) {
+                  g.teams.away.date = g.officialDate
+                  return g.teams.away
+                } else {
+                  g.teams.home.date = g.officialDate
+                  return g.teams.home
+                }
+              })
+              .reduce((accumulator, g) => {
+                count += 1
+                diff = diff + (g.isWinner ? 1 : -1)
+                accumulator.push({ date: g.date, diff, count: `${count}`, isWinner: g.isWinner })
+                return accumulator
+              }, [])
+
+            return {
+              seasonDiffs: gamesAbove500,
+              overallDiff: diff,
+              ...team
+            }
+          })
+      }))
+
+      commit('updateDiffs', diffs)
     }
   }
 })

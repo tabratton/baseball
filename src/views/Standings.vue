@@ -1,10 +1,12 @@
 <template>
-  <div class="standings h-home w-screen flex flex-col 2xl:items-center 2xl:justify-center p-4 overflow-auto">
+  <div class="standings h-home w-screen p-4 overflow-auto">
     <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="americanStandings">
       <div class="text-center text-2xl font-bold mb-2">{{ t('standings.american.title') }}</div>
       <div class="division-container">
         <div v-for="division in americanStandings" :key="division.division.id" class="p-2 w-full flex-auto">
-          <div class="text-center font-bold">{{ t(`standings.american.${division.division.abbreviation}`) }}</div>
+          <div class="text-center font-bold cursor-pointer" @click="updateAL(division.division.id)">
+            {{ t(`standings.american.${division.division.abbreviation}`) }}
+          </div>
           <SortableTable
             :items="division.teamRecords"
             :headers="headers"
@@ -40,12 +42,15 @@
           </SortableTable>
         </div>
       </div>
+      <DiffChart :diffs="alFilteredDiffs" v-if="alDivision"></DiffChart>
     </div>
     <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="nationalStandings">
       <div class="text-center text-2xl font-bold mb-2">{{ t('standings.national.title') }}</div>
       <div class="division-container">
         <div v-for="division in nationalStandings" :key="division.division.id" class="p-2 w-full flex-auto">
-          <div class="text-center font-bold">{{ t(`standings.national.${division.division.abbreviation}`) }}</div>
+          <div class="text-center font-bold cursor-pointer"  @click="updateNL(division.division.id)">
+            {{ t(`standings.national.${division.division.abbreviation}`) }}
+          </div>
           <SortableTable
               :items="division.teamRecords"
               :headers="headers"
@@ -81,32 +86,43 @@
           </SortableTable>
         </div>
       </div>
+      <DiffChart :diffs="nlFilteredDiffs" v-if="nlDivision"></DiffChart>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 
 import SortableTable from '@/components/SortableTable'
 import useSortableTable from '@/composables/useSortableTable'
+import DiffChart from '@/components/DiffChart'
 
 export default {
   name: 'Standings',
   components: {
-    SortableTable
+    SortableTable,
+    DiffChart
   },
   setup() {
     const store = useStore()
     const { t } = useI18n()
 
     store.dispatch('fetchStandings')
+    store.dispatch('fetchWinDifferentials')
 
     const standings = computed(() => store.getters.getStandings)
     const americanStandings = computed(() => standings.value.american)
     const nationalStandings = computed(() => standings.value.national)
+
+    const alDivision = ref(null)
+    const nlDivision = ref(null)
+
+    const winDiffs = computed(() => store.getters.getDiffs)
+    const alFilteredDiffs = computed(() => winDiffs.value.filter(team => team.divisionId === alDivision.value))
+    const nlFilteredDiffs = computed(() => winDiffs.value.filter(team => team.divisionId === nlDivision.value))
 
     const { sortField: americanField, sortDirection: americanDirection, update: americanUpdate } = useSortableTable(americanStandings, 'divisionRank', 'asc')
     const { sortField: nationalField, sortDirection: nationalDirection, update: nationalUpdate } = useSortableTable(nationalStandings, 'divisionRank', 'asc')
@@ -124,6 +140,22 @@ export default {
       { label: 'Δ', field: 'runDifferential' }
     ])
 
+    const updateAL = id => {
+      if (alDivision.value === id) {
+        alDivision.value = null
+      } else {
+        alDivision.value = id
+      }
+    }
+
+    const updateNL = id => {
+      if (nlDivision.value === id) {
+        nlDivision.value = null
+      } else {
+        nlDivision.value = id
+      }
+    }
+
     return {
       t,
       americanStandings,
@@ -134,7 +166,13 @@ export default {
       americanUpdate,
       nationalField,
       nationalDirection,
-      nationalUpdate
+      nationalUpdate,
+      alDivision,
+      alFilteredDiffs,
+      updateAL,
+      nlDivision,
+      nlFilteredDiffs,
+      updateNL
     }
   }
 }

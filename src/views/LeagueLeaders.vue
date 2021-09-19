@@ -129,7 +129,6 @@ export default {
         groups.push(group)
       }
 
-      console.log(groups)
       group.options.push(option)
       return groups
     }
@@ -294,6 +293,6 @@ export default {
 }
 
 #leaderTypes .multiselect-group-label {
-  @apply dark:bg-red-900 text-white text-center text-base uppercase;
+  @apply bg-red-900 text-white text-center text-base uppercase;
 }
 </style>

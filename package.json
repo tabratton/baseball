@@ -9,6 +9,7 @@
     "deploy": "vue-cli-service s3-deploy"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.22",
     "@popperjs/core": "^2.10.1",
     "@vueform/multiselect": "^2.2.0",
     "axios": "^0.21.4",
