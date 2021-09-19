@@ -221,5 +221,8 @@ export default {
       NLC: 'Central',
       NLE: 'East'
     }
+  },
+  diffChart: {
+    gamesPlayed: '{num} Games Played'
   }
 }
