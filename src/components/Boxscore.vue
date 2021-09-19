@@ -77,9 +77,13 @@ export default {
 }
 </script>
 
-<style scoped>
-.boxscore table th:first-of-type,
-.boxscore table td:first-of-type {
-  @apply text-left;
+<style lang="postcss" scoped>
+.boxscore {
+  table {
+    th:first-of-type,
+    td:first-of-type {
+      @apply text-left;
+    }
+  }
 }
 </style>

@@ -164,20 +164,24 @@ export default {
 }
 </script>
 
-<style scoped>
-.scorebug table td {
-  @apply whitespace-nowrap;
-}
+<style lang="postcss" scoped>
+.scorebug {
+  table {
+    td {
+      @apply whitespace-nowrap;
+    }
+  }
 
-.out-indicator {
-  @apply rounded-full w-4 h-4 m-2 bg-gray-500;
-}
+  .out-indicator {
+    @apply rounded-full w-4 h-4 m-2 bg-gray-500;
+  }
 
-.base {
-  @apply w-8 h-8 border-2 border-gray-800 bg-gray-500;
-}
+  .base {
+    @apply w-8 h-8 border-2 border-gray-800 bg-gray-500;
+  }
 
-.active {
-  @apply bg-yellow-600;
+  .active {
+    @apply bg-yellow-600;
+  }
 }
 </style>

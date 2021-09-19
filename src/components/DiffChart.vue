@@ -120,9 +120,3 @@ export default {
   }
 }
 </script>
-
- <style>
- foreignObject > div {
-   white-space: unset !important;
- }
- </style>

@@ -132,17 +132,17 @@ export default {
   --ms-border-color: transparent;
   --ms-bg: theme('colors.red.800');
   --ms-option-px: theme('spacing.2');
-}
 
-#localeSelect input:focus {
-  @apply ring-0;
-}
+  input:focus {
+    @apply ring-0;
+  }
 
-#localeSelect .multiselect-dropdown {
-  overflow-y: auto;
-}
+  .multiselect-clear {
+    @apply hidden;
+  }
 
-#localeSelect .multiselect-clear {
-  @apply hidden;
+  .multiselect-dropdown {
+    overflow-y: auto;
+  }
 }
 </style>

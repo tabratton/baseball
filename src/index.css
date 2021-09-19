@@ -12,19 +12,19 @@ h4 {
 
 .players-table {
     @apply border-collapse border border-white border-opacity-50 mb-4;
-}
 
-.players-table th,
-.players-table td {
-    @apply p-1 sm:p-3;
-}
+    th {
+        @apply border-b border-white border-opacity-60;
+    }
 
-.players-table th {
-    @apply border-b border-white border-opacity-60;
-}
+    td {
+        @apply border-l border-r border-white border-opacity-60;
+    }
 
-.players-table td {
-    @apply border-l border-r border-white border-opacity-60;
+    th,
+    td {
+        @apply p-1 sm:p-3;
+    }
 }
 
 a:hover {

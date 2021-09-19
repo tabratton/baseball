@@ -181,8 +181,12 @@ export default {
 </script>
 
 <style scoped>
-table tbody tr:nth-child(odd) {
-  @apply bg-gray-700;
+table {
+  tbody {
+    tr:nth-child(odd) {
+      @apply bg-gray-700;
+    }
+  }
 }
 
 abbr[title] {

@@ -117,11 +117,12 @@ export default {
     const searchText = ref('')
 
     const createGroups = (groups, option) => {
-      let group = groups.find(g => g.category === option.category)
+      const optionCategory = option.displayCategory ? option.displayCategory : option.category
+      let group = groups.find(g => g.category === optionCategory)
       if (!group) {
         group = {
-          category: option.category,
-          categoryLabel: t(`leagueLeaders.${option.category}`),
+          category: optionCategory,
+          categoryLabel: t(`leagueLeaders.${optionCategory}`),
           options: [],
           disabled: false
         }
@@ -179,7 +180,7 @@ export default {
         { typeName: 'airOuts', category: 'pitching' },
         { typeName: 'balk', category: 'pitching' },
         { typeName: 'blownSaves', category: 'pitching' },
-        { typeName: 'catcherEarnedRunAverage', category: 'catching' },
+        { typeName: 'catcherEarnedRunAverage', category: 'fielding', displayCategory: 'catching' },
         { typeName: 'catchersInterference', category: 'catching' },
         { typeName: 'completeGames', category: 'pitching' },
         { typeName: 'doublePlays', category: 'fielding' },
@@ -260,18 +261,22 @@ export default {
 <style lang="postcss">
 .leaders-table-american {
   @apply bg-red-800 text-white;
-}
 
-.leaders-table-american tbody tr:nth-child(odd) {
-  @apply bg-red-700;
+   tbody {
+     tr:nth-child(odd) {
+       @apply bg-red-700;
+     }
+   }
 }
 
 .leaders-table-national {
   @apply bg-blue-800 text-white;
-}
 
-.leaders-table-national tbody tr:nth-child(odd) {
-  @apply bg-blue-700;
+  tbody {
+    tr:nth-child(odd) {
+      @apply bg-blue-700;
+    }
+  }
 }
 
 #leaderTypes {
@@ -282,17 +287,17 @@ export default {
   --ms-border-color: theme('colors.red.800');
   --ms-bg: theme('colors.gray.900');
   --ms-option-px: theme('spacing.6');
-}
 
-#leaderTypes input:focus {
-  @apply ring-0;
-}
+  input:focus {
+    @apply ring-0;
+  }
 
-#leaderTypes .multiselect-dropdown {
-  @apply max-h-[80vh];
-}
+  .multiselect-dropdown {
+    @apply max-h-[80vh];
+  }
 
-#leaderTypes .multiselect-group-label {
-  @apply bg-red-900 text-white text-center text-base uppercase;
+  .multiselect-group-label {
+    @apply bg-red-900 text-white text-center text-base uppercase;
+  }
 }
 </style>

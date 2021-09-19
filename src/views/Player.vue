@@ -103,6 +103,7 @@
               <tr v-for="year in slotProps.sortedItems" :key="`${year.team?.id}_${year.season}_${year.position?.code}`">
                 <td
                     :class="stat.field === 'season' ? 'season-col' : ''"
+                    class="whitespace-nowrap"
                     v-for="(stat, index) in statTypes" :key="stat.field"
                 >
                   {{ stat.field.split('.').reduce((obj, key) => obj[key], year) }}
@@ -111,7 +112,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="season-col">{{ t('player.stats.career') }}</td>
+                <td class="season-col whitespace-nowrap">{{ t('player.stats.career') }}</td>
                 <td v-for="stat in nonYearTypes" :key="stat.field">{{ stat.field.split('.').reduce((obj, key) => obj[key], careerStats) }}</td>
               </tr>
             </template>
