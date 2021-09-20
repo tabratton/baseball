@@ -14,7 +14,7 @@
     "@vueform/multiselect": "^2.2.0",
     "axios": "^0.21.4",
     "core-js": "^3.17.3",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.24.0",
     "fuse.js": "^6.4.6",
     "numbro": "^2.3.5",
     "rsvp": "^4.8.5",
