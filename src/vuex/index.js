@@ -380,8 +380,9 @@ export default createStore({
             let count = 0
 
             const gamesAbove500 = dates
-              .map(d => d.games[0])
-              .filter(g => g.status.statusCode === 'F')
+              .map(d => d.games)
+              .reduce((accumulator, games) => accumulator.concat(games), [])
+              .filter(g => g.status.codedGameState === 'F')
               .map(g => {
                 if (g.teams.away.team.id === team.id) {
                   g.teams.away.date = g.officialDate
@@ -394,7 +395,7 @@ export default createStore({
               .reduce((accumulator, g) => {
                 count += 1
                 diff = diff + (g.isWinner ? 1 : -1)
-                accumulator.push({ date: g.date, diff, count: `${count}`, isWinner: g.isWinner })
+                accumulator.push({ date: g.date, diff, count, isWinner: g.isWinner })
                 return accumulator
               }, [])
 
