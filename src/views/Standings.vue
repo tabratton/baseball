@@ -1,8 +1,8 @@
 <template>
   <div class="standings h-home w-screen p-4 overflow-auto">
-    <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="americanStandings">
+    <div class="bg-gray-800 rounded-md my-4 w-full" v-if="americanStandings">
       <div class="text-center text-2xl font-bold mb-2">{{ t('standings.american.title') }}</div>
-      <div class="division-container">
+      <div class="division-container p-4">
         <div v-for="division in americanStandings" :key="division.division.id" class="p-2 w-full flex-auto">
           <div class="text-center font-bold cursor-pointer" @click="updateAL(division.division.id)">
             {{ t(`standings.american.${division.division.abbreviation}`) }}
@@ -24,7 +24,7 @@
               <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
                 <td>{{ record.divisionRank }}</td>
                 <td class="flex items-center justify-center">
-                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.png`">
+                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.svg`">
                   <abbr :title="record.team.name">
                     {{ record.team.short }}
                   </abbr>
@@ -44,9 +44,9 @@
       </div>
       <DiffChart :diffs="alFilteredDiffs" v-if="alDivision"></DiffChart>
     </div>
-    <div class="bg-gray-800 rounded-md p-4 my-4 w-full" v-if="nationalStandings">
+    <div class="bg-gray-800 rounded-md my-4 w-full" v-if="nationalStandings">
       <div class="text-center text-2xl font-bold mb-2">{{ t('standings.national.title') }}</div>
-      <div class="division-container">
+      <div class="division-container p-4">
         <div v-for="division in nationalStandings" :key="division.division.id" class="p-2 w-full flex-auto">
           <div class="text-center font-bold cursor-pointer"  @click="updateNL(division.division.id)">
             {{ t(`standings.national.${division.division.abbreviation}`) }}
@@ -68,7 +68,7 @@
               <tr v-for="record in slotProps.sortedItems" :key="record.team.short">
                 <td>{{ record.divisionRank }}</td>
                 <td class="flex items-center justify-center">
-                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.png`">
+                  <img class="h-6 mr-2" :src="`/assets/team_logos/${record.team.short.toLowerCase()}.svg`">
                   <abbr :title="record.team.name">
                     {{ record.team.short }}
                   </abbr>
@@ -144,7 +144,6 @@ export default {
       if (alDivision.value === id) {
         alDivision.value = null
       } else {
-        nlDivision.value = null
         alDivision.value = id
       }
     }
@@ -153,7 +152,6 @@ export default {
       if (nlDivision.value === id) {
         nlDivision.value = null
       } else {
-        alDivision.value = null
         nlDivision.value = id
       }
     }

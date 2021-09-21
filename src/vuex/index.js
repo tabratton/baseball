@@ -407,6 +407,8 @@ export default createStore({
           })
       }))
 
+      diffs.sort((a, b) => a.overallDiff < b.overallDiff ? -1 : 1)
+
       commit('updateDiffs', diffs)
     }
   }

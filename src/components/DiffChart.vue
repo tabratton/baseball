@@ -1,10 +1,10 @@
 <template>
-<div class="w-full h-[800px]" ref="chartDiv"></div>
+<div class="w-full h-[800px] bg-gray-700 rounded p-2" ref="chartDiv"></div>
 </template>
 
 <script>
-import { disposeAllCharts, color, create, Scrollbar, useTheme } from '@amcharts/amcharts4/core';
-import { Legend, LineSeries, ValueAxis, XYChart, XYCursor } from '@amcharts/amcharts4/charts';
+import { color, create, Image, Scrollbar, useTheme } from '@amcharts/amcharts4/core';
+import { Bullet, Legend, LineSeries, ValueAxis, XYChart, XYCursor } from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import resolveConfig from 'tailwindcss/resolveConfig'
 import { onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
@@ -31,11 +31,9 @@ export default {
     const chartDiv = ref(null)
     let chart = null
 
-    const secondaryColorTeams = ['SF', 'SD', 'CWS', 'DET', 'CLE', 'KC', 'TB', 'SEA', 'MIL']
+    const secondaryColorTeams = ['SF', 'SD', 'CWS', 'DET', 'CLE', 'KC', 'TB', 'SEA']
 
     const createChart = () => {
-      disposeAllCharts()
-
       const c = create(chartDiv.value, XYChart)
       c.paddingRight = 20
 
@@ -79,7 +77,7 @@ export default {
         }
 
         series.name = team.short
-        series.data = team.seasonDiffs.map(d => Object.assign({}, d))
+        series.data = team.seasonDiffs.map((d, index) => Object.assign({ disabled: index !== team.seasonDiffs.length - 1 }, d))
         series.dataFields.valueX = 'count'
         series.dataFields.valueY = 'diff'
         series.tooltipText = '{name}\n{diff.formatNumber("+#|#")}'
@@ -87,6 +85,16 @@ export default {
         series.fill = teamColor
         series.strokeWidth = 3
         series.cursorTooltipEnabled = true
+
+        const bullet = series.bullets.push(new Bullet())
+        bullet.disabled = true
+        bullet.propertyFields.disabled = 'disabled'
+        const image = bullet.createChild(Image)
+        image.href = `/assets/team_logos/${team.short.toLowerCase()}.svg`
+        image.width = 36
+        image.height = 36
+        image.horizontalCenter = 'middle'
+        image.verticalCenter = 'middle'
       })
 
       c.scrollbarX.thumb.background.fill = color('#E5E7EB')
