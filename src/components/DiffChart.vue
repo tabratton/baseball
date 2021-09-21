@@ -29,7 +29,7 @@ export default {
     const { t } = useI18n()
 
     const chartDiv = ref(null)
-    const chart = ref(null)
+    let chart = null
 
     const secondaryColorTeams = ['SF', 'SD', 'CWS', 'DET', 'CLE', 'KC', 'TB', 'SEA', 'MIL']
 
@@ -104,15 +104,15 @@ export default {
       c.legend = new Legend()
       c.legend.labels.template.fill = color(fullConfig.theme.colors.white)
 
-      chart.value = c
+      chart = c
     }
 
     watch(diffs, createChart)
     onMounted(() => createChart())
 
     onBeforeUnmount(() => {
-      if (chart.value) {
-        chart.value.dispose()
+      if (chart) {
+        chart.dispose()
       }
     })
 
