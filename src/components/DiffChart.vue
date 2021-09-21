@@ -56,6 +56,9 @@ export default {
       valueAxisY.renderer.grid.template.location = 0
       valueAxisY.renderer.grid.template.strokeOpacity = 0.15
       valueAxisY.renderer.grid.template.stroke = color(fullConfig.theme.colors.white)
+      valueAxisY.renderer.baseGrid.stroke = color(fullConfig.theme.colors.black)
+      valueAxisY.renderer.baseGrid.strokeWidth = 2
+      valueAxisY.renderer.baseGrid.strokeOpacity = 0.6
       valueAxisY.renderer.labels.template.fill = color(fullConfig.theme.colors.white)
       valueAxisY.renderer.labels.template.opacity = 0.87
       valueAxisY.renderer.fontSize = 16
