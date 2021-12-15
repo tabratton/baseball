@@ -23,7 +23,7 @@ import ScorebugList from '@/components/ScorebugList'
 import { parseISO } from 'date-fns'
 
 export default {
-  name: 'Game',
+  name: 'GameView',
   components: {
     Boxscore,
     Players,

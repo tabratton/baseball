@@ -24,7 +24,7 @@ import { computed, ref, watch } from 'vue'
 import ScorebugList from '@/components/ScorebugList.vue'
 
 export default {
-  name: 'Home',
+  name: 'HomeView',
   components: {
     DatePicker,
     ScorebugList

@@ -45,7 +45,7 @@ import { useI18n } from 'vue-i18n'
 import useDateFormat from '@/composables/useDateFormat'
 
 export default {
-  name: 'Boxscore',
+  name: 'BoxScore',
   props: {
     gamePk: {
       type: String,

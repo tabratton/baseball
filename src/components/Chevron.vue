@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Chevron',
+  name: 'DynamicChevron',
   props: {
     isUp: {
       type: Boolean

@@ -137,7 +137,7 @@ import useSortableTable from '@/composables/useSortableTable'
 import teamMap from '@/util/teamMap'
 
 export default {
-  name: 'Player',
+  name: 'PlayerView',
   components: {
     SortableTable
   },

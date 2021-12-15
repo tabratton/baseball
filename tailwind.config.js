@@ -56,13 +56,15 @@ Object.keys(mlbColors).forEach(key => {
 })
 
 module.exports = {
-  mode: 'jit',
-  purge: { content: ['./public/**/*.html', './src/**/*.vue', './src/**/*.js'] },
-  darkMode: 'media',
+  content: [
+    './public/**/*.html',
+    './src/**/*.vue',
+    './src/**/*.js'
+  ],
   theme: {
     extend: {
       colors: {
-        gray: colors.warmGray,
+        gray: colors.stone,
         ...mlbColors
       },
       boxShadow: {
@@ -93,9 +95,6 @@ module.exports = {
         white: colors.white
       }
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms')

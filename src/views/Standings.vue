@@ -101,7 +101,7 @@ import useSortableTable from '@/composables/useSortableTable'
 import DiffChart from '@/components/DiffChart'
 
 export default {
-  name: 'Standings',
+  name: 'StandingsTables',
   components: {
     SortableTable,
     DiffChart

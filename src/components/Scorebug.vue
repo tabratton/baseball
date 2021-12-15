@@ -126,7 +126,7 @@ import Chevron from '@/components/Chevron'
 import useDateFormat from '@/composables/useDateFormat'
 
 export default {
-  name: 'Scorebug',
+  name: 'ScoreBug',
   props: {
     game: {
       type: Object,
