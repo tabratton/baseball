@@ -15,7 +15,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.19.3",
     "date-fns": "^2.27.0",
-    "fuse.js": "^6.4.6",
+    "fuse.js": "^6.5.0",
     "numbro": "^2.3.5",
     "rsvp": "^4.8.5",
     "v-calendar": "^3.0.0-alpha.6",
