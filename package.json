@@ -13,7 +13,7 @@
     "@popperjs/core": "^2.11.0",
     "@vueform/multiselect": "^2.2.1",
     "axios": "^0.24.0",
-    "core-js": "^3.19.3",
+    "core-js": "^3.20.1",
     "date-fns": "^2.27.0",
     "fuse.js": "^6.4.6",
     "numbro": "^2.3.5",
