@@ -1,7 +1,43 @@
 {{page-title "Baseball"}}
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+<div id="app-grid" class="font-body h-screen w-screen bg-black bg-opacity-90 text-white text-opacity-90">
+  <div class="navbar flex flex-row items-center justify-between bg-red-800 bg-opacity-90 shadow-lg">
+    <svg
+      class="ml-4 cursor-pointer"
+      viewBox="189.848 157.915 17 17.119"
+      width="17"
+      height="17.119"
+      {{on "click" this.goHome}}
+    >
+      <path
+        class="stroke-black fill-white"
+        d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034"
+      ></path>
+      <polygon
+        class="stroke-white fill-white"
+        points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"
+      ></polygon>
+    </svg>
+    <div class="flex flex-row">
+      {{!-- TODO: Do something about search --}}
+      <Input
+        class="hidden p-1 pl-2 w-24 bg-transparent placeholder-white placeholder-opacity-75 border-none focus:bg-white focus:bg-opacity-[15%] focus:outline-none focus:ring-0"
+        @type="text"
+        placeholder={{t "navbar.search"}}
+      />
+      <button
+        class="hover:bg-white hover:bg-opacity-[15%] p-2 leading-4 focus:outline-none mr-2" type="button" {{on "click" this.goToStandings}}
+      >
+        {{t "navbar.standings"}}
+      </button>
+      <button
+        class="hover:bg-white hover:bg-opacity-[15%] p-2 leading-4 focus:outline-none mr-2" type="button" {{on "click" this.goToLeagueLeaders}}
+      >
+        {{t "navbar.league_leaders"}}
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    {{outlet}}
+  </div>
+</div>

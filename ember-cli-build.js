@@ -1,10 +1,16 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const { Webpack } = require('@embroider/webpack');
 
 module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
-    // Add options here
+  const app = new EmberApp(defaults, {
+    'ember-composable-helpers': {
+      only: ['find-by'],
+    },
+    'ember-power-calendar-date-fns': {
+      includeLocales: ['en-US'],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -20,7 +26,6 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  const { Webpack } = require('@embroider/webpack');
   return require('@embroider/compat').compatBuild(app, Webpack, {
     skipBabel: [
       {

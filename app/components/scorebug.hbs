@@ -1,0 +1,159 @@
+<div
+  class="scorebug flex m-2 rounded h-[8.25rem] {{unless @disableClick "cursor-pointer"}}"
+  ...attributes
+>
+  <table
+    class="table-auto text-gray-100"
+    {{on "click" this.goToBoxScore}}
+  >
+    <caption class="sr-only">{{t "scorebug.score"}}</caption>
+    <thead class="sr-only">
+      <tr>
+        <th scope="col">{{t "scorebug.team"}}</th>
+        <th scope="col">{{t "scorebug.score"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class={{concat @game.away.bgClass " " @game.away.textClass}}>
+        <td class="py-2.5 pl-2 whitespace-nowrap">
+          {{@game.away.team}}
+        </td>
+        <td class="py-2.5 pr-2 text-right whitespace-nowrap">
+          {{@game.away.score}}
+        </td>
+      </tr>
+
+      <tr class={{concat @game.home.bgClass " " @game.home.textClass}}>
+        <td class="py-2.5 pl-2 whitespace-nowrap">
+          {{@game.home.team}}
+        </td>
+        <td class="py-2.5 pr-2 text-right whitespace-nowrap">
+          {{@game.home.score}}
+        </td>
+      </tr>
+
+      <tr class="bg-gray-900">
+        {{#if @game.inProgress}}
+          <td class="py-2.5 pl-0 pr-2 sm:pr-4 flex items-center justify-start w-full whitespace-nowrap">
+            <Chevron @isUp={{@game.isTop}} />
+            <span>{{@game.inning}}</span>
+          </td>
+        {{else}}
+          <td class="py-2.5 pl-2 pr-1 whitespace-nowrap">
+            {{t (concat "status." @game.statusCode)}}
+          </td>
+        {{/if}}
+        <td class="text-right py-2.5 pl-1 pr-2 whitespace-nowrap">
+          {{#if @game.isPregame}}
+            {{date-format date=@game.gameTime locale="en-US" format="hh:mm a"}}
+          {{else}}
+            {{@game.batterCount}}
+          {{/if}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {{#if @game.inProgress}}
+    <div
+      class="flex flex-col justify-center w-28 items-center bg-gray-900"
+      {{on "click" this.goToBoxScore}}
+    >
+      <div class="flex-grow w-28 relative">
+        <div class="w-16 h-16 flex flex-wrap transform rotate-45 translate-x-6 translate-y-6 absolute">
+          {{#each (array
+                    (find-by "num" 2 @game.runners)
+                    (find-by "num" 1 @game.runners)
+                    (find-by "num" 3 @game.runners)
+                  ) as |base|
+          }}
+            <div class="w-8 h-8 border-2 border-gray-800 bg-gray-500 transition-colors duration-700 {{if base.runner "bg-yellow-600"}}"></div>
+          {{/each}}
+          <svg
+            class="home-plate transform -rotate-45 mt-3 ml-3"
+            viewBox="189.848 157.915 17 17.119"
+            width="17"
+            height="17.119"
+          >
+            <path d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034"></path>
+            <polygon points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"></polygon>
+          </svg>
+        </div>
+      </div>
+      <div class="flex justify-center items-center w-full">
+        {{#each @game.outs as |out|}}
+          <div class="rounded-full w-4 h-4 m-2 bg-gray-500 transition-colors duration-700 {{if out "bg-yellow-600"}}"></div>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+  {{#if (and @game.inProgress @game.home.currentPlayer @game.away.currentPlayer)}}
+    <table class="table-auto text-gray-100 rounded {{if this.playerInfoExpanded "table" "hidden"}}">
+      <caption class="sr-only">{{t "scorebug.current_players"}}</caption>
+      <thead class="sr-only">
+        <tr>
+          <th>{{t "scorebug.player"}}</th>
+          <th>{{t "scorebug.stat"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class={{concat @game.away.bgClass " " @game.away.textClass}}>
+          <td class="px-2 py-2.5 text-right">
+            {{#if @game.isTop}}
+              {{@game.away.order}} {{@game.away.currentPlayer.person.fullName}}
+            {{else}}
+              {{@game.away.currentPlayer.person.fullName}}
+            {{/if}}
+          </td>
+          <td class="px-2 py-2.5 text-right">
+            {{#if @game.isTop}}
+              {{t "scorebug.batter_stats" hits=@game.away.currentPlayer.stats.batting.hits atBats=@game.away.currentPlayer.stats.batting.atBats}}
+            {{else}}
+              {{t "scorebug.pitches" num=@game.away.currentPlayer.stats.pitching.pitchesThrown}}
+            {{/if}}
+          </td>
+        </tr>
+        <tr class={{concat @game.home.bgClass " " @game.home.textClass}}>
+          <td class="px-2 py-2.5 text-right">
+            {{#if @game.isTop}}
+              {{@game.home.currentPlayer.person.fullName}}
+            {{else}}
+              {{@game.home.order}} {{@game.home.currentPlayer.person.fullName}}
+            {{/if}}
+          </td>
+          <td class="px-2 py-2.5 text-right">
+            {{#if @game.isTop}}
+              {{t "scorebug.pitches" num=@game.home.currentPlayer.stats.pitching.pitchesThrown}}
+            {{else}}
+              {{t "scorebug.batter_stats" hits=@game.home.currentPlayer.stats.batting.hits atBats=@game.home.currentPlayer.stats.batting.atBats}}
+            {{/if}}
+          </td>
+        </tr>
+        <tr class="bg-gray-900">
+          <td class="px-2 py-5.5"></td>
+          <td class="px-2 py-5.5"></td>
+        </tr>
+      </tbody>
+    </table>
+  {{/if}}
+  {{#if @game.inProgress}}
+    <div
+      class="text-gray-100 bg-gray-900 pt-2 pr-1 pl-1 cursor-pointer"
+      {{on "click" (fn (mut this.playerInfoExpanded) (not this.playerInfoExpanded))}}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 transition-transform {{if this.playerInfoExpanded "transform rotate-180"}}"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 5l7 7-7 7M5 5l7 7-7 7"
+        />
+      </svg>
+    </div>
+  {{/if}}
+</div>

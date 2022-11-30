@@ -8,12 +8,13 @@
 
     {{content-for "head"}}
 
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/tailwind.css">
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/baseball.css">
 
     {{content-for "head-footer"}}
   </head>
-  <body>
+  <body class="overflow-hidden">
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>

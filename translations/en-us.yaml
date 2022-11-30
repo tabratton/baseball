@@ -1,0 +1,21 @@
+navbar:
+  search: Search
+  standings: Standings
+  league_leaders: League Leaders
+scorebug:
+  score: Score
+  team: Team
+  current_players: Current Players
+  player: Player
+  stat: Stat
+  batter_stats: "{hits}-{atBats}"
+  pitches: "{num}P"
+  list:
+    no_games: No Games
+status:
+  F: Final
+  L: Live
+  P: Pregame
+standings:
+  american:
+    title: American League

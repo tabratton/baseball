@@ -1,0 +1,24 @@
+<span class="date-picker">
+  <BasicDropdown as |dd|>
+    <dd.Trigger>
+      <input
+        class="text-gray-100 bg-transparent rounded-md border-gray-700 focus:border-gray-400 focus:ring-gray-400"
+        type="text"
+        value={{this.dateDisplay}}
+      />
+    </dd.Trigger>
+    <dd.Content>
+      <PowerCalendar
+        class="date-picker-calendar"
+        @selected={{this.date}}
+        @center={{this.center}}
+        @onSelect={{this.updateDate}}
+        @onCenterChange={{this.updateCenter}}
+        as |calendar|
+      >
+        <calendar.Nav />
+        <calendar.Days />
+      </PowerCalendar>
+    </dd.Content>
+  </BasicDropdown>
+</span>
