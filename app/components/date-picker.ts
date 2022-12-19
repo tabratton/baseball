@@ -21,8 +21,9 @@ export default class DatePicker extends Component<DatePickerArgs> {
   }
 
   @action
-  updateDate(epcDate: EmberPowerCalendarDate) {
+  updateDate(close: () => void, epcDate: EmberPowerCalendarDate) {
     this.args.onUpdate(epcDate.date);
+    close();
   }
 
   @action

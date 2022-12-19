@@ -12,7 +12,7 @@
         class="date-picker-calendar"
         @selected={{this.date}}
         @center={{this.center}}
-        @onSelect={{this.updateDate}}
+        @onSelect={{fn this.updateDate dd.actions.close}}
         @onCenterChange={{this.updateCenter}}
         as |calendar|
       >

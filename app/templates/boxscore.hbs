@@ -1,0 +1,10 @@
+<div class="game w-screen">
+  <div class="overflow-y-auto p-4 w-full h-content">
+    <div class="flex flex-row flex-wrap items-center justify-center">
+      {{#if this.model.inProgress}}
+        <Scorebug @game={{this.model}} @disableClick={{true}} />
+      {{/if}}
+      <Boxscore @game={{this.model}} />
+    </div>
+  </div>
+</div>

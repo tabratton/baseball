@@ -22,7 +22,7 @@ interface Official {
   officialType: string;
 }
 
-interface MLBBoxScoreTeam {
+export interface MLBBoxScoreTeam {
   batters: number[];
   battingOrder: number[];
   bench: number[];
@@ -66,7 +66,7 @@ interface MLBBoxScoreTeam {
         wins: number;
       };
       losses: number;
-      records: {};
+      records: object;
       sportGamesBack: string;
       springLeagueGamesBack: string;
       wildCardGamesBack: string;
@@ -110,7 +110,7 @@ interface TeamInfo {
   fieldList: Info[];
 }
 
-interface MLBBoxScorePlayerDict {
+export interface MLBBoxScorePlayerDict {
   [key: string]: MLBBoxScorePlayer;
 }
 

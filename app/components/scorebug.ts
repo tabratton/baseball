@@ -4,12 +4,13 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 import type RouterService from '@ember/routing/router-service';
-import { MappedScorebug } from 'baseball/interfaces/MappedScorebug';
+import type Game from 'baseball/models/Game';
 
 import './scorebug.css';
 
 interface ScorebugArgs {
-  game: MappedScorebug;
+  game: Game;
+  disableClick: boolean;
 }
 
 export default class Scorebug extends Component<ScorebugArgs> {
@@ -19,6 +20,6 @@ export default class Scorebug extends Component<ScorebugArgs> {
 
   @action
   goToBoxScore() {
-    this.router.transitionTo('game', this.args.game.gamePk);
+    this.router.transitionTo('boxscore', this.args.game.gamePk);
   }
 }

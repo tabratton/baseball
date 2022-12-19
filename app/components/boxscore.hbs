@@ -1,0 +1,43 @@
+<div class="boxscore m-2">
+  <table class="table-auto w-full text-gray-100 text-center border border-gray-200">
+    <thead>
+      <tr class="bg-gray-900">
+        <th class="text-left p-2 border border-gray-200">{{t (concat "status." @game.statusCode)}}</th>
+        {{#each this.innings as |inning|}}
+          <th class="p-2">{{inning}}</th>
+        {{/each}}
+        <th class="p-2 border-l border-gray-200">R</th>
+        <th class="p-2">H</th>
+        <th class="p-2">E</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}} border border-gray-200">
+        <td class="text-left px-2 py-1 border border-gray-200">{{@game.awayTeam.name}}</td>
+        {{#each @game.awayTeam.innings as |inning|}}
+          <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
+        {{/each}}
+        <td class="px-2 py-1 border-l border-gray-200">{{@game.awayTeam.runs}}</td>
+        <td class="px-2 py-1">{{@game.awayTeam.hits}}</td>
+        <td class="px-2 py-1">{{@game.awayTeam.errors}}</td>
+      </tr>
+      <tr class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}} border border-gray-200">
+        <td class="text-left px-2 py-1 border border-gray-200">{{@game.homeTeam.name}}</td>
+        {{#each @game.homeTeam.innings as |inning|}}
+          <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
+        {{/each}}
+        <td class="px-2 py-1 border-l border-gray-200">{{@game.homeTeam.runs}}</td>
+        <td class="px-2 py-1">{{@game.homeTeam.hits}}</td>
+        <td class="px-2 py-1">{{@game.homeTeam.errors}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="flex w-full justify-between p-2 text-xs font-bold border border-gray-200">
+    {{#if @game.isPregame}}
+      <span>{{t "boxscore.starts" time=(date-format @game.gameTime "h:mm a")}}</span>
+    {{/if}}
+    <span>{{if @game.winningPitcher "W: "}} {{@game.winningPitcher}}</span>
+    <span>{{if @game.losingPitcher "L: "}} {{@game.losingPitcher}}</span>
+    <span>{{if @game.save "S: "}} {{@game.save}}</span>
+  </div>
+</div>
