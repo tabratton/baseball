@@ -24,7 +24,8 @@
     "start": "ember serve",
     "start:css": "npx tailwindcss -i ./tailwind-input.css -o ./public/assets/tailwind.css --watch",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember test"
+    "test:ember": "ember test",
+    "ci": "yarn install --frozen-lockfile"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
