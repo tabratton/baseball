@@ -12,8 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}} border border-gray-200">
-        <td class="text-left px-2 py-1 border border-gray-200">{{@game.awayTeam.name}}</td>
+      <tr class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}} border border-b-0 border-gray-200">
+        <td class="text-left px-2 py-1 border border-b-0 border-gray-200">
+          {{@game.awayTeam.name}}
+          <span class="block text-xs font-bold">
+            {{@game.awayTeamRecord}}
+          </span>
+        </td>
         {{#each @game.awayTeam.innings as |inning|}}
           <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
         {{/each}}
@@ -21,8 +26,13 @@
         <td class="px-2 py-1">{{@game.awayTeam.hits}}</td>
         <td class="px-2 py-1">{{@game.awayTeam.errors}}</td>
       </tr>
-      <tr class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}} border border-gray-200">
-        <td class="text-left px-2 py-1 border border-gray-200">{{@game.homeTeam.name}}</td>
+      <tr class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}} border border-t-0 border-gray-200">
+        <td class="text-left px-2 py-1 border border-t-0 border-gray-200">
+          {{@game.homeTeam.name}}
+          <span class="block text-xs font-bold">
+            {{@game.homeTeamRecord}}
+          </span>
+        </td>
         {{#each @game.homeTeam.innings as |inning|}}
           <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
         {{/each}}
@@ -32,7 +42,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="flex w-full justify-between p-2 text-xs font-bold border border-gray-200">
+  <div class="flex w-full justify-between p-2 text-xs font-bold border border-t-0 border-gray-200">
     {{#if @game.isPregame}}
       <span>{{t "boxscore.starts" time=(date-format @game.gameTime "h:mm a")}}</span>
     {{/if}}
