@@ -1,11 +1,11 @@
 <span class="date-picker">
   <BasicDropdown as |dd|>
     <dd.Trigger>
-      <input
-        class="text-gray-100 bg-transparent rounded-md border-gray-700 focus:border-gray-400 focus:ring-gray-400"
-        type="text"
-        value={{this.dateDisplay}}
-      />
+      <span
+        class="text-gray-100 rounded-md border px-3 py-2 border-gray-700"
+      >
+        {{this.dateDisplay}}
+      </span>
     </dd.Trigger>
     <dd.Content>
       <PowerCalendar
