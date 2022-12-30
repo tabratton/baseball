@@ -232,7 +232,7 @@ interface Pitching {
   homeRunsPer9: string;
   inheritedRunners: number;
   inheritedRunnersScored: number;
-  inningsPitched: string;
+  inningsPitched: number;
   intentionalWalks: number;
   losses: number;
   numberOfPitched: number;

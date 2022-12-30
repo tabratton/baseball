@@ -1,0 +1,33 @@
+<div>
+  {{yield to="header"}}
+  <Table::Sortable
+    class="border-collapse border border-white border-opacity-50 mb-4"
+    @items={{@batters}}
+    @headers={{this.headers}}
+    ...attributes
+  >
+    <:header as |h|>
+      <h.Header class={{h.header.class}}>
+        {{h.header.label}}
+      </h.Header>
+    </:header>
+    <:row as |row|>
+      <row.Cell>{{row.item.battingOrder}}</row.Cell>
+      <row.Cell>{{row.item.position}}</row.Cell>
+      {{!-- todo: make link to player page --}}
+      <row.Cell class="text-left">{{row.item.fullName}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.number}}</row.Cell>
+      <row.Cell>{{row.item.atBats}}</row.Cell>
+      <row.Cell>{{row.item.hits}}</row.Cell>
+      <row.Cell>{{row.item.runs}}</row.Cell>
+      <row.Cell>{{row.item.baseOnBalls}}</row.Cell>
+      <row.Cell>{{row.item.rbi}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.singles}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.doubles}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.triples}}</row.Cell>
+      <row.Cell>{{row.item.homeRuns}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.hitByPitch}}</row.Cell>
+      <row.Cell class="hidden lg:table-cell">{{row.item.avg}}</row.Cell>
+    </:row>
+  </Table::Sortable>
+</div>

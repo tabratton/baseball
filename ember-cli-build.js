@@ -8,6 +8,9 @@ module.exports = function (defaults) {
     'ember-composable-helpers': {
       only: ['find-by'],
     },
+    'ember-math-helpers': {
+      only: ['add'],
+    },
     'ember-power-calendar-date-fns': {
       includeLocales: ['en-US'],
     },

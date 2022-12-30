@@ -16,6 +16,10 @@ status:
   F: Final
   L: Live
   P: Pregame
+playerTable:
+  name: Name
+  batters_title: '{team} - Batters'
+  pitchers_title: '{team} - Pitchers'
 standings:
   american:
     title: American League

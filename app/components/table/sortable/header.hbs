@@ -1,0 +1,10 @@
+<th
+  class="cursor-pointer whitespace-nowrap border border-white border-opacity-60 py-1 px-2 sm:px-3"
+  ...attributes
+  {{on "click" (fn @sort @field)}}
+>
+  {{yield}}
+  {{#if (eq @sortField @field)}}
+    <Chevron class="inline" @isUp={{eq @sortDirection "asc"}} />
+  {{/if}}
+</th>

@@ -41,7 +41,7 @@ export default class MlbApi extends Service {
 
         return response.json().then((data: MLBGameFeed) => data);
       })
-      .then((gameFeed) => new Game(gameFeed));
+      .then((gameFeed) => new Game(gameFeed, this));
   }
 }
 

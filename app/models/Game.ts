@@ -1,17 +1,30 @@
+import { getOwner, setOwner } from '@ember/application';
+import { inject as service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 
-import { MLBGameFeed } from 'baseball/interfaces/MLBAPI/MLBGameFeed';
-import teamMap from 'baseball/utils/teamMap';
-import { MLBLineScoreTeamStatus } from 'baseball/interfaces/MLBAPI/MLBLineScore';
-import { MLBBoxScorePlayer } from 'baseball/interfaces/MLBAPI/MLBBoxScore';
-import { notEmpty } from 'baseball/utils/typescriptNotEmpty';
 import { parseISO } from 'date-fns';
+import { enUS } from 'date-fns/locale';
+
+import Batter from 'baseball/models/Batter';
+import Pitcher from 'baseball/models/Pitcher';
+import durationFormat from 'baseball/utils/duration-format';
+import teamMap from 'baseball/utils/teamMap';
+import { notEmpty } from 'baseball/utils/typescriptNotEmpty';
+
+import type IntlService from 'ember-intl/services/intl';
+import type { MLBGameFeed } from 'baseball/interfaces/MLBAPI/MLBGameFeed';
+import type { MLBLineScoreTeamStatus } from 'baseball/interfaces/MLBAPI/MLBLineScore';
 
 export default class Game {
+  @service declare intl: IntlService;
   @tracked gameFeed: MLBGameFeed;
 
-  constructor(gameObj: MLBGameFeed) {
+  private readonly context;
+
+  constructor(gameObj: MLBGameFeed, context: unknown) {
     this.gameFeed = gameObj;
+    this.context = context;
+    setOwner(this, getOwner(context));
   }
 
   get gamePk() {
@@ -80,10 +93,13 @@ export default class Game {
       errors: stats.errors,
       batters: this.boxScore.teams.home.batters
         .map((id) => this.boxScore.teams.home.players[`ID${id}`])
-        .filter(notEmpty),
+        .filter(notEmpty)
+        .map((player) => new Batter(player, this.context))
+        .filter((player) => player.plateAppearances > 0),
       pitchers: this.boxScore.teams.home.pitchers
         .map((id) => this.boxScore.teams.home.players[`ID${id}`])
-        .filter(notEmpty),
+        .filter(notEmpty)
+        .map((player) => new Pitcher(player, this.context)),
     };
 
     if (this.colorConflict) {
@@ -118,10 +134,13 @@ export default class Game {
       errors: stats.errors,
       batters: this.boxScore.teams.away.batters
         .map((id) => this.boxScore.teams.away.players[`ID${id}`])
-        .filter(notEmpty),
+        .filter(notEmpty)
+        .map((player) => new Batter(player, this.context))
+        .filter((player) => player.plateAppearances > 0),
       pitchers: this.boxScore.teams.away.pitchers
         .map((id) => this.boxScore.teams.away.players[`ID${id}`])
-        .filter(notEmpty),
+        .filter(notEmpty)
+        .map((player) => new Pitcher(player, this.context)),
     };
 
     if (this.colorConflict) {
@@ -172,6 +191,18 @@ export default class Game {
     return !this.isPregame && !this.isOver;
   }
 
+  get gameDuration() {
+    return durationFormat(
+      {
+        hours: Math.floor(
+          this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
+        ),
+        minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
+      },
+      { locale: enUS, delimiter: ', ' }
+    );
+  }
+
   get isTopInning() {
     return this.lineScore.isTopInning || false;
   }
@@ -208,17 +239,17 @@ export default class Game {
   get batter() {
     const playerID = this.lineScore.offense.batter.id;
     const players = this.isTopInning
-      ? this.boxScore.teams.away.players
-      : this.boxScore.teams.home.players;
-    return players[`ID${playerID}`];
+      ? this.awayTeam.batters
+      : this.homeTeam.batters;
+    return players.find((player) => player.id === playerID);
   }
 
   get pitcher() {
     const playerID = this.lineScore.defense.pitcher.id;
     const players = this.isTopInning
-      ? this.boxScore.teams.home.players
-      : this.boxScore.teams.away.players;
-    return players[`ID${playerID}`];
+      ? this.homeTeam.pitchers
+      : this.awayTeam.pitchers;
+    return players.find((player) => player.id === playerID);
   }
 
   get formattedBattingOrder() {
@@ -238,6 +269,14 @@ export default class Game {
   get save() {
     return this.gameFeed.liveData.decisions?.save?.fullName;
   }
+
+  get awayTeamRecord() {
+    return `${this.gameFeed.gameData.teams.away.record.wins}-${this.gameFeed.gameData.teams.away.record.losses}`;
+  }
+
+  get homeTeamRecord() {
+    return `${this.gameFeed.gameData.teams.home.record.wins}-${this.gameFeed.gameData.teams.home.record.losses}`;
+  }
 }
 
 export interface TeamInfo {
@@ -249,6 +288,6 @@ export interface TeamInfo {
   runs: number;
   hits: number;
   errors: number;
-  batters: MLBBoxScorePlayer[];
-  pitchers: MLBBoxScorePlayer[];
+  batters: Batter[];
+  pitchers: Pitcher[];
 }
