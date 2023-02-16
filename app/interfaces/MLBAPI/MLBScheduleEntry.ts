@@ -1,3 +1,22 @@
+export interface MLBScheduleResponse {
+  copyright: string;
+  dates: MLBScheduleDate[];
+  totalEvents: number;
+  totalGames: number;
+  totalGamesInProgress: number;
+  totalItems: number;
+}
+
+export interface MLBScheduleDate {
+  date: string;
+  events: object[];
+  games: MLBScheduleEntry[];
+  totalEvents: number;
+  totalGames: number;
+  totalGamesInProgress: number;
+  totalItems: number;
+}
+
 export interface MLBScheduleEntry {
   calendarEventID: string;
   content: {

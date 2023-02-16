@@ -4,7 +4,7 @@
 >
   {{yield to="caption"}}
   <thead>
-    <tr>
+    <tr class={{@headerClasses}}>
       {{#each @headers as |header|}}
         {{yield
           (hash
@@ -24,16 +24,15 @@
   </thead>
   <tbody>
     {{#each this.sortedItems as |listItem index|}}
-      <tr>
-        {{yield
-          (hash
-            Cell=(component "table/sortable/cell")
-            item=listItem
-            index=index
-          )
-          to="row"
-        }}
-      </tr>
+      {{yield
+        (hash
+          Row=(component "table/sortable/row")
+          Cell=(component "table/sortable/cell")
+          item=listItem
+          index=index
+        )
+        to="row"
+      }}
     {{/each}}
   </tbody>
 </table>

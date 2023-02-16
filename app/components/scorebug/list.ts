@@ -17,18 +17,13 @@ interface ScorebugListArgs {
 export default class ScorebugList extends Component<ScorebugListArgs> {
   @service declare mlbApi: MlbApi;
 
-  @tracked loading = false;
   @tracked games: Game[] | undefined;
 
   getData = task({ restartable: true }, async () => {
-    this.loading = true;
-
     try {
       this.games = await this.mlbApi.fetchGamesForDay(this.args.date);
     } catch (ex) {
       this.games = [];
-    } finally {
-      this.loading = false;
     }
   });
 

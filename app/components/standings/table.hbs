@@ -1,0 +1,49 @@
+<div class='flex flex-col'>
+  <div
+    class='text-center font-bold cursor-pointer bg-stone-900 bg-opacity-50 p-2'
+    role='button'
+    {{on 'click' (fn @onHeaderClick @standings.division)}}
+  >
+    {{@standings.division.nameShort}}
+  </div>
+  <Table::Sortable
+    class='border-collapse border-none border-opacity-50 mb-4'
+    @items={{@standings.teamRecords}}
+    @headers={{this.headers}}
+    @headerClasses='bg-stone-800'
+    ...attributes
+  >
+    <:header as |h|>
+      <h.Header class='border-none {{h.header.class}}'>
+        {{h.header.label}}
+      </h.Header>
+    </:header>
+    <:row as |row|>
+      <row.Row
+        class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
+      >
+        <row.Cell class='border-none'>{{row.item.divisionRank}}</row.Cell>
+        <row.Cell class='border-none'>
+          <span class='flex items-center justify-center'>
+            <img
+              class='h-6 mr-2'
+              src={{row.item.teamLogo}}
+              alt={{row.item.teamName}}
+            />
+            <abbr title={{row.item.teamName}} class='text-sm'>
+              {{row.item.teamShortName}}
+            </abbr>
+          </span>
+        </row.Cell>
+        <row.Cell class='border-none'>{{row.item.wins}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.losses}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.pct}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.gamesBack}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.wildCardGamesBack}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.runsScored}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.runsAllowed}}</row.Cell>
+        <row.Cell class='border-none'>{{row.item.runDifferential}}</row.Cell>
+      </row.Row>
+    </:row>
+  </Table::Sortable>
+</div>

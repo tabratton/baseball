@@ -60,7 +60,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        gray: colors.stone,
         ...mlbColors,
       },
       boxShadow: {
@@ -86,6 +85,7 @@ module.exports = {
       stroke: {
         black: colors.black,
         white: colors.white,
+        ...mlbColors,
       },
       fill: {
         black: colors.black,

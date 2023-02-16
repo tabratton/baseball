@@ -6,11 +6,6 @@ import type RouterService from '@ember/routing/router-service';
 
 import './application.css';
 
-interface Locale {
-  label: string;
-  value: string;
-}
-
 export default class Application extends Controller {
   @service declare router: RouterService;
 

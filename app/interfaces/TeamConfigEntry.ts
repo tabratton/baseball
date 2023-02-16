@@ -7,6 +7,7 @@ export interface TeamConfigEntry {
   mainText: string;
   secondaryBackground: string;
   secondaryText: string;
+  stroke: string;
   divisionId: number;
   conflicts?: string[];
   priority?: number;

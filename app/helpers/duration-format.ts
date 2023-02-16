@@ -12,7 +12,7 @@ interface Params {
   };
 }
 
-export function dateFormat(params: any[], hash: Params) {
+export function dateFormat(params: unknown[], hash: Params) {
   return durationFormatUtil(hash.duration, hash.options);
 }
 

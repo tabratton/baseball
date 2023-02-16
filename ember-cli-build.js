@@ -9,7 +9,7 @@ module.exports = function (defaults) {
       only: ['find-by'],
     },
     'ember-math-helpers': {
-      only: ['add'],
+      only: ['add', 'mod', 'sub'],
     },
     'ember-power-calendar-date-fns': {
       includeLocales: ['en-US'],

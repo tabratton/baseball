@@ -23,3 +23,5 @@ playerTable:
 standings:
   american:
     title: American League
+  national:
+    title: National League

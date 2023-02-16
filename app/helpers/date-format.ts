@@ -8,7 +8,7 @@ interface Params {
   locale: string;
 }
 
-export function dateFormat(params: any[], hash: Params) {
+export function dateFormat(params: unknown[], hash: Params) {
   return dateFormatUtil(hash.date, hash.locale, hash.format);
 }
 

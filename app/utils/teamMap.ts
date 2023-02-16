@@ -10,6 +10,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-oak-text-main',
     secondaryBackground: 'bg-oak-secondary',
     secondaryText: 'text-oak-text-secondary',
+    stroke: 'stroke-oak-main',
     divisionId: 200,
   },
   {
@@ -21,6 +22,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-hou-text-main',
     secondaryBackground: 'bg-hou-secondary',
     secondaryText: 'text-hou-text-secondary',
+    stroke: 'stroke-hou-main',
     divisionId: 200,
   },
   {
@@ -32,6 +34,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-sea-text-main',
     secondaryBackground: 'bg-sea-secondary',
     secondaryText: 'text-sea-text-secondary',
+    stroke: 'stroke-sea-main',
     divisionId: 200,
   },
   {
@@ -43,6 +46,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-tex-text-main',
     secondaryBackground: 'bg-tex-secondary',
     secondaryText: 'text-tex-text-secondary',
+    stroke: 'stroke-tex-main',
     divisionId: 200,
   },
   {
@@ -54,6 +58,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-laa-text-main',
     secondaryBackground: 'bg-laa-secondary',
     secondaryText: 'text-laa-text-secondary',
+    stroke: 'stroke-laa-main',
     divisionId: 200,
   },
   {
@@ -65,6 +70,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-min-text-main',
     secondaryBackground: 'bg-min-secondary',
     secondaryText: 'text-min-text-secondary',
+    stroke: 'stroke-min-main',
     divisionId: 202,
   },
   {
@@ -77,6 +83,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-cws-text-main',
     secondaryBackground: 'bg-cws-secondary',
     secondaryText: 'text-cws-text-secondary',
+    stroke: 'stroke-cws-main',
     divisionId: 202,
   },
   {
@@ -89,6 +96,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-cle-text-main',
     secondaryBackground: 'bg-cle-secondary',
     secondaryText: 'text-cle-text-secondary',
+    stroke: 'stroke-cle-main',
     divisionId: 202,
   },
   {
@@ -101,6 +109,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-det-text-main',
     secondaryBackground: 'bg-det-secondary',
     secondaryText: 'text-det-text-secondary',
+    stroke: 'stroke-det-main',
     divisionId: 202,
   },
   {
@@ -112,6 +121,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-kc-text-main',
     secondaryBackground: 'bg-kc-secondary',
     secondaryText: 'text-kc-text-secondary',
+    stroke: 'stroke-kc-main',
     divisionId: 202,
   },
   {
@@ -123,6 +133,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-tb-text-main',
     secondaryBackground: 'bg-tb-secondary',
     secondaryText: 'text-tb-text-secondary',
+    stroke: 'stroke-tb-main',
     divisionId: 201,
   },
   {
@@ -134,6 +145,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-tor-text-main',
     secondaryBackground: 'bg-tor-secondary',
     secondaryText: 'text-tor-text-secondary',
+    stroke: 'stroke-tor-main',
     divisionId: 201,
   },
   {
@@ -145,6 +157,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-bal-text-main',
     secondaryBackground: 'bg-bal-secondary',
     secondaryText: 'text-bal-text-secondary',
+    stroke: 'stroke-bal-main',
     divisionId: 201,
   },
   {
@@ -156,6 +169,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-bos-text-main',
     secondaryBackground: 'bg-bos-secondary',
     secondaryText: 'text-bos-text-secondary',
+    stroke: 'stroke-bos-main',
     divisionId: 201,
   },
   {
@@ -169,6 +183,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-nyy-text-main',
     secondaryBackground: 'bg-nyy-secondary',
     secondaryText: 'text-nyy-text-secondary',
+    stroke: 'stroke-nyy-main',
     divisionId: 201,
   },
   {
@@ -180,6 +195,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-sd-text-main',
     secondaryBackground: 'bg-sd-secondary',
     secondaryText: 'text-sd-text-secondary',
+    stroke: 'stroke-sd-main',
     divisionId: 203,
   },
   {
@@ -192,6 +208,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-sf-text-main',
     secondaryBackground: 'bg-sf-secondary',
     secondaryText: 'text-sf-text-secondary',
+    stroke: 'stroke-sf-main',
     divisionId: 203,
   },
   {
@@ -203,6 +220,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-ari-text-main',
     secondaryBackground: 'bg-ari-secondary',
     secondaryText: 'text-ari-text-secondary',
+    stroke: 'stroke-ari-main',
     divisionId: 203,
   },
   {
@@ -214,6 +232,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-col-text-main',
     secondaryBackground: 'bg-col-secondary',
     secondaryText: 'text-col-text-secondary',
+    stroke: 'stroke-col-main',
     divisionId: 203,
   },
   {
@@ -225,6 +244,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-lad-text-main',
     secondaryBackground: 'bg-lad-secondary',
     secondaryText: 'text-lad-text-secondary',
+    stroke: 'stroke-lad-main',
     divisionId: 203,
   },
   {
@@ -236,6 +256,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-pit-text-main',
     secondaryBackground: 'bg-pit-secondary',
     secondaryText: 'text-pit-text-secondary',
+    stroke: 'stroke-pit-main',
     divisionId: 205,
   },
   {
@@ -247,6 +268,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-stl-text-main',
     secondaryBackground: 'bg-stl-secondary',
     secondaryText: 'text-stl-text-secondary',
+    stroke: 'stroke-stl-main',
     divisionId: 205,
   },
   {
@@ -258,6 +280,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-mil-text-main',
     secondaryBackground: 'bg-mil-secondary',
     secondaryText: 'text-mil-text-secondary',
+    stroke: 'stroke-mil-main',
     divisionId: 205,
   },
   {
@@ -269,6 +292,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-chc-text-main',
     secondaryBackground: 'bg-chc-secondary',
     secondaryText: 'text-chc-text-secondary',
+    stroke: 'stroke-chc-main',
     divisionId: 205,
   },
   {
@@ -280,6 +304,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-cin-text-main',
     secondaryBackground: 'bg-cin-secondary',
     secondaryText: 'text-cin-text-secondary',
+    stroke: 'stroke-cin-main',
     divisionId: 205,
   },
   {
@@ -291,6 +316,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-phi-text-main',
     secondaryBackground: 'bg-phi-secondary',
     secondaryText: 'text-phi-text-secondary',
+    stroke: 'stroke-phi-main',
     divisionId: 204,
   },
   {
@@ -302,6 +328,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-atl-text-main',
     secondaryBackground: 'bg-atl-secondary',
     secondaryText: 'text-atl-text-secondary',
+    stroke: 'stroke-atl-main',
     divisionId: 204,
   },
   {
@@ -313,6 +340,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-mia-text-main',
     secondaryBackground: 'bg-mia-secondary',
     secondaryText: 'text-mia-text-secondary',
+    stroke: 'stroke-mia-main',
     divisionId: 204,
   },
   {
@@ -324,6 +352,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-wsh-text-main',
     secondaryBackground: 'bg-wsh-secondary',
     secondaryText: 'text-wsh-text-secondary',
+    stroke: 'stroke-wsh-main',
     divisionId: 204,
   },
   {
@@ -335,6 +364,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-nym-text-main',
     secondaryBackground: 'bg-nym-secondary',
     secondaryText: 'text-nym-text-secondary',
+    stroke: 'stroke-nym-main',
     divisionId: 204,
   },
   {
@@ -346,6 +376,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-al-text-main',
     secondaryBackground: 'bg-al-secondary',
     secondaryText: 'text-al-text-secondary',
+    stroke: 'stroke-al-main',
     divisionId: 200,
   },
   {
@@ -357,6 +388,7 @@ const teamMap: TeamConfigEntry[] = [
     mainText: 'text-nl-text-main',
     secondaryBackground: 'bg-nl-secondary',
     secondaryText: 'text-nl-text-secondary',
+    stroke: 'stroke-nl-main',
     divisionId: 204,
   },
 ];
