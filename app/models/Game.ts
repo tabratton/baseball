@@ -79,6 +79,8 @@ export default class Game {
     const team = {
       name: homeTeam?.name,
       short: homeTeam?.short,
+      locationName: this.homeTeamGameData.locationName,
+      teamName: this.homeTeamGameData.teamName,
       bgClass:
         this.teamColorPriority === 'home'
           ? homeTeam?.mainBackground
@@ -125,6 +127,8 @@ export default class Game {
 
     const team = {
       name: awayTeam?.name,
+      locationName: this.awayTeamGameData.locationName,
+      teamName: this.awayTeamGameData.teamName,
       short: awayTeam?.short,
       bgClass: awayTeam?.mainBackground,
       textClass: awayTeam?.mainText,
@@ -159,12 +163,20 @@ export default class Game {
 
   @cached
   get homeTeamMap() {
-    return teamMap.find((t) => t.id === this.gameFeed.gameData.teams.home.id);
+    return teamMap.find((t) => t.id === this.homeTeamGameData.id);
+  }
+
+  get homeTeamGameData() {
+    return this.gameFeed.gameData.teams.home;
   }
 
   @cached
   get awayTeamMap() {
-    return teamMap.find((t) => t.id === this.gameFeed.gameData.teams.away.id);
+    return teamMap.find((t) => t.id === this.awayTeamGameData.id);
+  }
+
+  get awayTeamGameData() {
+    return this.gameFeed.gameData.teams.away;
   }
 
   @cached
@@ -271,16 +283,18 @@ export default class Game {
   }
 
   get awayTeamRecord() {
-    return `${this.gameFeed.gameData.teams.away.record.wins}-${this.gameFeed.gameData.teams.away.record.losses}`;
+    return `${this.awayTeamGameData.record.wins}-${this.awayTeamGameData.record.losses}`;
   }
 
   get homeTeamRecord() {
-    return `${this.gameFeed.gameData.teams.home.record.wins}-${this.gameFeed.gameData.teams.home.record.losses}`;
+    return `${this.homeTeamGameData.record.wins}-${this.homeTeamGameData.record.losses}`;
   }
 }
 
 export interface TeamInfo {
   name?: string;
+  locationName: string;
+  teamName: string;
   short?: string;
   bgClass?: string;
   textClass?: string;

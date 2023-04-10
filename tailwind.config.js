@@ -79,7 +79,7 @@ module.exports = {
         'locale-select': '2rem',
       },
       fontFamily: {
-        body: 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace',
+        body: 'Iosevka Etoile, Iosevka, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace',
       },
       stroke: {
         black: colors.black,

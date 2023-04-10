@@ -277,7 +277,7 @@ interface Count {
   outs: number;
 }
 
-interface MLBTeam {
+export interface MLBTeam {
   abbreviation: string;
   active: boolean;
   allStarStatus: string;

@@ -97,6 +97,16 @@ export default class Batter {
     return this.batter.person.fullName;
   }
 
+  get firstName() {
+    const lastSpace = this.fullName.lastIndexOf(' ');
+    return this.fullName.slice(0, lastSpace);
+  }
+
+  get lastName() {
+    const lastSpace = this.fullName.lastIndexOf(' ');
+    return this.fullName.slice(lastSpace);
+  }
+
   get plateAppearances() {
     return this.batter.stats.batting.plateAppearances;
   }

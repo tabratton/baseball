@@ -14,19 +14,19 @@
     </thead>
     <tbody>
       <tr>
-        <td class='py-2.5 pl-2 whitespace-nowrap rounded-tl {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
+        <td class='py-2.5 pl-2 whitespace-nowrap italic font-bold rounded-tl {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.short}}
         </td>
-        <td class='py-2.5 pr-2 text-right whitespace-nowrap rounded-tr {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
+        <td class='py-2.5 pr-2 text-right whitespace-nowrap font-bold rounded-tr {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.runs}}
         </td>
       </tr>
 
       <tr class={{concat @game.homeTeam.bgClass ' ' @game.homeTeam.textClass}}>
-        <td class='py-2.5 pl-2 whitespace-nowrap'>
+        <td class='py-2.5 pl-2 whitespace-nowrap italic font-bold'>
           {{@game.homeTeam.short}}
         </td>
-        <td class='py-2.5 pr-2 text-right whitespace-nowrap'>
+        <td class='py-2.5 pr-2 text-right whitespace-nowrap font-bold'>
           {{@game.homeTeam.runs}}
         </td>
       </tr>
@@ -120,9 +120,11 @@
             <td class='px-2 py-2.5 text-right'>
               {{#if @game.isTopInning}}
                 {{@game.batter.battingOrder}}
-                {{@game.batter.fullName}}
+                <span class="text-sm">{{@game.batter.firstName}}</span>
+                <span class="font-bold text-lg">{{@game.batter.lastName}}</span>
               {{else}}
-                {{@game.pitcher.fullName}}
+                <span class="text-sm">{{@game.pitcher.firstName}}</span>
+                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
               {{/if}}
             </td>
             <td class='px-2 py-2.5 text-right'>
@@ -145,10 +147,12 @@
           >
             <td class='px-2 py-2.5 text-right'>
               {{#if @game.isTopInning}}
-                {{@game.pitcher.fullName}}
+                <span class="text-sm">{{@game.pitcher.firstName}}</span>
+                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
               {{else}}
                 {{@game.batter.battingOrder}}
-                {{@game.batter.fullName}}
+                <span class="text-sm">{{@game.pitcher.firstName}}</span>
+                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
               {{/if}}
             </td>
             <td class='px-2 py-2.5 text-right'>
