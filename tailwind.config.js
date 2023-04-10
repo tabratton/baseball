@@ -43,7 +43,6 @@ const mlbColors = {
   nl: { main: '#002D72', secondary: '#D50032' },
   al: { main: '#D50032', secondary: '#002D72' },
 };
-// TODO: Make highlight color variable for each team, apply to team name/borders/stuff for highlights
 
 Object.keys(mlbColors).forEach((key) => {
   if (!mlbColors[key]['text-main']) {

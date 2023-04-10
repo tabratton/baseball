@@ -1,4 +1,11 @@
 <div class="standings h-home w-screen p-4 overflow-auto">
+  <div class="flex items-center justify-center">
+    <DatePicker
+      @date={{this.selectedDate}}
+      @maxDate={{this.maxDate}}
+      @onUpdate={{fn (mut this.selectedDate)}}
+    />
+  </div>
   <Standings::Card
     @league={{this.model.standings.american}}
     @diffData={{this.model.winDifferentials}}
@@ -12,4 +19,3 @@
     {{t "standings.national.title"}}
   </Standings::Card>
 </div>
-{{!-- TODO: add date picker to standings page --}}

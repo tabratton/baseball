@@ -18,6 +18,12 @@
     class='gridlines {{unless @enableGridlines "hidden"}}'
     transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
   ></g>
+  <g
+    aria-hidden='true'
+    class='x-axis'
+    transform='translate(0, {{this.xAxisPosition}})'
+  >
+  </g>
   <g class='canvas' transform='translate(0, {{this.margin.top}})'>
     {{#each this.filteredData as |team|}}
       <DiffChart::Line
@@ -28,12 +34,6 @@
         @yScale={{this.yScale}}
       />
     {{/each}}
-  </g>
-  <g
-    aria-hidden='true'
-    class='x-axis'
-    transform='translate(0, {{this.xAxisPosition}})'
-  >
   </g>
   {{#if (and this.showTooltips this.tooltipData)}}
     <g transform='translate({{sub this.tooltipX 20}}, {{this.margin.top}})'>

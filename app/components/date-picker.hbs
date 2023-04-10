@@ -12,12 +12,13 @@
         class="date-picker-calendar"
         @selected={{this.date}}
         @center={{this.center}}
+        @maxDate={{this.maxDate}}
         @onSelect={{fn this.updateDate dd.actions.close}}
         @onCenterChange={{this.updateCenter}}
         as |calendar|
       >
-        <calendar.Nav />
-        <calendar.Days />
+        <calendar.Nav @maxDate={{this.maxDate}} />
+        <calendar.Days @maxDate={{this.maxDate}} />
       </PowerCalendar>
     </dd.Content>
   </BasicDropdown>

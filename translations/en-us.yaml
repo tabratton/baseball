@@ -25,3 +25,5 @@ standings:
     title: American League
   national:
     title: National League
+boxscore:
+  starts: Starts

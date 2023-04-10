@@ -53,6 +53,10 @@ export default class Pitcher {
     return this.pitcher.stats.pitching.strikes;
   }
 
+  get pitchesThrown() {
+    return this.pitcher.stats.pitching.pitchesThrown;
+  }
+
   get ballsAndStrikes() {
     return this.balls / this.strikes;
   }

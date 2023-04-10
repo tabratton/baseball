@@ -33,16 +33,19 @@ export default class DiffChart extends Component<DiffChartArgs> {
   get tooltipData() {
     const itemIndex = Math.floor(this.xScale.invert(this.tooltipX));
 
-    if (itemIndex > 162 || itemIndex < 1) return null;
+    if (
+      itemIndex > (this.xDomain[1] || 0) ||
+      itemIndex < (this.xDomain[0] || 0)
+    )
+      return null;
 
     return this.args.data.map((d) => {
       const item = d.seasonDiffs.find((diff) => diff.count === itemIndex);
-      const newItem = {
+      return {
         ...item,
         y: this.yScale(item?.diff || 0),
         team: d.team,
       };
-      return newItem;
     });
   }
 
@@ -71,10 +74,7 @@ export default class DiffChart extends Component<DiffChartArgs> {
   @cached
   get yValues() {
     return this.filteredData
-      .map((wd) => {
-        const diffs = wd.seasonDiffs.map((sd) => sd.diff);
-        return diffs;
-      })
+      .map((wd) => wd.seasonDiffs.map((sd) => sd.diff))
       .reduce((a, b) => a.concat(b), []);
   }
 
@@ -209,6 +209,8 @@ export default class DiffChart extends Component<DiffChartArgs> {
   @action
   onPointerMoved(event: PointerEvent) {
     this.tooltipX = event.clientX - this.yAxisWidth;
-    this.showTooltips = true;
+    this.showTooltips =
+      this.tooltipX > (this.xRange[0] || 0) &&
+      this.tooltipX < (this.xRange[1] || 0);
   }
 }

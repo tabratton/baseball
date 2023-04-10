@@ -1,11 +1,10 @@
 {{! template-lint-disable no-invalid-interactive }}
 <div
-  class='scorebug flex m-2 rounded h-[8.25rem]
+  class='scorebug flex m-2 border border-stone-200 rounded h-[136px]
     {{unless @disableClick "cursor-pointer"}}'
   ...attributes
-  {{on 'click' this.goToBoxScore}}
 >
-  <table class='table-auto text-stone-100'>
+  <table class='table-auto text-stone-100 rounded' {{on 'click' this.goToBoxScore}}>
     <caption class='sr-only'>{{t 'scorebug.score'}}</caption>
     <thead class='sr-only'>
       <tr>
@@ -14,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr class={{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}>
-        <td class='py-2.5 pl-2 whitespace-nowrap'>
+      <tr>
+        <td class='py-2.5 pl-2 whitespace-nowrap rounded-tl {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.short}}
         </td>
-        <td class='py-2.5 pr-2 text-right whitespace-nowrap'>
+        <td class='py-2.5 pr-2 text-right whitespace-nowrap rounded-tr {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.runs}}
         </td>
       </tr>
@@ -32,20 +31,22 @@
         </td>
       </tr>
 
-      <tr class='bg-stone-900'>
+      <tr class="border-t border-stone-200">
         {{#if @game.inProgress}}
           <td
-            class='py-2.5 pl-0 pr-2 sm:pr-4 flex items-center justify-start w-full whitespace-nowrap'
+            class='bg-stone-900 py-2.5 pl-0 pr-2 sm:pr-4 flex items-center justify-start w-full whitespace-nowrap rounded-bl'
           >
             <Chevron @isUp={{@game.isTopInning}} />
             <span>{{@game.inning}}</span>
           </td>
-        {{else}}
-          <td class='py-2.5 pl-2 pr-1 whitespace-nowrap'>
+        {{else if @game.isOver}}
+          <td class='bg-stone-900 py-2.5 pl-2 pr-1 whitespace-nowrap rounded-bl'>
             {{t (concat 'status.' @game.statusCode)}}
           </td>
+        {{else}}
+          <td class="bg-stone-900 py-2.5 pl-2 pr-1 whitespace-nowrap rounded-bl"></td>
         {{/if}}
-        <td class='text-right py-2.5 pl-1 pr-2 whitespace-nowrap'>
+        <td class='bg-stone-900 text-right py-2.5 pl-1 pr-2 whitespace-nowrap rounded-br'>
           {{#if @game.isPregame}}
             {{date-format date=@game.gameTime locale='en-US' format='hh:mm a'}}
           {{else if @game.inProgress}}
@@ -56,7 +57,7 @@
     </tbody>
   </table>
   {{#if @game.inProgress}}
-    <div class='flex flex-col justify-center w-28 items-center bg-stone-900'>
+    <div class='flex flex-col justify-center w-28 items-center bg-stone-900' {{on 'click' this.goToBoxScore}}>
       <div class='flex-grow w-28 relative'>
         <div
           class='w-16 h-16 flex flex-wrap transform rotate-45 translate-x-6 translate-y-6 absolute'
@@ -100,76 +101,78 @@
     </div>
   {{/if}}
   {{#if (and @game.inProgress @game.batter @game.pitcher)}}
-    <table
-      class='table-auto text-stone-100 rounded
-        {{if this.playerInfoExpanded "table" "hidden"}}'
-    >
-      <caption class='sr-only'>{{t 'scorebug.current_players'}}</caption>
-      <thead class='sr-only'>
-        <tr>
-          <th>{{t 'scorebug.player'}}</th>
-          <th>{{t 'scorebug.stat'}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class={{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}
-        >
-          <td class='px-2 py-2.5 text-right'>
-            {{#if @game.isTopInning}}
-              {{@game.formattedBattingOrder}}
-              {{@game.batter.person.fullName}}
-            {{else}}
-              {{@game.pitcher.person.fullName}}
-            {{/if}}
-          </td>
-          <td class='px-2 py-2.5 text-right'>
-            {{#if @game.isTopInning}}
-              {{t
-                'scorebug.batter_stats'
-                hits=@game.batter.stats.batting.hits
-                atBats=@game.batter.stats.batting.atBats
-              }}
-            {{else}}
-              {{t
-                'scorebug.pitches'
-                num=@game.pitcher.stats.pitching.pitchesThrown
-              }}
-            {{/if}}
-          </td>
-        </tr>
-        <tr
-          class={{concat @game.homeTeam.bgClass ' ' @game.homeTeam.textClass}}
-        >
-          <td class='px-2 py-2.5 text-right'>
-            {{#if @game.isTopInning}}
-              {{@game.pitcher.person.fullName}}
-            {{else}}
-              {{@game.formattedBattingOrder}}
-              {{@game.batter.person.fullName}}
-            {{/if}}
-          </td>
-          <td class='px-2 py-2.5 text-right'>
-            {{#if @game.isTopInning}}
-              {{t
-                'scorebug.pitches'
-                num=@game.pitcher.stats.pitching.pitchesThrown
-              }}
-            {{else}}
-              {{t
-                'scorebug.batter_stats'
-                hits=@game.batter.stats.batting.hits
-                atBats=@game.batter.stats.batting.atBats
-              }}
-            {{/if}}
-          </td>
-        </tr>
-        <tr class='bg-stone-900'>
-          <td class='px-2 py-5.5'></td>
-          <td class='px-2 py-5.5'></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class='transition {{if this.playerInfoExpanded "max-w-max" "max-w-0"}}'>
+      <table
+        class='table table-auto text-stone-100 rounded'
+        {{on 'click' this.goToBoxScore}}
+      >
+        <caption class='sr-only'>{{t 'scorebug.current_players'}}</caption>
+        <thead class='sr-only'>
+          <tr>
+            <th>{{t 'scorebug.player'}}</th>
+            <th>{{t 'scorebug.stat'}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class={{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}
+          >
+            <td class='px-2 py-2.5 text-right'>
+              {{#if @game.isTopInning}}
+                {{@game.batter.battingOrder}}
+                {{@game.batter.fullName}}
+              {{else}}
+                {{@game.pitcher.fullName}}
+              {{/if}}
+            </td>
+            <td class='px-2 py-2.5 text-right'>
+              {{#if @game.isTopInning}}
+                {{t
+                  'scorebug.batter_stats'
+                  hits=@game.batter.hits
+                  atBats=@game.batter.atBats
+                }}
+              {{else}}
+                {{t
+                  'scorebug.pitches'
+                  num=@game.pitcher.pitchesThrown
+                }}
+              {{/if}}
+            </td>
+          </tr>
+          <tr
+            class={{concat @game.homeTeam.bgClass ' ' @game.homeTeam.textClass}}
+          >
+            <td class='px-2 py-2.5 text-right'>
+              {{#if @game.isTopInning}}
+                {{@game.pitcher.fullName}}
+              {{else}}
+                {{@game.batter.battingOrder}}
+                {{@game.batter.fullName}}
+              {{/if}}
+            </td>
+            <td class='px-2 py-2.5 text-right'>
+              {{#if @game.isTopInning}}
+                {{t
+                  'scorebug.pitches'
+                  num=@game.pitcher.pitchesThrown
+                }}
+              {{else}}
+                {{t
+                  'scorebug.batter_stats'
+                  hits=@game.batter.hits
+                  atBats=@game.batter.atBats
+                }}
+              {{/if}}
+            </td>
+          </tr>
+          <tr class='bg-stone-900'>
+            <td class='px-2 py-5.5'></td>
+            <td class='px-2 py-5.5'></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   {{/if}}
   {{#if @game.inProgress}}
     <div
@@ -182,7 +185,7 @@
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        class='h-6 w-6 transition-transform
+        class='h-6 w-6 transition-transform duration-400
           {{if this.playerInfoExpanded "transform rotate-180"}}'
         fill='none'
         viewBox='0 0 24 24'

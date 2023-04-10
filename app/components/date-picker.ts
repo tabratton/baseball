@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 
 interface DatePickerArgs {
   date: Date;
+  maxDate: Date;
   onUpdate: (arg0: Date) => void;
 }
 
@@ -18,6 +19,10 @@ export default class DatePicker extends Component<DatePickerArgs> {
 
   get dateDisplay() {
     return format(this.date, 'yyyy-MM-dd');
+  }
+
+  get maxDate() {
+    return this.args.maxDate || undefined;
   }
 
   @action
