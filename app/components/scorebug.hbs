@@ -1,6 +1,6 @@
 {{! template-lint-disable no-invalid-interactive }}
 <div
-  class='scorebug flex m-2 border border-stone-200 rounded h-[136px]
+  class='scorebug flex m-2 border-2 border-stone-200 rounded h-[136px]
     {{unless @disableClick "cursor-pointer"}}'
   ...attributes
 >
@@ -31,7 +31,7 @@
         </td>
       </tr>
 
-      <tr class="border-t border-stone-200">
+      <tr>
         {{#if @game.inProgress}}
           <td
             class='bg-stone-900 py-2.5 pl-0 pr-2 sm:pr-4 flex items-center justify-start w-full whitespace-nowrap rounded-bl'
@@ -101,7 +101,7 @@
     </div>
   {{/if}}
   {{#if (and @game.inProgress @game.batter @game.pitcher)}}
-    <div class='transition {{if this.playerInfoExpanded "max-w-max" "max-w-0"}}'>
+    <div class='{{unless this.playerInfoExpanded "hidden"}}'>
       <table
         class='table table-auto text-stone-100 rounded'
         {{on 'click' this.goToBoxScore}}
@@ -151,8 +151,8 @@
                 <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
               {{else}}
                 {{@game.batter.battingOrder}}
-                <span class="text-sm">{{@game.pitcher.firstName}}</span>
-                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
+                <span class="text-sm">{{@game.batter.firstName}}</span>
+                <span class="font-bold text-lg">{{@game.batter.lastName}}</span>
               {{/if}}
             </td>
             <td class='px-2 py-2.5 text-right'>
@@ -169,10 +169,6 @@
                 }}
               {{/if}}
             </td>
-          </tr>
-          <tr class='bg-stone-900'>
-            <td class='px-2 py-5.5'></td>
-            <td class='px-2 py-5.5'></td>
           </tr>
         </tbody>
       </table>

@@ -1,7 +1,7 @@
 import { getOwner, setOwner } from '@ember/application';
 import { inject as service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { parse } from 'date-fns';
+import { parse, subDays } from 'date-fns';
 
 import type IntlService from 'ember-intl/services/intl';
 
@@ -40,21 +40,32 @@ export default class WinDifferential {
     let diff = 0;
     let count = 0;
 
-    return this.scheduleMap.reduce(
-      (accumulator: DifferentialReduction[], g: MLBScheduleTeamMap) => {
-        count += 1;
-        diff = diff + (g.isWinner ? 1 : -1);
-        const acc = {
-          date: parse(g.date, 'yyyy-MM-dd', new Date()),
-          diff,
-          count,
-          isWinner: g.isWinner,
-        };
-        accumulator.push(acc);
-        return accumulator;
+    return [
+      {
+        date: subDays(
+          parse(this.scheduleMap[0]?.date || '', 'yyyy-MM-dd', new Date()),
+          1
+        ),
+        diff: 0,
+        count: 0,
+        isWinner: false,
       },
-      []
-    );
+      ...this.scheduleMap.reduce(
+        (accumulator: DifferentialReduction[], g: MLBScheduleTeamMap) => {
+          count += 1;
+          diff = diff + (g.isWinner ? 1 : -1);
+          const acc = {
+            date: parse(g.date, 'yyyy-MM-dd', new Date()),
+            diff,
+            count,
+            isWinner: g.isWinner,
+          };
+          accumulator.push(acc);
+          return accumulator;
+        },
+        []
+      ),
+    ];
   }
 }
 

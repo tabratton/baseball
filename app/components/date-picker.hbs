@@ -7,9 +7,9 @@
         {{this.dateDisplay}}
       </span>
     </dd.Trigger>
-    <dd.Content>
+    <dd.Content class="calendar-dropdown shadow bg-white text-stone-100">
       <PowerCalendar
-        class="date-picker-calendar"
+        class="date-picker-calendar bg-stone-900 bg-opacity-90"
         @selected={{this.date}}
         @center={{this.center}}
         @maxDate={{this.maxDate}}
@@ -23,5 +23,3 @@
     </dd.Content>
   </BasicDropdown>
 </span>
-
-{{! TODO Style date picker }}

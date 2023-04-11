@@ -20,6 +20,8 @@ export default class DiffChart extends Component<DiffChartArgs> {
   @tracked xAxisHeight = 0;
   @tracked yAxisWidth = 0;
 
+  @tracked yPlotPadding = 1.1;
+
   @tracked showTooltips = false;
   @tracked tooltipX = 0;
 
@@ -30,6 +32,7 @@ export default class DiffChart extends Component<DiffChartArgs> {
     return this.args.data.filter((d) => d.selected);
   }
 
+  @cached
   get tooltipData() {
     const itemIndex = Math.floor(this.xScale.invert(this.tooltipX));
 
@@ -39,7 +42,7 @@ export default class DiffChart extends Component<DiffChartArgs> {
     )
       return null;
 
-    return this.args.data.map((d) => {
+    return this.filteredData.map((d) => {
       const item = d.seasonDiffs.find((diff) => diff.count === itemIndex);
       return {
         ...item,
@@ -47,6 +50,10 @@ export default class DiffChart extends Component<DiffChartArgs> {
         team: d.team,
       };
     });
+  }
+
+  get tooltipDataSorted() {
+    return this.tooltipData?.sort((a, b) => (a.diff || 0) - (b.diff || 0));
   }
 
   get enableGridlines() {
@@ -80,7 +87,10 @@ export default class DiffChart extends Component<DiffChartArgs> {
 
   @cached
   get yDomain() {
-    return [d3.min(this.yValues) || 0, d3.max(this.yValues) || 0];
+    return [
+      (d3.min(this.yValues) || 0) * this.yPlotPadding,
+      (d3.max(this.yValues) || 0) * this.yPlotPadding,
+    ];
   }
 
   @cached
@@ -109,16 +119,13 @@ export default class DiffChart extends Component<DiffChartArgs> {
   @cached
   get xValues() {
     return this.filteredData
-      .map((wd) => {
-        const count = wd.seasonDiffs.map((sd) => sd.count);
-        return count;
-      })
+      .map((wd) => wd.seasonDiffs.map((sd) => sd.count))
       .reduce((a, b) => a.concat(b), []);
   }
 
   @cached
   get xDomain() {
-    return [1, d3.max(this.xValues) || 1];
+    return [0, d3.max(this.xValues) || 1];
   }
 
   @cached

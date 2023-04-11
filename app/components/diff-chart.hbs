@@ -52,7 +52,7 @@
             >
               <span>{{tooltip.team.short}}</span>
               <span>{{format-number
-                  tooltip.diff
+                  (or tooltip.diff 0)
                   signDisplay='exceptZero'
                 }}</span>
             </div>
