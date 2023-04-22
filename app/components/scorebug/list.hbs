@@ -7,6 +7,7 @@
   {{did-insert (perform this.getData)}}
   {{did-update (perform this.getData) @date}}
 >
+  {{!-- TODO: Add loading spinners --}}
   {{#each this.inProgress as |g|}}
     <Scorebug @game={{g}} />
   {{/each}}
