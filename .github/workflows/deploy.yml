@@ -24,6 +24,6 @@ jobs:
         env:
           AWS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CLOUDFRONT_DISTRIBUTION: ${{ variables.CLOUDFRONT_DISTRIBUTION }}
+          CLOUDFRONT_DISTRIBUTION: $CLOUDFRONT_DISTRIBUTION
           BUCKET: $BUCKET
           REGION: $REGION
