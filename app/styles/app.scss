@@ -5,3 +5,31 @@
 .date-picker-calendar {
   @include ember-power-calendar($cell-size: 36px);
 }
+
+#app-grid {
+  display: grid;
+  grid-template:
+    "navbar" 2rem
+    "content" calc(100vh - 2rem)
+    / 100vw;
+}
+
+.navbar {
+  grid-area: navbar;
+}
+
+.content {
+  grid-area: content;
+}
+
+// TODO: use tailwind for this;
+.scorebug .home-plate path {
+  paint-order: fill;
+  fill: white;
+  stroke: black;
+}
+
+.scorebug .home-plate polygon {
+  stroke: white;
+  fill: white;
+}

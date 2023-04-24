@@ -2,8 +2,6 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 
-import './application.css';
-
 export default class Application extends Controller {
   @service router;
 

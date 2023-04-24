@@ -20,7 +20,7 @@ export default class Player {
   }
 
   get nickname() {
-    return `"${this.player.nickName}"`;
+    return this.player.nickName ? `"${this.player.nickName}"` : '';
   }
 
   get bats() {
