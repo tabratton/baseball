@@ -14,7 +14,7 @@
     "build": "yarn build:css && yarn build:js",
     "build:js": "ember build --environment=production",
     "build:css": "npx tailwindcss -i ./tailwind-input.css -o ./public/assets/tailwind.css",
-    "deploy": "yarn build:css && ember deploy production",
+    "deploy": "yarn build:css && ember deploy production --verbose",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
