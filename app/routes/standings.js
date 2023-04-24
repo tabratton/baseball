@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { format } from 'date-fns';
+import { DateTime } from 'luxon';
 import { hash } from 'rsvp';
 
 export default class Standings extends Route {
@@ -16,11 +16,11 @@ export default class Standings extends Route {
   async model(params) {
     return hash({
       standings: this.mlbApi.fetchStandings(
-        params.date || format(new Date(), 'y-MM-dd'),
+        params.date || DateTime.now().toFormat('y-MM-dd'),
         'regularSeason'
       ),
       winDifferentials: this.mlbApi.fetchWinDifferentials(
-        params.date?.split('-')[0] || format(new Date(), 'y')
+        params.date?.split('-')[0] || DateTime.now().toFormat('y')
       ),
     });
   }

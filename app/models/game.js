@@ -2,8 +2,7 @@ import { getOwner, setOwner } from '@ember/application';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 
-import { parseISO } from 'date-fns';
-import { enUS } from 'date-fns/locale';
+import { DateTime, Duration } from 'luxon';
 
 import Batter from 'baseball/models/batter';
 import Pitcher from 'baseball/models/pitcher';
@@ -36,7 +35,7 @@ export default class Game {
   }
 
   get gameTime() {
-    return parseISO(this.gameFeed.gameData.datetime.dateTime);
+    return DateTime.fromISO(this.gameFeed.gameData.datetime.dateTime);
   }
 
   #processInnings(innings) {
@@ -201,13 +200,12 @@ export default class Game {
 
   get gameDuration() {
     return durationFormat(
-      {
+      Duration.fromObject({
         hours: Math.floor(
           this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
         ),
         minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-      },
-      { locale: enUS, delimiter: ', ' }
+      })
     );
   }
 

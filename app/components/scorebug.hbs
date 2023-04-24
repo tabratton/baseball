@@ -48,7 +48,7 @@
         {{/if}}
         <td class='bg-stone-900 text-right py-2.5 pl-1 pr-2 whitespace-nowrap rounded-br'>
           {{#if @game.isPregame}}
-            {{date-format date=@game.gameTime locale='en-US' format='hh:mm a'}}
+            {{date-format date=@game.gameTime format='hh:mm a'}}
           {{else if @game.inProgress}}
             {{concat @game.balls '-' @game.strikes}}
           {{/if}}

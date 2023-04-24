@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 
-import { format, parse } from 'date-fns';
 import fetch from 'fetch';
 import { all, hash } from 'rsvp';
 
@@ -10,6 +9,7 @@ import Player from 'baseball/models/player';
 import TeamRecord from 'baseball/models/team-record';
 import teamMap from 'baseball/utils/team-map';
 import WinDifferential from 'baseball/models/win-differential';
+import { DateTime } from 'luxon';
 
 export default class MlbApi extends Service {
   apiHost = 'https://statsapi.mlb.com/api/';
@@ -17,7 +17,7 @@ export default class MlbApi extends Service {
   fetchGamesForDay(date) {
     return fetch(
       encodeURI(
-        `${this.apiHost}v1/schedule?sportId=1&date=${format(date, 'y-MM-dd')}`
+        `${this.apiHost}v1/schedule?sportId=1&date=${date.toFormat('y-MM-dd')}`
       )
     )
       .then((response) =>
@@ -34,15 +34,15 @@ export default class MlbApi extends Service {
   }
 
   async fetchStandings(date, type) {
-    const jsDate = parse(date, 'yyyy-MM-dd', new Date());
+    const dateTime = DateTime.fromFormat(date, 'y-MM-dd');
 
     return fetch(
       encodeURI(
-        `${this.apiHost}v1/standings?leagueId=103,104&season=${format(
-          jsDate,
-          'yyyy'
-        )}&date=${format(
-          jsDate,
+        `${
+          this.apiHost
+        }v1/standings?leagueId=103,104&season=${dateTime.toFormat(
+          'y'
+        )}&date=${dateTime.toFormat(
           'MM/dd/yyyy'
         )}&standingsType=${type}&hydrate=team(division)`
       )

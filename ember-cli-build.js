@@ -10,9 +10,6 @@ module.exports = function (defaults) {
     'ember-math-helpers': {
       only: ['add', 'mod', 'sub'],
     },
-    'ember-power-calendar-date-fns': {
-      includeLocales: ['en-US'],
-    },
   });
 
   const { Webpack } = require('@embroider/webpack');

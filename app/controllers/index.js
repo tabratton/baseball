@@ -1,18 +1,18 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
-import { format, parse } from 'date-fns';
+import { DateTime } from 'luxon';
 
 export default class Index extends Controller {
   queryParams = ['date'];
 
-  @tracked selectedDate = new Date();
+  @tracked selectedDate = DateTime.now();
 
   get date() {
-    return format(this.selectedDate, 'yyyy-MM-dd');
+    return this.selectedDate.toFormat('y-MM-dd');
   }
 
   set date(value) {
-    this.selectedDate = parse(value, 'yyyy-MM-dd', new Date());
+    this.selectedDate = DateTime.fromFormat(value, 'y-MM-dd');
   }
 }

@@ -2,7 +2,7 @@ import { getOwner, setOwner } from '@ember/application';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 
-import { parse, subDays } from 'date-fns';
+import { DateTime } from 'luxon';
 
 export default class WinDifferential {
   @service intl;
@@ -32,10 +32,9 @@ export default class WinDifferential {
 
     return [
       {
-        date: subDays(
-          parse(this.scheduleMap[0]?.date || '', 'yyyy-MM-dd', new Date()),
-          1
-        ),
+        date: DateTime.fromISO(this.scheduleMap[0]?.date || '').minus({
+          days: 1,
+        }),
         diff: 0,
         count: 0,
         isWinner: false,
@@ -44,7 +43,7 @@ export default class WinDifferential {
         count += 1;
         diff = diff + (g.isWinner ? 1 : -1);
         const acc = {
-          date: parse(g.date, 'yyyy-MM-dd', new Date()),
+          date: DateTime.fromISO(g.date),
           diff,
           count,
           isWinner: g.isWinner,

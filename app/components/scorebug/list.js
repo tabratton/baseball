@@ -2,7 +2,6 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import { compareAsc } from 'date-fns';
 import { task } from 'ember-concurrency';
 
 export default class ScorebugList extends Component {
@@ -20,7 +19,7 @@ export default class ScorebugList extends Component {
   get scorebugGames() {
     return this.getData.last?.value
       ?.filter((v) => v)
-      .sort((a, b) => compareAsc(a.gameTime, b.gameTime));
+      .sort((a, b) => a.gameTime > b.gameTime);
   }
 
   get inProgress() {
