@@ -3,8 +3,6 @@ import { tracked } from '@glimmer/tracking';
 
 import { format, parse } from 'date-fns';
 
-import './application.css';
-
 export default class Standings extends Controller {
   queryParams = ['date'];
 

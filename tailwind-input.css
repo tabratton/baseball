@@ -18,6 +18,7 @@
   @apply rounded-full;
 }
 
+/* stylelint-disable selector-class-pattern */
 .date-picker-calendar .ember-power-calendar-day--other-month {
   @apply bg-stone-600 text-stone-400;
 }
@@ -34,10 +35,12 @@
   @apply border-2 border-solid border-red-600;
 }
 
-.date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {
-  @apply bg-stone-600 text-stone-100;
+.date-picker-calendar .ember-power-calendar-day--focused {
+  @apply shadow-[inset_0px_-2px_0px_0px_theme(colors.red.600)];
 }
 
-.date-picker-calendar .ember-power-calendar-day--focused {
-  @apply shadow-[inset_0px_-2px_0px_0px_theme(colors.red.600)]
+/* stylelint-enable selector-class-pattern */
+
+.date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {
+  @apply bg-stone-600 text-stone-100;
 }
