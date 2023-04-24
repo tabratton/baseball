@@ -25,5 +25,5 @@ jobs:
           AWS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           CLOUDFRONT_DISTRIBUTION: ${{ variables.CLOUDFRONT_DISTRIBUTION }}
-          BUCKET: ${{ variables.BUCKET }}
-          REGION: ${{ variables.RGEION }}
+          BUCKET: $BUCKET
+          REGION: $REGION
