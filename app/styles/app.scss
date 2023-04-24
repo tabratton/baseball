@@ -1,0 +1,7 @@
+@import 'ember-basic-dropdown';
+@import 'ember-power-calendar';
+@import 'ember-power-select';
+
+.date-picker-calendar {
+  @include ember-power-calendar($cell-size: 36px);
+}

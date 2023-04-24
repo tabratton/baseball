@@ -1,0 +1,7 @@
+<div class="home h-home overflow-auto w-screen flex flex-col items-center">
+  <Scorebug::List
+    class="w-full overflow-auto flex flex-row flex-wrap md:justify-center p-2 md:p-4"
+    @date={{this.selectedDate}}
+    @onUpdate={{fn (mut this.selectedDate)}}
+  />
+</div>

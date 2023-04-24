@@ -1,12 +1,12 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 function getContrastYIQ(hex) {
-  hex = hex.replace('#', '')
-  const r = parseInt(hex.substr(0, 2), 16)
-  const g = parseInt(hex.substr(2, 2), 16)
-  const b = parseInt(hex.substr(4, 2), 16)
-  const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000
-  return yiq >= 128 ? 'black' : 'white'
+  hex = hex.replace('#', '');
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? 'black' : 'white';
 }
 
 const mlbColors = {
@@ -41,62 +41,56 @@ const mlbColors = {
   col: { main: '#33006F', secondary: '#C4CED4' },
   lad: { main: '#005A9C', secondary: '#A5ACAF' },
   nl: { main: '#002D72', secondary: '#D50032' },
-  al: { main: '#D50032', secondary: '#002D72' }
-}
-// TODO: Make highlight color variable for each team, apply to team name/borders/stuff for highlights
+  al: { main: '#D50032', secondary: '#002D72' },
+};
 
-Object.keys(mlbColors).forEach(key => {
+Object.keys(mlbColors).forEach((key) => {
   if (!mlbColors[key]['text-main']) {
-    mlbColors[key]['text-main'] = getContrastYIQ(mlbColors[key].main)
+    mlbColors[key]['text-main'] = getContrastYIQ(mlbColors[key].main);
   }
 
   if (!mlbColors[key]['text-secondary']) {
-    mlbColors[key]['text-secondary'] = getContrastYIQ(mlbColors[key].secondary)
+    mlbColors[key]['text-secondary'] = getContrastYIQ(mlbColors[key].secondary);
   }
-})
+});
 
 module.exports = {
-  content: [
-    './public/**/*.html',
-    './src/**/*.vue',
-    './src/**/*.js'
-  ],
+  content: ['./app/**/*.{js,hbs,html}'],
   theme: {
     extend: {
       colors: {
-        gray: colors.stone,
-        ...mlbColors
+        ...mlbColors,
       },
       boxShadow: {
-        'md-side': '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
+        'md-side':
+          '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
       },
       height: {
-        'content': 'calc(100vh - 12.5rem)',
-        'home': 'calc(100vh - 2rem)',
-        'leaders': 'calc(100vh - 6.5rem)'
+        content: 'calc(100vh - 12.5rem)',
+        home: 'calc(100vh - 2rem)',
+        leaders: 'calc(100vh - 6.5rem)',
       },
       padding: {
-        '2.5': '0.625rem',
-        '5.5': '1.375rem'
+        2.5: '0.625rem',
+        5.5: '1.375rem',
       },
       minHeight: {
         'leader-select': '2.625rem',
-        'locale-select': '2rem'
+        'locale-select': '2rem',
       },
       fontFamily: {
-        'body': 'Inconsolata, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace'
+        body: 'Iosevka Etoile, Iosevka, Menlo, Monaco, ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", "Courier New", monospace',
       },
       stroke: {
         black: colors.black,
-        white: colors.white
+        white: colors.white,
+        ...mlbColors,
       },
       fill: {
         black: colors.black,
-        white: colors.white
-      }
+        white: colors.white,
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms')
-  ],
-}
+  plugins: [require('@tailwindcss/forms')],
+};

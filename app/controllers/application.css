@@ -1,0 +1,16 @@
+/* stylelint-disable scss/function-no-unknown */
+#app-grid {
+  display: grid;
+  grid-template:
+    "navbar" 2rem
+    "content" calc(100vh - 2rem)
+    / 100vw;
+}
+
+.navbar {
+  grid-area: navbar;
+}
+
+.content {
+  grid-area: content;
+}

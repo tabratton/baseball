@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.date-picker-calendar .ember-power-calendar-weekday {
+  @apply text-stone-100;
+}
+
+.date-picker-calendar .ember-power-calendar-nav {
+  @apply px-3 py-2 bg-stone-900 opacity-80;
+}
+
+.date-picker-calendar .ember-power-calendar-nav-control {
+  @apply text-white hover:text-stone-100 focus:text-stone-100;
+}
+
+.date-picker-calendar .ember-power-calendar-day {
+  @apply rounded-full;
+}
+
+/* stylelint-disable selector-class-pattern */
+.date-picker-calendar .ember-power-calendar-day--other-month {
+  @apply bg-stone-600 text-stone-400;
+}
+
+.date-picker-calendar .ember-power-calendar-day--current-month {
+  @apply bg-stone-800 text-stone-100;
+}
+
+.date-picker-calendar .ember-power-calendar-day--today {
+  @apply bg-stone-700 text-stone-100;
+}
+
+.date-picker-calendar .ember-power-calendar-day--selected {
+  @apply border-2 border-solid border-red-600;
+}
+
+.date-picker-calendar .ember-power-calendar-day--focused {
+  @apply shadow-[inset_0px_-2px_0px_0px_theme(colors.red.600)];
+}
+
+/* stylelint-enable selector-class-pattern */
+
+.date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {
+  @apply bg-stone-600 text-stone-100;
+}
+
+.ember-power-select-trigger {
+  @apply bg-transparent border-stone-700 px-3 py-2;
+}
+
+.ember-power-select-placeholder {
+  @apply text-stone-100;
+}
+
+.ember-power-select-dropdown {
+  @apply bg-white border-stone-700;
+}
+
+.ember-power-select-search,
+.ember-power-select-options {
+  @apply bg-stone-900 bg-opacity-90 text-stone-100;
+}
+
+.ember-power-select-search-input {
+  @apply border-stone-700 rounded-md bg-transparent focus:ring-red-800 focus:border-red-800;
+}
+
+.ember-power-select-group-name + .ember-power-select-options {
+  @apply my-2;
+}
+
+.ember-power-select-option[aria-current="true"] {
+  @apply bg-red-800;
+}
+
+.ember-power-select-option[aria-selected="true"] {
+  @apply bg-red-900;
+}
+
+.ember-power-select-option {
+  @apply py-1;
+}

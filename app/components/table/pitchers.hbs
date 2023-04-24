@@ -1,0 +1,35 @@
+<div>
+  {{yield to="header"}}
+  <Table::Sortable
+    class="border-collapse border border-white border-opacity-50 mb-4"
+    @items={{@pitchers}}
+    @headers={{this.headers}}
+    ...attributes
+  >
+    <:header as |h|>
+      <h.Header class={{h.header.class}}>
+        {{h.header.label}}
+      </h.Header>
+    </:header>
+    <:row as |row|>
+      <row.Row>
+        <row.Cell>#{{add row.index 1}}</row.Cell>
+        <row.Cell class="text-left">
+          <LinkTo @route="player" @model={{row.item.id}}>
+            <span class="text-sm">{{row.item.firstName}}</span>
+            <span class="font-bold">{{row.item.lastName}}</span>
+          </LinkTo>
+        </row.Cell>
+        <row.Cell class="hidden lg:table-cell">{{row.item.number}}</row.Cell>
+        <row.Cell>{{row.item.inningsPitched}}</row.Cell>
+        <row.Cell>{{row.item.hits}}</row.Cell>
+        <row.Cell>{{row.item.earnedRuns}}</row.Cell>
+        <row.Cell>{{row.item.strikeOuts}}</row.Cell>
+        <row.Cell>{{row.item.baseOnBalls}}</row.Cell>
+        <row.Cell class="hidden lg:table-cell">{{row.item.balls}}/{{row.item.strikes}}</row.Cell>
+        <row.Cell class="hidden lg:table-cell">{{row.item.era}}</row.Cell>
+        {{!-- TODO: Configurable list of table columns (advanced stats?) --}}
+      </row.Row>
+    </:row>
+  </Table::Sortable>
+</div>

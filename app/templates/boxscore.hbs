@@ -1,0 +1,10 @@
+<div class="overflow-y-auto p-4 w-full h-full">
+  <div class="flex flex-row flex-wrap items-center justify-center">
+    {{#if this.model.inProgress}}
+      <Scorebug @game={{this.model}} @disableClick={{true}} />
+    {{/if}}
+    <Boxscore @game={{this.model}} />
+  </div>
+  <Players class="w-full" @game={{this.model}} />
+</div>
+{{! TODO: auto refresh if game not over }}

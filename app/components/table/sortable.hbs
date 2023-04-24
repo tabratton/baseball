@@ -1,0 +1,39 @@
+<table
+  class="table-auto text-center"
+  ...attributes
+>
+  {{yield to="caption"}}
+  <thead>
+    <tr class={{@headerClasses}}>
+      {{#each @headers as |header|}}
+        {{yield
+          (hash
+            Header=(component
+              "table/sortable/header"
+              sort=this.sort
+              field=header.field
+              sortField=this.sortField
+              sortDirection=this.sortDirection
+            )
+            header=header
+          )
+          to="header"
+        }}
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each this.sortedItems as |listItem index|}}
+      {{yield
+        (hash
+          Row=(component "table/sortable/row")
+          Cell=(component "table/sortable/cell")
+          item=listItem
+          index=index
+        )
+        to="row"
+      }}
+    {{/each}}
+    {{yield}}
+  </tbody>
+</table>
