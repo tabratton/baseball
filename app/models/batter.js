@@ -1,5 +1,5 @@
 import { getOwner, setOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class Batter {

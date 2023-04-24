@@ -2,9 +2,10 @@ import Service from '@ember/service';
 
 import { format, parse } from 'date-fns';
 import fetch from 'fetch';
-import { all } from 'rsvp';
+import { all, hash } from 'rsvp';
 
 import Game from 'baseball/models/game';
+import LeagueLeaders from 'baseball/models/league-leaders';
 import Player from 'baseball/models/player';
 import TeamRecord from 'baseball/models/team-record';
 import teamMap from 'baseball/utils/team-map';
@@ -19,27 +20,16 @@ export default class MlbApi extends Service {
         `${this.apiHost}v1/schedule?sportId=1&date=${format(date, 'y-MM-dd')}`
       )
     )
-      .then((response) => {
-        if (response.status !== 200) {
-          return [];
-        }
-
-        return response
-          .json()
-          .then(({ dates: [dateData] }) => dateData?.games || []);
-      })
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch games')
+      )
+      .then(({ dates: [dateData] }) => dateData?.games || [])
       .then((games) => all(games.map((d) => this.fetchGame(`${d.gamePk}`))));
   }
 
   fetchGame(gamePk) {
     return fetch(encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`))
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error('could not fetch game');
-        }
-
-        return response.json().then((data) => data);
-      })
+      .then((response) => this.handleResponse(response, 'could not fetch game'))
       .then((gameFeed) => new Game(gameFeed, this));
   }
 
@@ -56,52 +46,42 @@ export default class MlbApi extends Service {
           'MM/dd/yyyy'
         )}&standingsType=${type}&hydrate=team(division)`
       )
-    ).then((response) => {
-      if (response.status !== 200) {
-        throw new Error('could not fetch standings');
-      }
-
-      const mapRecords = (data) => {
-        const teamRecords =
-          data?.teamRecords?.map((re) => new TeamRecord(re, this)) || [];
-        return {
-          division: teamRecords[0]?.division,
-          teamRecords: teamRecords,
+    )
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch standings')
+      )
+      .then(({ records }) => {
+        const mapRecords = (data) => {
+          const teamRecords =
+            data?.teamRecords?.map((re) => new TeamRecord(re, this)) || [];
+          return {
+            division: teamRecords[0]?.division,
+            teamRecords: teamRecords,
+          };
         };
-      };
 
-      return response.json().then((data) => {
         return {
           american: {
-            west: mapRecords(data.records.find((r) => r.division.id === 200)),
-            central: mapRecords(
-              data.records.find((r) => r.division.id === 202)
-            ),
-            east: mapRecords(data.records.find((r) => r.division.id === 201)),
+            west: mapRecords(records.find((r) => r.division.id === 200)),
+            central: mapRecords(records.find((r) => r.division.id === 202)),
+            east: mapRecords(records.find((r) => r.division.id === 201)),
           },
           national: {
-            west: mapRecords(data.records.find((r) => r.division.id === 203)),
-            central: mapRecords(
-              data.records.find((r) => r.division.id === 205)
-            ),
-            east: mapRecords(data.records.find((r) => r.division.id === 204)),
+            west: mapRecords(records.find((r) => r.division.id === 203)),
+            central: mapRecords(records.find((r) => r.division.id === 205)),
+            east: mapRecords(records.find((r) => r.division.id === 204)),
           },
         };
       });
-    });
   }
 
   async fetchWinDifferentials(year) {
     const { regularSeasonStartDate, regularSeasonEndDate } = await fetch(
       encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`)
     )
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error('could not fetch standings');
-        }
-
-        return response.json();
-      })
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch win diffs')
+      )
       .then((response) => {
         if (!response.seasons[0]) {
           throw new Error('no season data');
@@ -112,20 +92,16 @@ export default class MlbApi extends Service {
 
     const diffs = await all(
       teamMap
-        .reject((team) => team.id === 159 || team.id === 160)
+        .filter((team) => team.id !== 159 && team.id !== 160)
         .map((team) => {
           return fetch(
             encodeURI(
               `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${regularSeasonEndDate}`
             )
           )
-            .then((response) => {
-              if (response.status !== 200) {
-                throw new Error('couldnt get schedule');
-              }
-
-              return response.json();
-            })
+            .then((response) =>
+              this.handleResponse(response, 'could not get schedule')
+            )
             .then((response) => {
               const dates = response.dates;
 
@@ -159,13 +135,9 @@ export default class MlbApi extends Service {
         `${this.apiHost}v1/people/${playerId}?hydrate=stats(group=[hitting,pitching,fielding],type=[career,yearByYear],currentTeam)`
       )
     )
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error('could not fetch player');
-        }
-
-        return response.json();
-      })
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch player')
+      )
       .then((response) => {
         if (!response.people[0]) {
           throw new Error('no people data');
@@ -175,5 +147,41 @@ export default class MlbApi extends Service {
       });
 
     return new Player(player);
+  }
+
+  async fetchLeagueLeaders(stat) {
+    if (!stat) return null;
+
+    const [statGroup, type] = stat.split('_');
+    let url = `${this.apiHost}v1/stats/leaders?sportId=1&statGroup=${statGroup}&statType=season&leaderCategories=${type}&limit=10`;
+
+    const noneQualified = ['saves', 'blownSaves', 'holds', 'saveOpportunities'];
+
+    if (!noneQualified.includes(type)) {
+      url += '&playerPool=qualified';
+    }
+
+    const { american, national } = await hash({
+      american: fetch(encodeURI(`${url}&leagueId=103`))
+        .then((response) =>
+          this.handleResponse(response, 'could not fetch stats')
+        )
+        .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
+      national: fetch(encodeURI(`${url}&leagueId=104`))
+        .then((response) =>
+          this.handleResponse(response, 'could not fetch stats')
+        )
+        .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
+    });
+
+    return new LeagueLeaders(american, national);
+  }
+
+  handleResponse(response, message) {
+    if (response.status !== 200) {
+      throw new Error(message);
+    }
+
+    return response.json();
   }
 }

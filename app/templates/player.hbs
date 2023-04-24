@@ -1,5 +1,5 @@
-<div class="flex justify-center">
-  <div class="mt-4 bg-stone-800 w-3/4 p-4 rounded">
+<div class="p-4">
+  <div class="bg-stone-800 p-4 rounded">
     <div class="font-bold text-2xl">{{this.model.firstName}} {{this.model.nickname}} {{this.model.lastName}} - {{this.model.number}}</div>
     <div class="flex gap-12 mt-4">
       <div class="flex flex-col">
@@ -56,7 +56,7 @@
         </nav.Tab>
       {{/if}}
     </Nav>
-    <div class="mt-4 overflow-auto">
+    <div class="mt-4 overflow-auto relative">
       {{#if (eq this.selectedTab "hitting")}}
         <Table::Sortable
           class="border-collapse border-none border-opacity-50 mb-4"
@@ -69,12 +69,11 @@
             </h.Header>
           </:header>
           <:row as |row|>
-            {{!-- TODO: create tables for pitching and fielding --}}
             <row.Row
               class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
             >
               <row.Cell
-                class='border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
+                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
               >
                 {{row.item.total.season}}
@@ -113,7 +112,7 @@
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesPlayed}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.plateAppearances}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.atBats}}</td>
@@ -145,7 +144,7 @@
           </:row>
           <:default>
             <tr>
-              <td class="py-1 px-2 sm:px-3">Career</td>
+              <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3">Career</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.gamesPlayed}}</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.plateAppearances}}</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.atBats}}</td>
@@ -186,12 +185,12 @@
             </h.Header>
           </:header>
           <:row as |row|>
-            {{!-- TODO: create tables for pitching, handle row coloring for career (base on stat array length) --}}
+            {{!-- TODO: handle row coloring for career (base on stat array length) --}}
             <row.Row
               class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
             >
               <row.Cell
-                class='border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
+                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
               >
                 {{row.item.total.season}} - {{row.item.total.position.abbreviation}}
@@ -215,7 +214,7 @@
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesPlayed}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesStarted}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.innings}}</td>
@@ -233,7 +232,7 @@
           <:default>
             {{#each this.model.careerStats.fielding as |fielding index|}}
               <tr class={{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}>
-                <td class="py-1 px-2 sm:px-3">Career - {{fielding.position.abbreviation}}</td>
+                <td class="sticky left-0 py-1 px-2 sm:px-3 whitespace-nowrap {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}">Career - {{fielding.position.abbreviation}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesPlayed}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesStarted}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.innings}}</td>
@@ -260,12 +259,12 @@
             </h.Header>
           </:header>
           <:row as |row|>
-            {{!-- TODO: create tables for pitching, handle row coloring for career (base on stat array length) --}}
+            {{!-- TODO: handle row coloring for career (base on stat array length) --}}
             <row.Row
               class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
             >
               <row.Cell
-                class='border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
+                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
               >
                 {{row.item.total.season}}
@@ -304,7 +303,7 @@
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.wins}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.losses}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.winPercentage}}</td>
@@ -336,7 +335,7 @@
           </:row>
           <:default>
             <tr>
-              <td class="py-1 px-2 sm:px-3">Career</td>
+              <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3">Career</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.wins}}</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.losses}}</td>
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.winPercentage}}</td>

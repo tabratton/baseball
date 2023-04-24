@@ -10,5 +10,6 @@ Router.map(function () {
   this.route('boxscore', { path: '/boxscore/:game_pk' });
   this.route('standings');
   this.route('player', { path: '/player/:player_id' });
+  this.route('league-leaders');
 });
-// TODO: create league leaders route
+// TODO: Add team route

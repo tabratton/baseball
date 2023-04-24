@@ -1,5 +1,5 @@
 import { getOwner, setOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 
 import teamMap from 'baseball/utils/team-map';

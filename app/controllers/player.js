@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
 export default class Player extends Controller {
-  @tracked selectedTab = 'hitting';
+  @tracked selectedTab;
 
   get hasPitchingStats() {
     return !!this.model.careerStats.pitching;

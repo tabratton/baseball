@@ -44,3 +44,40 @@
 .date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {
   @apply bg-stone-600 text-stone-100;
 }
+
+.ember-power-select-trigger {
+  @apply bg-transparent border-stone-700 px-3 py-2;
+}
+
+.ember-power-select-placeholder {
+  @apply text-stone-100;
+}
+
+.ember-power-select-dropdown {
+  @apply bg-white border-stone-700;
+}
+
+.ember-power-select-search,
+.ember-power-select-options {
+  @apply bg-stone-900 bg-opacity-90 text-stone-100;
+}
+
+.ember-power-select-search-input {
+  @apply border-stone-700 rounded-md bg-transparent focus:ring-red-800 focus:border-red-800;
+}
+
+.ember-power-select-group-name + .ember-power-select-options {
+  @apply my-2;
+}
+
+.ember-power-select-option[aria-current="true"] {
+  @apply bg-red-800;
+}
+
+.ember-power-select-option[aria-selected=true] {
+  @apply bg-red-900;
+}
+
+.ember-power-select-option {
+  @apply py-1;
+}

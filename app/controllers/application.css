@@ -4,7 +4,7 @@
   grid-template:
     "navbar" 2rem
     "content" calc(100vh - 2rem)
-    / auto;
+    / 100vw;
 }
 
 .navbar {
