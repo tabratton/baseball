@@ -14,10 +14,10 @@
     </thead>
     <tbody>
       <tr>
-        <td class='py-2.5 pl-2 whitespace-nowrap italic font-bold rounded-tl {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
+        <td class='py-2.5 pl-2 whitespace-nowrap italic font-bold rounded-tl-[2px] {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.short}}
         </td>
-        <td class='py-2.5 pr-2 text-right whitespace-nowrap font-bold rounded-tr {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
+        <td class='py-2.5 pr-2 text-right whitespace-nowrap font-bold rounded-tr-[2px] {{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}'>
           {{@game.awayTeam.runs}}
         </td>
       </tr>
@@ -82,9 +82,11 @@
             height='17.119'
           >
             <path
+              class="fill-white stroke-black"
               d='M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034'
             ></path>
             <polygon
+              class="fill-white stroke-white"
               points='198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458'
             ></polygon>
           </svg>
@@ -120,11 +122,15 @@
             <td class='px-2 py-2.5 text-right'>
               {{#if @game.isTopInning}}
                 {{@game.batter.battingOrder}}
-                <span class="text-sm">{{@game.batter.firstName}}</span>
-                <span class="font-bold text-lg">{{@game.batter.lastName}}</span>
+                <PlayerName>
+                  <:first>{{@game.batter.firstName}}</:first>
+                  <:last>{{@game.batter.lastName}}</:last>
+                </PlayerName>
               {{else}}
-                <span class="text-sm">{{@game.pitcher.firstName}}</span>
-                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
+                <PlayerName>
+                  <:first>{{@game.pitcher.firstName}}</:first>
+                  <:last>{{@game.pitcher.lastName}}</:last>
+                </PlayerName>
               {{/if}}
             </td>
             <td class='px-2 py-2.5 text-right'>
@@ -147,12 +153,16 @@
           >
             <td class='px-2 py-2.5 text-right'>
               {{#if @game.isTopInning}}
-                <span class="text-sm">{{@game.pitcher.firstName}}</span>
-                <span class="font-bold text-lg">{{@game.pitcher.lastName}}</span>
+                <PlayerName>
+                  <:first>{{@game.pitcher.firstName}}</:first>
+                  <:last>{{@game.pitcher.lastName}}</:last>
+                </PlayerName>
               {{else}}
                 {{@game.batter.battingOrder}}
-                <span class="text-sm">{{@game.batter.firstName}}</span>
-                <span class="font-bold text-lg">{{@game.batter.lastName}}</span>
+                <PlayerName>
+                  <:first>{{@game.batter.firstName}}</:first>
+                  <:last>{{@game.batter.lastName}}</:last>
+                </PlayerName>
               {{/if}}
             </td>
             <td class='px-2 py-2.5 text-right'>

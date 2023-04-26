@@ -22,14 +22,46 @@
   grid-area: content;
 }
 
-// TODO: use tailwind for this;
-.scorebug .home-plate path {
-  paint-order: fill;
-  fill: white;
-  stroke: black;
+@keyframes dropFadeBelow {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
 }
 
-.scorebug .home-plate polygon {
-  stroke: white;
-  fill: white;
+@keyframes dropFadeAbove {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.slide-fade {
+  // When opening below the trigger
+  &.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-in {
+    animation: dropFadeBelow .15s;
+  }
+
+  &.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-out {
+    animation: dropFadeBelow .15s reverse;
+  }
+
+  // When opening above the trigger
+  &.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-in {
+    animation: dropFadeAbove .15s;
+  }
+
+  &.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-out {
+    animation: dropFadeAbove .15s reverse;
+  }
 }

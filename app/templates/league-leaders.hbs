@@ -30,8 +30,11 @@
           <:row as |row|>
             <row.Row class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}>
               <row.Cell class="border-r-0">
-                <LinkTo @route="player" @model={{row.item.american.person.id}}>
-                  {{row.item.american.person.fullName}}
+                <LinkTo class="hover:underline" @route="player" @model={{row.item.american.person.id}}>
+                  <PlayerName>
+                    <:first>{{row.item.american.person.firstName}}</:first>
+                    <:last>{{row.item.american.person.lastName}}</:last>
+                  </PlayerName>
                 </LinkTo>
               </row.Cell>
               <row.Cell class="border-l-0">
@@ -40,8 +43,11 @@
               <row.Cell>{{row.item.rank}}</row.Cell>
               <row.Cell class="border-r-0">{{row.item.national.value}}</row.Cell>
               <row.Cell class="border-l-0">
-                <LinkTo @route="player" @model={{row.item.national.person.id}}>
-                  {{row.item.national.person.fullName}}
+                <LinkTo class="hover:underline" @route="player" @model={{row.item.national.person.id}}>
+                  <PlayerName>
+                    <:first>{{row.item.national.person.firstName}}</:first>
+                    <:last>{{row.item.national.person.lastName}}</:last>
+                  </PlayerName>
                 </LinkTo>
               </row.Cell>
             </row.Row>

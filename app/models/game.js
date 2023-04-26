@@ -199,14 +199,29 @@ export default class Game {
   }
 
   get gameDuration() {
-    return durationFormat(
-      Duration.fromObject({
-        hours: Math.floor(
-          this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
-        ),
-        minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-      })
-    );
+    if (this.isOver) {
+      return durationFormat(
+        Duration.fromObject({
+          hours: Math.floor(
+            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
+          ),
+          minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
+        })
+      );
+    } else if (this.inProgress) {
+      const millis =
+        DateTime.now() -
+        DateTime.fromISO(this.gameFeed.gameData.gameInfo.firstPitch);
+      const duration = Duration.fromMillis(millis).rescale();
+      return durationFormat(
+        duration
+          .minus(duration.milliseconds)
+          .minus(duration.seconds * 1000)
+          .rescale()
+      );
+    }
+
+    return '';
   }
 
   get isTopInning() {

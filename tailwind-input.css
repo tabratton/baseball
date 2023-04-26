@@ -39,6 +39,22 @@
   @apply shadow-[inset_0px_-2px_0px_0px_theme(colors.red.600)];
 }
 
+.ember-basic-dropdown-trigger--below {
+  @apply rounded-br-none rounded-bl-none;
+}
+
+.ember-basic-dropdown-trigger--above {
+  @apply rounded-tr-none rounded-tl-none;
+}
+
+.ember-basic-dropdown-content--below {
+  @apply mt-[-1px];
+}
+
+.ember-basic-dropdown-content--above {
+  @apply mb-[-1px];
+}
+
 /* stylelint-enable selector-class-pattern */
 
 .date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {

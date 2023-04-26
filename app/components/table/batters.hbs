@@ -16,9 +16,11 @@
         <row.Cell>{{row.item.battingOrder}}</row.Cell>
         <row.Cell>{{row.item.position}}</row.Cell>
         <row.Cell class="text-left">
-          <LinkTo @route="player" @model={{row.item.id}}>
-            <span class="text-sm font-light">{{row.item.firstName}}</span>
-            <span class="font-bold">{{row.item.lastName}}</span>
+          <LinkTo class="hover:underline" @route="player" @model={{row.item.id}}>
+            <PlayerName>
+              <:first>{{row.item.firstName}}</:first>
+              <:last>{{row.item.lastName}}</:last>
+            </PlayerName>
           </LinkTo>
         </row.Cell>
         <row.Cell class="hidden lg:table-cell">{{row.item.number}}</row.Cell>
