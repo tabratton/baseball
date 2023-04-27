@@ -7,14 +7,15 @@
   {{did-insert (perform this.getData)}}
   {{did-update (perform this.getData) @date}}
 >
-  {{!-- TODO: Add loading spinners --}}
-  {{#each this.inProgress as |g|}}
-    <Scorebug @game={{g}} />
-  {{/each}}
-  {{#each this.notInProgress as |g|}}
-    <Scorebug @game={{g}} />
-  {{/each}}
-  {{#if (and (eq this.inProgress.length 0) (eq this.notInProgress.length 0))}}
-    {{t "scorebug.list.no_games"}}
-  {{/if}}
+  <Loading class="mt-4" @loading={{this.getData.isRunning}}>
+    {{#each this.inProgress as |g|}}
+      <Scorebug @game={{g}} />
+    {{/each}}
+    {{#each this.notInProgress as |g|}}
+      <Scorebug @game={{g}} />
+    {{/each}}
+    {{#if (and (eq this.inProgress.length 0) (eq this.notInProgress.length 0))}}
+      {{t "scorebug.list.no_games"}}
+    {{/if}}
+  </Loading>
 </div>

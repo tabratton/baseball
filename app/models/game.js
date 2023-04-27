@@ -92,7 +92,7 @@ export default class Game {
         .map((id) => this.boxScore.teams.home.players[`ID${id}`])
         .filter((v) => v)
         .map((player) => new Batter(player, this.context))
-        .filter((player) => player.plateAppearances > 0),
+        .filter((player) => player.plateAppearances !== undefined),
       pitchers: this.boxScore.teams.home.pitchers
         .map((id) => this.boxScore.teams.home.players[`ID${id}`])
         .filter((v) => v)
@@ -135,7 +135,7 @@ export default class Game {
         .map((id) => this.boxScore.teams.away.players[`ID${id}`])
         .filter((v) => v)
         .map((player) => new Batter(player, this.context))
-        .filter((player) => player.plateAppearances > 0),
+        .filter((player) => player.plateAppearances !== undefined),
       pitchers: this.boxScore.teams.away.pitchers
         .map((id) => this.boxScore.teams.away.players[`ID${id}`])
         .filter((v) => v)

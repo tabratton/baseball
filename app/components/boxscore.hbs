@@ -21,7 +21,7 @@
           </span>
         </td>
         {{#each @game.awayTeam.innings as |inning|}}
-          <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
+          <td class="px-2 py-1">{{with-default inning.runs (if @game.isOver "x" "")}}</td>
         {{/each}}
         <td class="px-2 py-1 border-l border-stone-200 font-bold">{{@game.awayTeam.runs}}</td>
         <td class="px-2 py-1">{{@game.awayTeam.hits}}</td>
@@ -36,7 +36,7 @@
           </span>
         </td>
         {{#each @game.homeTeam.innings as |inning|}}
-          <td class="px-2 py-1">{{with-default inning.runs "x"}}</td>
+          <td class="px-2 py-1">{{with-default inning.runs (if @game.isOver "x" "")}}</td>
         {{/each}}
         <td class="px-2 py-1 border-l border-stone-200 font-bold">{{@game.homeTeam.runs}}</td>
         <td class="px-2 py-1">{{@game.homeTeam.hits}}</td>

@@ -5,7 +5,7 @@
   {{yield to="caption"}}
   <thead>
     <tr class={{@headerClasses}}>
-      {{#each @headers as |header|}}
+      {{#each @headers as |header index|}}
         {{yield
           (hash
             Header=(component
@@ -16,6 +16,7 @@
               sortDirection=this.sortDirection
             )
             header=header
+            index=index
           )
           to="header"
         }}
