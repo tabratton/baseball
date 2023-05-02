@@ -1,4 +1,6 @@
-<div class="overflow-auto w-screen h-home">
+{{page-title this.model.awayTeam.teamName " at " this.model.homeTeam.teamName " - " (format-date this.model.gameTime)}}
+
+<div class="overflow-auto w-full h-home">
   <div class="flex flex-row flex-wrap items-center justify-center">
     {{#if this.model.inProgress}}
       <Scorebug @game={{this.model}} @disableClick={{true}} />
