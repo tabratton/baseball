@@ -1,67 +1,57 @@
-<svg
-  class='diff-chart'
-  ...attributes
-  {{did-insert this.onInsert}}
-  {{did-update this.redrawChartElements this.yValues this.xValues}}
-  {{did-resize this.updateDimensions}}
-  {{on 'pointerenter' this.onPointerMoved}}
+<div class="relative" ...attributes {{on 'pointerenter' this.onPointerMoved}}
   {{on 'pointermove' this.onPointerMoved}}
-  {{on 'pointerleave' this.onPointerLeave}}
->
-  <g
-    aria-hidden='true'
-    class='y-axis {{if @enableGridlines "hidden"}}'
-    transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
+  {{on 'pointerleave' this.onPointerLeave}}>
+  <svg
+    class='diff-chart h-full w-full'
+    {{did-insert this.onInsert}}
+    {{did-update this.redrawChartElements this.yValues this.xValues}}
+    {{did-resize this.updateDimensions}}
   >
-  </g>
-  <g
-    class='gridlines {{unless @enableGridlines "hidden"}}'
-    transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
-  ></g>
-  <g
-    aria-hidden='true'
-    class='x-axis'
-    transform='translate(0, {{this.xAxisPosition}})'
-  >
-  </g>
-  <g class='canvas' transform='translate(0, {{this.margin.top}})'>
-    {{#each this.filteredData as |team|}}
-      <DiffChart::Line
-        @team={{team}}
-        @tooltipX={{this.tooltipX}}
-        @showTooltip={{this.showTooltips}}
-        @xScale={{this.xScale}}
-        @yScale={{this.yScale}}
-      />
-    {{/each}}
-  </g>
-  {{#if (and this.showTooltips this.tooltipData)}}
-    <g transform='translate({{sub this.tooltipX 20}}, {{this.margin.top}})'>
-      <foreignObject
-        width='1'
-        height='1'
-        class='overflow-visible pointer-events-none'
-      >
-        <div class='flex flex-col rounded bg-stone-800 shadow w-max'>
-          <div class='p-2'>{{get this.tooltipData '0.count'}} games played</div>
-          {{#each this.tooltipData as |tooltip|}}
-            <div
-              class='flex flex-col p-2 items-center
-                {{tooltip.team.mainBackground}}
-                {{tooltip.team.mainText}}'
-            >
-              <span>{{tooltip.team.short}}</span>
-              <span>{{format-number
-                  (or tooltip.diff 0)
-                  signDisplay='exceptZero'
-                }}</span>
-            </div>
-          {{/each}}
-        </div>
-      </foreignObject>
+    <g
+      aria-hidden='true'
+      class='y-axis {{if @enableGridlines "hidden"}}'
+      transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
+    >
     </g>
+    <g
+      class='gridlines {{unless @enableGridlines "hidden"}}'
+      transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
+    ></g>
+    <g
+      aria-hidden='true'
+      class='x-axis'
+      transform='translate(0, {{this.xAxisPosition}})'
+    >
+    </g>
+    <g class='canvas' transform='translate(0, {{this.margin.top}})'>
+      {{#each this.filteredData as |team|}}
+        <DiffChart::Line
+          @team={{team}}
+          @tooltipX={{this.tooltipX}}
+          @showTooltip={{this.showTooltips}}
+          @xScale={{this.xScale}}
+          @yScale={{this.yScale}}
+        />
+      {{/each}}
+    </g>
+  </svg>
+  {{#if (and this.showTooltips this.tooltipData)}}
+    <div
+      class='flex flex-col rounded bg-stone-800 shadow w-max absolute'
+      {{position-element top=this.margin.top left=this.tooltipX}}
+    >
+      <div class='p-2'>
+        {{get this.tooltipData '0.count'}} games played
+      </div>
+      {{#each this.tooltipData as |tooltip|}}
+        <div class='flex flex-col p-2 items-center {{tooltip.team.mainBackground}} {{tooltip.team.mainText}}'>
+          <span>{{tooltip.team.short}}</span>
+          <span>{{format-number (or tooltip.diff 0) signDisplay='exceptZero'}}</span>
+        </div>
+      {{/each}}
+    </div>
   {{/if}}
-</svg>
+</div>
 <div class='flex items-center justify-center gap-4'>
   {{#each @data as |team|}}
     <div
@@ -69,10 +59,7 @@
       role='button'
       {{on 'click' (fn this.toggleTeam team)}}
     >
-      <span
-        class='h-[0.25rem] w-[1.5rem]
-          {{if team.selected team.team.mainBackground "bg-stone-700"}}'
-      ></span>
+      <span class='h-[0.25rem] w-[1.5rem] {{if team.selected team.team.mainBackground "bg-stone-700"}}'></span>
       <span>{{team.team.short}}</span>
     </div>
   {{/each}}
