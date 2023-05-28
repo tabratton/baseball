@@ -1,12 +1,14 @@
 {{page-title this.model.awayTeam.teamName " at " this.model.homeTeam.teamName " - " (format-date this.model.gameTime)}}
 
-<div class="overflow-auto w-full h-home">
-  <div class="flex flex-row flex-wrap items-center justify-center">
-    {{#if this.model.inProgress}}
-      <Scorebug @game={{this.model}} @disableClick={{true}} />
-    {{/if}}
-    <Boxscore @game={{this.model}} />
+<div class="overflow-auto w-full h-home" {{game-refresher this.model}}>
+  {{#if this.model.inProgress}}
+    <div class="flex overflow-auto md:justify-center">
+      <Scorebug class="mx-auto" @game={{this.model}} @disableClick={{true}} />
+    </div>
+  {{/if}}
+  <div class="flex overflow-auto my-4">
+    <Boxscore class="mx-auto" @game={{this.model}} />
   </div>
-  <Players class="w-full" @game={{this.model}} />
+  <Players class="w-full mb-4" @game={{this.model}} />
 </div>
 {{! TODO: auto refresh if game not over }}

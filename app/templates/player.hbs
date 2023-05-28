@@ -61,7 +61,7 @@
     <div class="mt-4 overflow-auto relative">
       {{#if (eq this.selectedTab "hitting")}}
         <Table::Sortable
-          class="border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.hittingHeaders}}
           @items={{this.model.seasonHittingStats}}
         >
@@ -71,11 +71,9 @@
             </h.Header>
           </:header>
           <:row as |row|>
-            <row.Row
-              class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
-            >
+            <row.Row>
               <row.Cell
-                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
+                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
               >
                 {{row.item.total.season}}
@@ -177,7 +175,7 @@
         </Table::Sortable>
       {{else if (eq this.selectedTab "fielding")}}
         <Table::Sortable
-          class="border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.fieldingHeaders}}
           @items={{this.model.seasonFieldingStats}}
         >
@@ -192,7 +190,7 @@
               class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
             >
               <row.Cell
-                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
+                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
               >
                 {{row.item.total.season}} - {{row.item.total.position.abbreviation}}
@@ -233,7 +231,7 @@
           </:row>
           <:default>
             {{#each this.model.careerStats.fielding as |fielding index|}}
-              <tr class={{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}>
+              <tr>
                 <td class="sticky left-0 py-1 px-2 sm:px-3 whitespace-nowrap {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}">Career - {{fielding.position.abbreviation}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesPlayed}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesStarted}}</td>
@@ -251,7 +249,7 @@
         </Table::Sortable>
       {{else if (eq this.selectedTab "pitching")}}
         <Table::Sortable
-          class="border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.pitchingHeaders}}
           @items={{this.model.seasonPitchingStats}}
         >
@@ -262,9 +260,7 @@
           </:header>
           <:row as |row|>
             {{!-- TODO: handle row coloring for career (base on stat array length) --}}
-            <row.Row
-              class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
-            >
+            <row.Row>
               <row.Cell
                 class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
                 {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}

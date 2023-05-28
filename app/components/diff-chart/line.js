@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 
 export default class Line extends Component {
   logoSize = 32;
+  circleRadius = this.logoSize / 2;
 
   get seasonDiffs() {
     return this.args.team.seasonDiffs;
@@ -32,7 +33,6 @@ export default class Line extends Component {
     };
   }
 
-  @cached
   get tooltipItem() {
     const itemIndex = Math.floor(this.args.xScale.invert(this.args.tooltipX));
     return this.seasonDiffs[itemIndex];

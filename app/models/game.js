@@ -11,6 +11,7 @@ import teamMap from 'baseball/utils/team-map';
 
 export default class Game {
   @service intl;
+  @service mlbApi;
 
   @tracked gameFeed;
 
@@ -20,6 +21,10 @@ export default class Game {
     this.gameFeed = gameObj;
     this.context = context;
     setOwner(this, getOwner(context));
+  }
+
+  async refreshData() {
+    this.gameFeed = await this.mlbApi.fetchGameData(this.gamePk);
   }
 
   get gamePk() {
@@ -74,8 +79,8 @@ export default class Game {
     const team = {
       name: homeTeam?.name,
       short: homeTeam?.short,
-      locationName: this.homeTeamGameData.locationName,
-      teamName: this.homeTeamGameData.teamName,
+      locationName: this.homeTeamGameData.franchiseName,
+      teamName: this.homeTeamGameData.clubName,
       bgClass:
         this.teamColorPriority === 'home'
           ? homeTeam?.mainBackground
@@ -122,8 +127,8 @@ export default class Game {
 
     const team = {
       name: awayTeam?.name,
-      locationName: this.awayTeamGameData.locationName,
-      teamName: this.awayTeamGameData.teamName,
+      locationName: this.awayTeamGameData.franchiseName,
+      teamName: this.awayTeamGameData.clubName,
       short: awayTeam?.short,
       bgClass: awayTeam?.mainBackground,
       textClass: awayTeam?.mainText,

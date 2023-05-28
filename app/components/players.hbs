@@ -1,8 +1,8 @@
 <div
-  class="flex flex-row flex-wrap items-center md:items-start justify-center"
+  class="flex gap-4 flex-row flex-wrap md:items-start overflow-auto"
   ...attributes
 >
-  <div class="m-2 flex flex-col items-center">
+  <div class="flex flex-col mx-auto md:items-center">
     <Table::Batters
       class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}}"
       @batters={{@game.awayTeam.batters}}
@@ -24,7 +24,7 @@
       </:header>
     </Table::Pitchers>
   </div>
-  <div class="m-2 flex flex-col items-center">
+  <div class="flex flex-col mx-auto md:items-center">
     <Table::Batters
       class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}}"
       @batters={{@game.homeTeam.batters}}

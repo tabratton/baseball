@@ -27,10 +27,16 @@ export default class MlbApi extends Service {
       .then((games) => all(games.map((d) => this.fetchGame(`${d.gamePk}`))));
   }
 
+  fetchGameData(gamePk) {
+    return fetch(
+      encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`)
+    ).then((response) => this.handleResponse(response, 'could not fetch game'));
+  }
+
   fetchGame(gamePk) {
-    return fetch(encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`))
-      .then((response) => this.handleResponse(response, 'could not fetch game'))
-      .then((gameFeed) => new Game(gameFeed, this));
+    return this.fetchGameData(gamePk).then(
+      (gameFeed) => new Game(gameFeed, this)
+    );
   }
 
   async fetchStandings(date, type) {

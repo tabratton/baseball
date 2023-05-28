@@ -1,4 +1,4 @@
-<div>
+<div class="w-fit">
   {{yield to="header"}}
   <Table::Sortable
     class="border-collapse border border-white border-opacity-50 mb-4"
@@ -16,7 +16,7 @@
         <row.Cell>{{row.item.battingOrder}}</row.Cell>
         <row.Cell>{{row.item.position}}</row.Cell>
         <row.Cell class="text-left">
-          <LinkTo class="hover:underline" @route="player" @model={{row.item.id}}>
+          <LinkTo class="hover:underline whitespace-nowrap" @route="player" @model={{row.item.id}}>
             <PlayerName>
               <:first>{{row.item.firstName}}</:first>
               <:last>{{row.item.lastName}}</:last>

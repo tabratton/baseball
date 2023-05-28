@@ -1,7 +1,6 @@
 {{! template-lint-disable no-invalid-interactive }}
 <div
-  class='scorebug flex m-2 border-2 border-stone-200 rounded h-[136px]
-    {{unless @disableClick "cursor-pointer"}}'
+  class='scorebug flex mx-auto md:mx-0 border-2 border-stone-200 rounded h-[136px] {{unless @disableClick "cursor-pointer"}}'
   ...attributes
 >
   <table class='table-auto text-stone-100 rounded' {{on 'click' this.goToBoxScore}}>
@@ -119,7 +118,7 @@
           <tr
             class={{concat @game.awayTeam.bgClass ' ' @game.awayTeam.textClass}}
           >
-            <td class='px-2 py-2.5 text-right'>
+            <td class='px-2 py-2.5 text-right whitespace-nowrap'>
               {{#if @game.isTopInning}}
                 {{@game.batter.battingOrder}}
                 <PlayerName>
@@ -151,7 +150,7 @@
           <tr
             class={{concat @game.homeTeam.bgClass ' ' @game.homeTeam.textClass}}
           >
-            <td class='px-2 py-2.5 text-right'>
+            <td class='px-2 py-2.5 text-right whitespace-nowrap'>
               {{#if @game.isTopInning}}
                 <PlayerName>
                   <:first>{{@game.pitcher.firstName}}</:first>

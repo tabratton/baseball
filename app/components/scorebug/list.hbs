@@ -9,10 +9,10 @@
 >
   <Loading class="mt-4" @loading={{this.getData.isRunning}}>
     {{#each this.inProgress as |g|}}
-      <Scorebug @game={{g}} />
+      <Scorebug @game={{g}} {{game-refresher g}} />
     {{/each}}
     {{#each this.notInProgress as |g|}}
-      <Scorebug @game={{g}} />
+      <Scorebug @game={{g}} {{game-refresher g}} />
     {{/each}}
     {{#if (and (eq this.inProgress.length 0) (eq this.notInProgress.length 0))}}
       {{t "scorebug.list.no_games"}}

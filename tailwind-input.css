@@ -97,3 +97,19 @@
 .ember-power-select-option {
   @apply py-1;
 }
+
+table.player-table tbody tr:nth-of-type(2n) {
+  @apply bg-stone-800;
+}
+
+table.player-table tbody tr:nth-of-type(2n) td {
+  @apply bg-stone-800;
+}
+
+table.player-table tbody tr:nth-of-type(2n + 1) {
+  @apply bg-stone-700;
+}
+
+table.player-table tbody tr:nth-of-type(2n + 1) td {
+  @apply bg-stone-700;
+}
