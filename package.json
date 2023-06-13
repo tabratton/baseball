@@ -105,7 +105,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "d3": "^7.8.4",
+    "d3": "^7.8.5",
     "fuse.js": "^6.6.2",
     "luxon": "^3.3.0"
   }
