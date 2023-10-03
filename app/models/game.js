@@ -81,14 +81,8 @@ export default class Game {
       short: homeTeam?.short,
       locationName: this.homeTeamGameData.franchiseName,
       teamName: this.homeTeamGameData.clubName,
-      bgClass:
-        this.teamColorPriority === 'home'
-          ? homeTeam?.mainBackground
-          : homeTeam?.secondaryBackground,
-      textClass:
-        this.teamColorPriority === 'home'
-          ? homeTeam?.mainText
-          : homeTeam?.secondaryText,
+      bgClass: homeTeam?.mainBackground,
+      textClass: homeTeam?.mainText,
       innings: innings,
       runs: stats.runs,
       hits: stats.hits,
@@ -103,17 +97,6 @@ export default class Game {
         .filter((v) => v)
         .map((player) => new Pitcher(player, this.context)),
     };
-
-    if (this.colorConflict) {
-      team.bgClass =
-        this.teamColorPriority === 'home'
-          ? homeTeam?.mainBackground
-          : homeTeam?.secondaryBackground;
-      team.textClass =
-        this.teamColorPriority === 'home'
-          ? homeTeam?.mainText
-          : homeTeam?.secondaryText;
-    }
 
     return team;
   }
@@ -148,14 +131,8 @@ export default class Game {
     };
 
     if (this.colorConflict) {
-      team.bgClass =
-        this.teamColorPriority === 'away'
-          ? awayTeam?.mainBackground
-          : awayTeam?.secondaryBackground;
-      team.textClass =
-        this.teamColorPriority === 'away'
-          ? awayTeam?.mainText
-          : awayTeam?.secondaryText;
+      team.bgClass = awayTeam?.secondaryBackground;
+      team.textClass = awayTeam?.secondaryText;
     }
 
     return team;
@@ -181,14 +158,7 @@ export default class Game {
 
   @cached
   get colorConflict() {
-    return this.homeTeamMap?.conflicts?.includes(this.homeTeamMap?.short);
-  }
-
-  get teamColorPriority() {
-    return (this.awayTeamMap?.priority || Number.MAX_SAFE_INTEGER) <
-      (this.homeTeamMap?.priority || Number.MAX_SAFE_INTEGER)
-      ? 'away'
-      : 'home';
+    return this.homeTeamMap?.conflicts?.includes(this.awayTeamMap?.short);
   }
 
   get isPregame() {
@@ -208,10 +178,10 @@ export default class Game {
       return durationFormat(
         Duration.fromObject({
           hours: Math.floor(
-            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
+            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60,
           ),
           minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-        })
+        }),
       );
     } else if (this.inProgress) {
       const millis =
@@ -222,7 +192,7 @@ export default class Game {
         duration
           .minus(duration.milliseconds)
           .minus(duration.seconds * 1000)
-          .rescale()
+          .rescale(),
       );
     }
 

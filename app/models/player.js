@@ -57,7 +57,7 @@ export default class Player {
 
   get careerStats() {
     const career = this.player.stats.filter(
-      (stat) => stat.type.displayName === 'career'
+      (stat) => stat.type.displayName === 'career',
     );
     return {
       hitting: career.find((stat) => stat.group.displayName === 'hitting')
@@ -75,7 +75,7 @@ export default class Player {
       .find((stat) => stat.group.displayName === 'hitting')
       ?.splits.reduce((grouped, currentSplit, index, allSplits) => {
         const matchingStats = allSplits.filter(
-          (split) => split.season === currentSplit.season
+          (split) => split.season === currentSplit.season,
         );
         if (!grouped.find((split) => split.year === currentSplit.season)) {
           grouped.push(new Season(matchingStats, currentSplit));
@@ -92,19 +92,19 @@ export default class Player {
       ?.splits.filter((s) => s.position.abbreviation !== 'DH')
       .reduce((grouped, currentSplit, _, allSplits) => {
         const statsForSeason = allSplits.filter(
-          (split) => split.season === currentSplit.season
+          (split) => split.season === currentSplit.season,
         );
 
         if (!grouped.find((split) => split.year === currentSplit.season)) {
           statsForSeason.forEach((stat, _, all) => {
             const matching = all.filter(
-              (split) => split.position.code === stat.position.code
+              (split) => split.position.code === stat.position.code,
             );
             if (
               !grouped.find(
                 (split) =>
                   split.position === stat.position.code &&
-                  split.year === stat.season
+                  split.year === stat.season,
               )
             ) {
               grouped.push(new FieldingSeason(matching, stat));
@@ -122,7 +122,7 @@ export default class Player {
       .find((stat) => stat.group.displayName === 'pitching')
       ?.splits.reduce((grouped, currentSplit, index, allSplits) => {
         const matchingStats = allSplits.filter(
-          (split) => split.season === currentSplit.season
+          (split) => split.season === currentSplit.season,
         );
         if (!grouped.find((split) => split.year === currentSplit.season)) {
           grouped.push(new Season(matchingStats, currentSplit));

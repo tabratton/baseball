@@ -17,11 +17,11 @@ export default class MlbApi extends Service {
   fetchGamesForDay(date) {
     return fetch(
       encodeURI(
-        `${this.apiHost}v1/schedule?sportId=1&date=${date.toFormat('y-MM-dd')}`
-      )
+        `${this.apiHost}v1/schedule?sportId=1&date=${date.toFormat('y-MM-dd')}`,
+      ),
     )
       .then((response) =>
-        this.handleResponse(response, 'could not fetch games')
+        this.handleResponse(response, 'could not fetch games'),
       )
       .then(({ dates: [dateData] }) => dateData?.games || [])
       .then((games) => all(games.map((d) => this.fetchGame(`${d.gamePk}`))));
@@ -29,13 +29,13 @@ export default class MlbApi extends Service {
 
   fetchGameData(gamePk) {
     return fetch(
-      encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`)
+      encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`),
     ).then((response) => this.handleResponse(response, 'could not fetch game'));
   }
 
   fetchGame(gamePk) {
     return this.fetchGameData(gamePk).then(
-      (gameFeed) => new Game(gameFeed, this)
+      (gameFeed) => new Game(gameFeed, this),
     );
   }
 
@@ -47,14 +47,14 @@ export default class MlbApi extends Service {
         `${
           this.apiHost
         }v1/standings?leagueId=103,104&season=${dateTime.toFormat(
-          'y'
+          'y',
         )}&date=${dateTime.toFormat(
-          'MM/dd/yyyy'
-        )}&standingsType=${type}&hydrate=team(division)`
-      )
+          'MM/dd/yyyy',
+        )}&standingsType=${type}&hydrate=team(division)`,
+      ),
     )
       .then((response) =>
-        this.handleResponse(response, 'could not fetch standings')
+        this.handleResponse(response, 'could not fetch standings'),
       )
       .then(({ records }) => {
         const mapRecords = (data) => {
@@ -83,10 +83,10 @@ export default class MlbApi extends Service {
 
   async fetchWinDifferentials(year) {
     const { regularSeasonStartDate, regularSeasonEndDate } = await fetch(
-      encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`)
+      encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`),
     )
       .then((response) =>
-        this.handleResponse(response, 'could not fetch win diffs')
+        this.handleResponse(response, 'could not fetch win diffs'),
       )
       .then((response) => {
         if (!response.seasons[0]) {
@@ -102,11 +102,11 @@ export default class MlbApi extends Service {
         .map((team) => {
           return fetch(
             encodeURI(
-              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${regularSeasonEndDate}`
-            )
+              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${regularSeasonEndDate}`,
+            ),
           )
             .then((response) =>
-              this.handleResponse(response, 'could not get schedule')
+              this.handleResponse(response, 'could not get schedule'),
             )
             .then((response) => {
               const dates = response.dates;
@@ -124,10 +124,10 @@ export default class MlbApi extends Service {
                       return { date: g.officialDate, ...g.teams.home };
                     }
                   }),
-                this
+                this,
               );
             });
-        })
+        }),
     );
 
     diffs.sort((a, b) => (a.overallDiff < b.overallDiff ? -1 : 1));
@@ -138,11 +138,11 @@ export default class MlbApi extends Service {
   async fetchPlayer(playerId) {
     const player = await fetch(
       encodeURI(
-        `${this.apiHost}v1/people/${playerId}?hydrate=stats(group=[hitting,pitching,fielding],type=[career,yearByYear],currentTeam)`
-      )
+        `${this.apiHost}v1/people/${playerId}?hydrate=stats(group=[hitting,pitching,fielding],type=[career,yearByYear],currentTeam)`,
+      ),
     )
       .then((response) =>
-        this.handleResponse(response, 'could not fetch player')
+        this.handleResponse(response, 'could not fetch player'),
       )
       .then((response) => {
         if (!response.people[0]) {
@@ -170,12 +170,12 @@ export default class MlbApi extends Service {
     const { american, national } = await hash({
       american: fetch(encodeURI(`${url}&leagueId=103`))
         .then((response) =>
-          this.handleResponse(response, 'could not fetch stats')
+          this.handleResponse(response, 'could not fetch stats'),
         )
         .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
       national: fetch(encodeURI(`${url}&leagueId=104`))
         .then((response) =>
-          this.handleResponse(response, 'could not fetch stats')
+          this.handleResponse(response, 'could not fetch stats'),
         )
         .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
     });

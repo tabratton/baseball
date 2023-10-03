@@ -16,7 +16,7 @@
     </PowerSelect>
     <div class="mt-4">
       {{#if this.model.allLeaders.length}}
-        <Table::Sortable
+        <SortableTable
           class="border-collapse border border-white border-opacity-50 mb-4"
           @items={{this.model.allLeaders}}
           @headers={{this.headers}}
@@ -52,7 +52,7 @@
               </row.Cell>
             </row.Row>
           </:row>
-        </Table::Sortable>
+        </SortableTable>
       {{/if}}
     </div>
   </div>

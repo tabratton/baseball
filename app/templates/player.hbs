@@ -60,7 +60,7 @@
     </Nav>
     <div class="mt-4 overflow-auto relative">
       {{#if (eq this.selectedTab "hitting")}}
-        <Table::Sortable
+        <SortableTable
           class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.hittingHeaders}}
           @items={{this.model.seasonHittingStats}}
@@ -172,9 +172,9 @@
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.atBatsPerHomeRun}}</td>
             </tr>
           </:default>
-        </Table::Sortable>
+        </SortableTable>
       {{else if (eq this.selectedTab "fielding")}}
-        <Table::Sortable
+        <SortableTable
           class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.fieldingHeaders}}
           @items={{this.model.seasonFieldingStats}}
@@ -246,9 +246,9 @@
               </tr>
             {{/each}}
           </:default>
-        </Table::Sortable>
+        </SortableTable>
       {{else if (eq this.selectedTab "pitching")}}
-        <Table::Sortable
+        <SortableTable
           class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
           @headers={{this.pitchingHeaders}}
           @items={{this.model.seasonPitchingStats}}
@@ -361,7 +361,7 @@
               <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.walksPer9Inn}}</td>
             </tr>
           </:default>
-        </Table::Sortable>
+        </SortableTable>
       {{/if}}
     </div>
   </div>

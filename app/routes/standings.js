@@ -17,10 +17,10 @@ export default class Standings extends Route {
     return hash({
       standings: this.mlbApi.fetchStandings(
         params.date || DateTime.now().toFormat('y-MM-dd'),
-        'regularSeason'
+        'regularSeason',
       ),
       winDifferentials: this.mlbApi.fetchWinDifferentials(
-        params.date?.split('-')[0] || DateTime.now().toFormat('y')
+        params.date?.split('-')[0] || DateTime.now().toFormat('y'),
       ),
     });
   }
