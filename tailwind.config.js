@@ -55,7 +55,7 @@ Object.keys(mlbColors).forEach((key) => {
 });
 
 module.exports = {
-  content: ['./app/**/*.{js,hbs,html}'],
+  content: ['./app/**/*.{js,hbs,html,gjs}'],
   theme: {
     extend: {
       colors: {

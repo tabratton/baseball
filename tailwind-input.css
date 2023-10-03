@@ -2,43 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.date-picker-calendar .ember-power-calendar-weekday {
-  @apply text-stone-100;
-}
-
-.date-picker-calendar .ember-power-calendar-nav {
-  @apply px-3 py-2 bg-stone-900 opacity-80;
-}
-
-.date-picker-calendar .ember-power-calendar-nav-control {
-  @apply text-white hover:text-stone-100 focus:text-stone-100;
-}
-
-.date-picker-calendar .ember-power-calendar-day {
-  @apply rounded-full;
-}
-
 /* stylelint-disable selector-class-pattern */
-.date-picker-calendar .ember-power-calendar-day--other-month {
-  @apply bg-stone-600 text-stone-400;
-}
-
-.date-picker-calendar .ember-power-calendar-day--current-month {
-  @apply bg-stone-800 text-stone-100;
-}
-
-.date-picker-calendar .ember-power-calendar-day--today {
-  @apply bg-stone-700 text-stone-100;
-}
-
-.date-picker-calendar .ember-power-calendar-day--selected {
-  @apply border-2 border-solid border-red-600;
-}
-
-.date-picker-calendar .ember-power-calendar-day--focused {
-  @apply shadow-[inset_0px_-2px_0px_0px_theme(colors.red.600)];
-}
-
 .ember-basic-dropdown-trigger--below {
   @apply rounded-br-none rounded-bl-none;
 }
