@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 18.17
           cache: npm
-      - run: npm install --force
+      - run: npm ci
       - run: npm run deploy
         env:
           AWS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
