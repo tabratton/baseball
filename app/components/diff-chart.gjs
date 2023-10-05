@@ -116,7 +116,7 @@ export default class DiffChart extends Component {
           <div class='p-2'>
             {{get this.tooltipData '0.count'}} games played
           </div>
-          {{#each this.tooltipData as |tooltip|}}
+          {{#each this.tooltipDataSorted as |tooltip|}}
             <div class='flex flex-col p-2 items-center {{tooltip.team.mainBackground}} {{tooltip.team.mainText}}'>
               <span>{{tooltip.team.short}}</span>
               <span>{{formatNumber (or tooltip.diff 0) signDisplay='exceptZero'}}</span>
@@ -179,7 +179,7 @@ export default class DiffChart extends Component {
   }
 
   get tooltipDataSorted() {
-    return this.tooltipData?.sort((a, b) => (a.diff || 0) - (b.diff || 0));
+    return this.tooltipData?.sort((a, b) => (b.diff || 0) - (a.diff || 0));
   }
 
   get enableGridlines() {
@@ -312,18 +312,18 @@ export default class DiffChart extends Component {
     // Modify labels
     yAxis
       .selectAll('.tick text')
-      .attr('class', 'font-mono text-sm text-stone-300');
+      .attr('class', 'font-mono text-sm text-stone-50');
     yGridlines
       .selectAll('.tick text')
-      .attr('class', 'font-mono text-sm text-stone-300');
+      .attr('class', 'font-mono text-sm text-stone-50');
     xAxis
       .selectAll('.tick text')
-      .attr('class', 'font-mono text-sm text-stone-300');
+      .attr('class', 'font-mono text-sm text-stone-50');
 
     // Modify gridlines
     yGridlines
       .selectAll('.tick line')
-      .attr('class', 'text-stone-300')
+      .attr('class', 'text-stone-50')
       .attr('stroke-width', '0.5');
   }
 

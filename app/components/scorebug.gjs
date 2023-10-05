@@ -18,10 +18,10 @@ export default class Scorebug extends Component {
   <template>
     {{! template-lint-disable no-invalid-interactive }}
     <div
-      class='scorebug flex mx-auto md:mx-0 border-2 border-stone-200 rounded h-[136px] {{unless @disableClick "cursor-pointer"}}'
+      class='scorebug flex mx-auto md:mx-0 border-2 border-stone-50 rounded h-[136px] {{unless @disableClick "cursor-pointer"}}'
       ...attributes
     >
-      <table class='table-auto text-stone-100 rounded' {{on 'click' this.goToBoxScore}}>
+      <table class='table-auto text-stone-50 rounded' {{on 'click' this.goToBoxScore}}>
         <caption class='sr-only'>{{t 'scorebug.score'}}</caption>
         <thead class='sr-only'>
         <tr>
@@ -122,7 +122,7 @@ export default class Scorebug extends Component {
       {{#if (and @game.inProgress @game.batter @game.pitcher)}}
         <div class='{{unless this.playerInfoExpanded "hidden"}}'>
           <table
-            class='table table-auto text-stone-100 rounded'
+            class='table table-auto text-stone-50 rounded'
             {{on 'click' this.goToBoxScore}}
           >
             <caption class='sr-only'>{{t 'scorebug.current_players'}}</caption>
@@ -203,7 +203,7 @@ export default class Scorebug extends Component {
       {{/if}}
       {{#if @game.inProgress}}
         <div
-          class='text-stone-100 bg-stone-900 pt-2 pr-1 pl-1 cursor-pointer'
+          class='text-stone-50 bg-stone-900 pt-2 pr-1 pl-1 cursor-pointer'
           role='button'
           {{on
             'click'

@@ -11,7 +11,7 @@ import Chevron from './chevron';
 
 const Header = <template>
   <th
-    class="cursor-pointer whitespace-nowrap border border-white border-opacity-60 py-1 px-2 sm:px-3"
+    class="cursor-pointer whitespace-nowrap border-2 border-stone-50 py-1 px-2 sm:px-3"
     ...attributes
   >
     <span role="button" {{on "click" (fn @sort @field)}}>
@@ -33,7 +33,7 @@ const Row = <template>
 
 const Cell = <template>
   <td
-    class="border-l border-r border-white border-opacity-60 py-1 px-2 sm:px-3"
+    class="border-l-2 border-r-2 border-stone-50 py-1 px-2 sm:px-3"
     ...attributes
   >
     {{yield}}

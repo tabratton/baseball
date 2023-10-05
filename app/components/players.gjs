@@ -12,9 +12,10 @@ class Batters extends Component {
     <div class="w-fit">
       {{yield to="header"}}
       <SortableTable
-        class="border-collapse border border-white border-opacity-50 mb-4"
+        class="border-collapse border-2 border-stone-50 mb-4"
         @items={{@batters}}
         @headers={{this.headers}}
+        @headerClasses="bg-stone-800 text-stone-50"
         ...attributes
       >
         <:header as |h|>
@@ -79,9 +80,10 @@ class Pitchers extends Component {
     <div class="w-fit">
       {{yield to="header"}}
       <SortableTable
-        class="border-collapse border border-white border-opacity-50 mb-4"
+        class="border-collapse border-2 border-stone-50 mb-4"
         @items={{@pitchers}}
         @headers={{this.headers}}
+        @headerClasses="bg-stone-800 text-stone-50"
         ...attributes
       >
         <:header as |h|>
@@ -142,7 +144,7 @@ class Pitchers extends Component {
         @batters={{@game.awayTeam.batters}}
       >
         <:header>
-          <h4 class="border-t border-r border-l border-white border-opacity-60 text-center p-2 text-white font-bold text-lg">
+          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
             {{t "playerTable.batters_title" team=@game.awayTeam.name}}
           </h4>
         </:header>
@@ -152,7 +154,7 @@ class Pitchers extends Component {
         @pitchers={{@game.awayTeam.pitchers}}
       >
         <:header>
-          <h4 class="border-t border-r border-l border-white border-opacity-60 text-center p-2 text-white font-bold text-lg">
+          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
             {{t "playerTable.pitchers_title" team=@game.awayTeam.name}}
           </h4>
         </:header>
@@ -164,7 +166,7 @@ class Pitchers extends Component {
         @batters={{@game.homeTeam.batters}}
       >
         <:header>
-          <h4 class="border-t border-r border-l border-white border-opacity-60 text-center p-2 text-white font-bold text-lg">
+          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
             {{t "playerTable.batters_title" team=@game.homeTeam.name}}
           </h4>
         </:header>
@@ -174,7 +176,7 @@ class Pitchers extends Component {
         @pitchers={{@game.homeTeam.pitchers}}
       >
         <:header>
-          <h4 class="border-t border-r border-l border-white border-opacity-60 text-center p-2 text-white font-bold text-lg">
+          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
             {{t "playerTable.pitchers_title" team=@game.homeTeam.name}}
           </h4>
         </:header>

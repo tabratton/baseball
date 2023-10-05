@@ -14,7 +14,7 @@ class StandingsTable extends Component {
   <template>
     <div class="mx-auto overflow-auto">
       <div
-        class='text-center font-bold cursor-pointer bg-stone-900 bg-opacity-50 p-2 w-full'
+        class='text-center font-bold cursor-pointer bg-stone-900 p-2 w-full'
         role='button'
         {{on 'click' (fn @onHeaderClick @standings.division)}}
       >
@@ -22,7 +22,7 @@ class StandingsTable extends Component {
       </div>
       <div class='overflow-auto'>
         <SortableTable
-          class='border-collapse border-none border-opacity-50 mb-4'
+          class='border-collapse border-none mb-4'
           @items={{@standings.teamRecords}}
           @headers={{this.headers}}
           @headerClasses='bg-stone-800'
@@ -85,7 +85,7 @@ export default class Standings extends Component {
   <template>
     <div class='bg-stone-800 rounded-md my-4 w-full'>
       <div
-        class='text-center text-2xl font-bold mb-2 p-4 bg-stone-900 bg-opacity-50 rounded-t-md'
+        class='text-center text-2xl font-bold mb-2 p-4 bg-stone-900 rounded-t-md'
       >
         {{yield}}
       </div>

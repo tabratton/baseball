@@ -54,12 +54,29 @@ Object.keys(mlbColors).forEach((key) => {
   }
 });
 
+const customColors = {
+  crimson: {
+    50: '#fff1f1',
+    100: '#ffdfdf',
+    200: '#ffc5c5',
+    300: '#ff9c9c',
+    400: '#ff6363',
+    500: '#ff3333',
+    600: '#ef1a1a',
+    700: '#c90c0c',
+    800: '#a60e0e',
+    900: '#891313',
+    950: '#4b0404',
+  },
+};
+
 module.exports = {
   content: ['./app/**/*.{js,hbs,html,gjs}'],
   theme: {
     extend: {
       colors: {
         ...mlbColors,
+        crimson: customColors.crimson,
       },
       boxShadow: {
         'md-side':

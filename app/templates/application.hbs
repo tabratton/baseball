@@ -2,11 +2,11 @@
 
 <div
   id='app-grid'
-  class='h-screen w-screen bg-black bg-opacity-90 text-white text-opacity-90'
+  class='h-screen w-screen text-stone-50'
 >
   <div class="navbar w-100">
     <div
-      class='flex flex-row items-center justify-between bg-red-800 bg-opacity-90 shadow-lg'
+      class='flex flex-row items-center justify-between bg-crimson-900 shadow-lg'
     >
       <svg
         class='ml-4 cursor-pointer'
@@ -27,14 +27,14 @@
       </svg>
       <div class='flex flex-row'>
         <button
-          class='hover:bg-white hover:bg-opacity-[15%] p-2 leading-4 focus:outline-none mr-2'
+          class='hover:bg-crimson-950 p-2 leading-4 focus:outline-none mr-2'
           type='button'
           {{on 'click' this.goToStandings}}
         >
           {{t 'navbar.standings'}}
         </button>
         <button
-          class='hover:bg-white hover:bg-opacity-[15%] p-2 leading-4 focus:outline-none mr-2'
+          class='hover:bg-crimson-950 p-2 leading-4 focus:outline-none mr-2'
           type='button'
           {{on 'click' this.goToLeagueLeaders}}
         >

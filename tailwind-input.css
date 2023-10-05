@@ -21,29 +21,37 @@
 
 /* stylelint-enable selector-class-pattern */
 
-.date-picker-calendar .ember-power-calendar-day:not([disabled]):hover {
-  @apply bg-stone-600 text-stone-100;
+.ember-power-select-trigger {
+  @apply bg-transparent border-stone-50 border-2 px-3 py-2;
 }
 
-.ember-power-select-trigger {
-  @apply bg-transparent border-stone-700 px-3 py-2;
+.ember-power-select-trigger--active {
+  @apply border-stone-50 border-2 !important;
 }
 
 .ember-power-select-placeholder {
-  @apply text-stone-100;
+  @apply text-stone-50;
 }
 
 .ember-power-select-dropdown {
-  @apply bg-white border-stone-700;
+  @apply border-2 border-t-0 border-stone-50;
 }
 
 .ember-power-select-search,
 .ember-power-select-options {
-  @apply bg-stone-900 bg-opacity-90 text-stone-100;
+  @apply bg-stone-800 text-stone-100;
+}
+
+.ember-power-select-search {
+  @apply pb-4;
+}
+
+.ember-power-select-option {
+  @apply py-1 bg-stone-900 text-stone-50;
 }
 
 .ember-power-select-search-input {
-  @apply border-stone-700 rounded-md bg-transparent focus:ring-red-800 focus:border-red-800;
+  @apply border-stone-700 rounded-md bg-transparent focus:ring-crimson-900 focus:border-crimson-900;
 }
 
 .ember-power-select-group-name + .ember-power-select-options {
@@ -51,15 +59,11 @@
 }
 
 .ember-power-select-option[aria-current="true"] {
-  @apply bg-red-800;
+  @apply bg-crimson-900;
 }
 
 .ember-power-select-option[aria-selected="true"] {
-  @apply bg-red-900;
-}
-
-.ember-power-select-option {
-  @apply py-1;
+  @apply bg-crimson-950;
 }
 
 table.player-table tbody tr:nth-of-type(2n) {

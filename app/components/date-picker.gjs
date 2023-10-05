@@ -10,7 +10,7 @@ export default class DatePicker extends Component {
       <label class="hidden" for="date-picker">date picker</label>
       <input
         id="date-picker"
-        class="bg-gray-900 border border-white rounded [color-scheme:dark]"
+        class="bg-gray-900 border-2 border-stone-50 rounded [color-scheme:dark]"
         type="date"
         max={{this.max}}
         value={{this.date}}

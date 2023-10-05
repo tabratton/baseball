@@ -61,7 +61,7 @@
     <div class="mt-4 overflow-auto relative">
       {{#if (eq this.selectedTab "hitting")}}
         <SortableTable
-          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none mb-4 mx-auto"
           @headers={{this.hittingHeaders}}
           @items={{this.model.seasonHittingStats}}
         >
@@ -175,7 +175,7 @@
         </SortableTable>
       {{else if (eq this.selectedTab "fielding")}}
         <SortableTable
-          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none mb-4 mx-auto"
           @headers={{this.fieldingHeaders}}
           @items={{this.model.seasonFieldingStats}}
         >
@@ -249,7 +249,7 @@
         </SortableTable>
       {{else if (eq this.selectedTab "pitching")}}
         <SortableTable
-          class="player-table border-collapse border-none border-opacity-50 mb-4 mx-auto"
+          class="player-table border-collapse border-none mb-4 mx-auto"
           @headers={{this.pitchingHeaders}}
           @items={{this.model.seasonPitchingStats}}
         >

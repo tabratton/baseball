@@ -1,7 +1,7 @@
 {{page-title "League Leaders"}}
 
 <div class="league-leaders h-home w-full overflow-auto">
-  <div class="bg-stone-800 mt-4 flex items-center flex-col p-4 rounded">
+  <div class="mt-4 flex items-center flex-col p-4 rounded">
     <PowerSelect
       @triggerClass="w-[420px]"
       @search={{perform this.searchCategories}}
@@ -17,9 +17,10 @@
     <div class="mt-4">
       {{#if this.model.allLeaders.length}}
         <SortableTable
-          class="border-collapse border border-white border-opacity-50 mb-4"
+          class="border-collapse border-2 border-stone-50 mb-4"
           @items={{this.model.allLeaders}}
           @headers={{this.headers}}
+          @headerClasses="bg-stone-800"
           ...attributes
         >
           <:header as |h|>

@@ -1,4 +1,3 @@
-@import 'ember-basic-dropdown';
 @import 'ember-power-select';
 
 #app-grid {
@@ -41,22 +40,20 @@
   }
 }
 
-.slide-fade {
-  // When opening below the trigger
-  &.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-in {
-    animation: dropFadeBelow .15s;
-  }
+// When opening below the trigger
+.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-in {
+  animation: dropFadeBelow .25s;
+}
 
-  &.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-out {
-    animation: dropFadeBelow .15s reverse;
-  }
+.ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-out {
+  animation: dropFadeBelow .25s reverse;
+}
 
-  // When opening above the trigger
-  &.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-in {
-    animation: dropFadeAbove .15s;
-  }
+// When opening above the trigger
+.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-in {
+  animation: dropFadeAbove .25s;
+}
 
-  &.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-out {
-    animation: dropFadeAbove .15s reverse;
-  }
+.ember-basic-dropdown-content--above.ember-basic-dropdown--transitioning-out {
+  animation: dropFadeAbove .25s reverse;
 }
