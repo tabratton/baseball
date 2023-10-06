@@ -19,8 +19,6 @@
   @apply mb-[-1px];
 }
 
-/* stylelint-enable selector-class-pattern */
-
 .ember-power-select-trigger {
   @apply bg-transparent border-stone-50 border-2 px-3 py-2;
 }
@@ -28,6 +26,8 @@
 .ember-power-select-trigger--active {
   @apply border-stone-50 border-2 !important;
 }
+
+/* stylelint-enable selector-class-pattern */
 
 .ember-power-select-placeholder {
   @apply text-stone-50;
