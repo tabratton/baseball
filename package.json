@@ -63,7 +63,7 @@
     "ember-composable-helpers": "^5.0.0",
     "ember-concurrency": "^3.1.1",
     "ember-fetch": "^8.1.2",
-    "ember-intl": "^6.1.2",
+    "ember-intl": "^6.4.0",
     "ember-load-initializers": "^2.1.2",
     "ember-math-helpers": "^4.0.0",
     "ember-modifier": "^4.1.0",
@@ -106,6 +106,6 @@
   "dependencies": {
     "d3": "^7.8.5",
     "fuse.js": "^7.0.0",
-    "luxon": "^3.4.3"
+    "luxon": "^3.4.4"
   }
 }

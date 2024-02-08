@@ -12,7 +12,7 @@ dependencies:
     specifier: ^7.0.0
     version: 7.0.0
   luxon:
-    specifier: ^3.4.3
+    specifier: ^3.4.4
     version: 3.4.4
 
 devDependencies:
@@ -119,7 +119,7 @@ devDependencies:
     specifier: ^8.1.2
     version: 8.1.2
   ember-intl:
-    specifier: ^6.1.2
+    specifier: ^6.4.0
     version: 6.4.0(@babel/core@7.23.9)(webpack@5.90.1)
   ember-load-initializers:
     specifier: ^2.1.2
