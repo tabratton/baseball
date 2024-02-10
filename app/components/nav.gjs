@@ -6,7 +6,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 
 const Tab = <template>
   <div
-    class="p-4 cursor-pointer rounded-t border-2 hover:bg-stone-700 mb-[-2px] transition {{if (eq @selected @tab) "border-stone-50" "border-transparent"}}"
+    class="p-4 cursor-pointer rounded-t border-2 hover:bg-stone-700 hover:border-b-stone-700 mb-[-2px] transition {{if (eq @selected @tab) "border-stone-50 border-b-stone-800" "border-transparent"}}"
     role="tab"
     {{on "click" (fn @onUpdate @tab)}}
   >

@@ -1,4 +1,7 @@
 const colors = require('tailwindcss/colors');
+const path = require('node:path');
+const appEntry = path.join(__dirname, 'app');
+const relevantFilesGlob = '**/*.{html,js,ts,hbs,gjs,gts}';
 
 function getContrastYIQ(hex) {
   hex = hex.replace('#', '');
@@ -71,7 +74,7 @@ const customColors = {
 };
 
 module.exports = {
-  content: ['./app/**/*.{js,hbs,html,gjs}'],
+  content: [path.join(appEntry, relevantFilesGlob)],
   theme: {
     extend: {
       colors: {

@@ -5,6 +5,8 @@ import config from 'baseball/config/environment';
 
 import 'ember-cached-decorator-polyfill';
 
+import './assets/styles.css';
+
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
