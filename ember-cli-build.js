@@ -10,6 +10,11 @@ module.exports = function (defaults) {
     'ember-math-helpers': {
       only: ['add', 'mod', 'sub'],
     },
+    babel: {
+      plugins: [
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+      ],
+    },
   });
 
   function isProduction() {

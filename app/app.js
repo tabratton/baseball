@@ -3,9 +3,9 @@ import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from 'baseball/config/environment';
 
-import 'ember-cached-decorator-polyfill';
+import 'ember-power-select/styles';
 
-import './assets/styles.css';
+import './app.css';
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
@@ -14,3 +14,6 @@ export default class App extends Application {
 }
 
 loadInitializers(App, config.modulePrefix);
+
+// TODO: alternate table colors, better color scheme (steal ochre?)
+//  post season support, use resources?
