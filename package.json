@@ -45,7 +45,7 @@
     "autoprefixer": "^10.4.19",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
-    "cssnano": "^6.1.2",
+    "cssnano": "^7.0.6",
     "ember-auto-import": "^2.7.2",
     "ember-basic-dropdown": "^8.0.4",
     "ember-cached-decorator-polyfill": "^1.0.1",
