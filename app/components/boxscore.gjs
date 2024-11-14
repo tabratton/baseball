@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 
-import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
 
+import dateFormat from '../helpers/date-format';
 import withDefault from '../helpers/with-default';
 
 export default class Boxscore extends Component {
@@ -59,7 +60,7 @@ export default class Boxscore extends Component {
       </table>
       <div class="grid grid-cols-3 gap-2 p-2 text-xs font-bold border-2 border-t-0 border-stone-50 bg-stone-800">
         {{#if @game.isPregame}}
-          <span>{{t "boxscore.starts" time=(date-format date=@game.gameTime format="h:mm a")}}</span>
+          <span>{{t "boxscore.starts" time=(dateFormat date=@game.gameTime format="h:mm a")}}</span>
         {{/if}}
         {{#if @game.isOver}}
           <span class="text-center">{{if @game.winningPitcher "Win: "}} {{@game.winningPitcher}}</span>

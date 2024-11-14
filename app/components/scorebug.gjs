@@ -18,7 +18,7 @@ export default class Scorebug extends Component {
   <template>
     {{! template-lint-disable no-invalid-interactive }}
     <div
-      class='scorebug flex mx-auto md:mx-0 border-2 border-stone-50 rounded h-[136px] {{unless @disableClick "cursor-pointer"}}'
+      class='scorebug flex mx-auto md:mx-0 border-2 border-stone-50 rounded {{unless @disableClick "cursor-pointer"}}'
       ...attributes
     >
       <table class='table-auto text-stone-50 rounded' {{on 'click' this.goToBoxScore}}>
