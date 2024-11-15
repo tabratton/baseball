@@ -1,20 +1,24 @@
 import { fn, get } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import didInsert from '@ember/render-modifiers/modifiers/did-insert';
-import didUpdate from '@ember/render-modifiers/modifiers/did-update';
-import { scheduleOnce } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 
 import * as d3 from 'd3';
 import formatNumber from 'ember-intl/helpers/format-number';
+import { scheduleTask } from 'ember-lifeline';
+import { modifier } from 'ember-modifier';
+import { resource, use } from 'ember-resources';
 import and from 'ember-truth-helpers/helpers/and';
 import or from 'ember-truth-helpers/helpers/or';
 
 import didResize from '../modifiers/did-resize';
 import positionElement from '../modifiers/position-element';
 
+/* global path */
+/* global g */
+/* global circle */
+/* global image */
 class Line extends Component {
   <template>
     <path
@@ -23,8 +27,19 @@ class Line extends Component {
     >
     </path>
     <g transform='translate({{this.logoPosition.x}}, {{this.logoPosition.y}})'>
-      <circle stroke="white" fill="white" opacity="0.8" cx="16" cy="16" r={{this.circleRadius}} />
-      <image href={{@team.logo}} height={{this.logoSize}} width={{this.logoSize}} />
+      <circle
+        stroke='white'
+        fill='white'
+        opacity='0.8'
+        cx='16'
+        cy='16'
+        r={{this.circleRadius}}
+      />
+      <image
+        href={{@team.logo}}
+        height={{this.logoSize}}
+        width={{this.logoSize}}
+      />
     </g>
   </template>
 
@@ -71,13 +86,16 @@ class Line extends Component {
 
 export default class DiffChart extends Component {
   <template>
-    <div class="relative" ...attributes {{on 'pointerenter' this.onPointerMoved}}
+    <div
+      class='relative'
+      ...attributes
+      {{on 'pointerenter' this.onPointerMoved}}
       {{on 'pointermove' this.onPointerMoved}}
-      {{on 'pointerleave' this.onPointerLeave}}>
+      {{on 'pointerleave' this.onPointerLeave}}
+    >
       <svg
         class='diff-chart h-full w-full'
-        {{didInsert this.onInsert}}
-        {{didUpdate this.redrawChartElements this.yValues this.xValues}}
+        {{this.initSvg}}
         {{didResize this.updateDimensions}}
       >
         <g
@@ -114,12 +132,20 @@ export default class DiffChart extends Component {
           {{positionElement top=this.margin.top left=this.tooltipX}}
         >
           <div class='p-2'>
-            {{get this.tooltipData '0.count'}} games played
+            {{get this.tooltipData '0.count'}}
+            games played
           </div>
           {{#each this.tooltipDataSorted as |tooltip|}}
-            <div class='flex flex-col p-2 items-center {{tooltip.team.mainBackground}} {{tooltip.team.mainText}}'>
+            <div
+              class='flex flex-col p-2 items-center
+                {{tooltip.team.mainBackground}}
+                {{tooltip.team.mainText}}'
+            >
               <span>{{tooltip.team.short}}</span>
-              <span>{{formatNumber (or tooltip.diff 0) signDisplay='exceptZero'}}</span>
+              <span>{{formatNumber
+                  (or tooltip.diff 0)
+                  signDisplay='exceptZero'
+                }}</span>
             </div>
           {{/each}}
         </div>
@@ -132,7 +158,10 @@ export default class DiffChart extends Component {
           role='button'
           {{on 'click' (fn this.toggleTeam team)}}
         >
-          <span class='h-[0.25rem] w-[1.5rem] {{if team.selected team.team.mainBackground "bg-stone-700"}}'></span>
+          <span
+            class='h-[0.25rem] w-[1.5rem]
+              {{if team.selected team.team.mainBackground "bg-stone-700"}}'
+          ></span>
           <span>{{team.team.short}}</span>
         </div>
       {{/each}}
@@ -153,10 +182,15 @@ export default class DiffChart extends Component {
 
   margin = { top: 16, right: 0, bottom: 16, left: 0 };
 
-  @cached
-  get filteredData() {
+  // @cached
+  // get filteredData() {
+  //   return this.args.data.filter((d) => d.selected);
+  // }
+
+  @use filteredData = resource(() => {
+    scheduleTask(this, 'actions', this.redrawChartElements);
     return this.args.data.filter((d) => d.selected);
-  }
+  });
 
   @cached
   get tooltipData() {
@@ -264,14 +298,22 @@ export default class DiffChart extends Component {
     return d3.axisBottom(this.xScale).tickSizeOuter(0);
   }
 
-  @action
-  onInsert(element) {
-    this.width = element.clientWidth;
-    this.height = element.clientHeight;
-    this.el = element;
-    this.redrawChartElements();
-    scheduleOnce('afterRender', this, this.getAxisDimensions);
-  }
+  initSvg = modifier((element) => {
+    if (!this.el) {
+      this.width = element.clientWidth;
+      this.height = element.clientHeight;
+      scheduleTask(this, 'actions', () => {
+        this.el = element;
+        this.redrawChartElements();
+        this.getAxisDimensions();
+      });
+    }
+    return () => {
+      // this.el = null;
+      // this.width = 1;
+      // this.height = 1;
+    };
+  });
 
   @action
   updateDimensions(entry) {

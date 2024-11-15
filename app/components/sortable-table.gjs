@@ -11,74 +11,74 @@ import Chevron from './chevron';
 
 const Header = <template>
   <th
-    class="cursor-pointer whitespace-nowrap border-2 border-stone-50 py-1 px-2 sm:px-3"
+    class='cursor-pointer whitespace-nowrap border-2 border-stone-50 py-1 px-2 sm:px-3'
     ...attributes
   >
-    <span role="button" {{on "click" (fn @sort @field)}}>
+    <span role='button' {{on 'click' (fn @sort @field)}}>
       {{yield}}
       {{#if (eq @sortField @field)}}
-        <Chevron class="inline" role="presentation" @isUp={{eq @sortDirection "asc"}} />
+        <Chevron
+          class='inline'
+          role='presentation'
+          @isUp={{eq @sortDirection 'asc'}}
+        />
       {{/if}}
     </span>
   </th>
-</template>
+</template>;
 
 const Row = <template>
-  <tr
-    ...attributes
-  >
+  <tr ...attributes>
     {{yield}}
   </tr>
-</template>
+</template>;
 
 const Cell = <template>
   <td
-    class="border-l-2 border-r-2 border-stone-50 py-1 px-2 sm:px-3"
+    class='border-l-2 border-r-2 border-stone-50 py-1 px-2 sm:px-3'
     ...attributes
   >
     {{yield}}
   </td>
-</template>
+</template>;
 
 export default class SortableTable extends Component {
   <template>
-    <table
-      class="table-auto text-center"
-      ...attributes
-    >
-      {{yield to="caption"}}
+    <table class='table-auto text-center' ...attributes>
+      {{yield to='caption'}}
       <thead>
-      <tr class={{@headerClasses}}>
-        {{#each @headers as |header index|}}
-          {{yield
-            (hash
-              Header=(component Header
-                sort=this.sort
-                field=header.field
-                sortField=this.sortField
-                sortDirection=this.sortDirection
+        <tr class={{@headerClasses}}>
+          {{#each @headers as |header index|}}
+            {{yield
+              (hash
+                Header=(component
+                  Header
+                  sort=this.sort
+                  field=header.field
+                  sortField=this.sortField
+                  sortDirection=this.sortDirection
+                )
+                header=header
+                index=index
               )
-              header=header
-              index=index
-            )
-            to="header"
-          }}
-        {{/each}}
-      </tr>
+              to='header'
+            }}
+          {{/each}}
+        </tr>
       </thead>
       <tbody>
-      {{#each this.sortedItems as |listItem index|}}
-        {{yield
-          (hash
-            Row=(component Row)
-            Cell=(component Cell)
-            item=listItem
-            index=index
-          )
-          to="row"
-        }}
-      {{/each}}
-      {{yield}}
+        {{#each this.sortedItems as |listItem index|}}
+          {{yield
+            (hash
+              Row=(component Row)
+              Cell=(component Cell)
+              item=listItem
+              index=index
+            )
+            to='row'
+          }}
+        {{/each}}
+        {{yield}}
       </tbody>
     </table>
   </template>

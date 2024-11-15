@@ -1,5 +1,5 @@
 import { registerDestructor } from '@ember/destroyable';
-import { later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import Modifier from 'ember-modifier';
 
 function cleanup(instance) {
@@ -17,7 +17,11 @@ export default class GameRefresher extends Modifier {
 
   refresh() {
     if (this.game && !this.game.isOver) {
-      later(this, 'doRefresh', (this.game.gameFeed.metaData.wait || 60) * 1000);
+      runTask(
+        this,
+        'doRefresh',
+        (this.game.gameFeed.metaData.wait || 60) * 1000,
+      );
     }
   }
 

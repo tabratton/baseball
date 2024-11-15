@@ -12,7 +12,7 @@ import SortableTable from './sortable-table';
 
 class StandingsTable extends Component {
   <template>
-    <div class="mx-auto overflow-auto">
+    <div class='mx-auto overflow-auto'>
       <div
         class='text-center font-bold cursor-pointer bg-stone-900 p-2 w-full'
         role='button'
@@ -35,7 +35,11 @@ class StandingsTable extends Component {
           </:header>
           <:row as |row|>
             <row.Row
-              class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
+              class={{if
+                (eq (mod row.index 2) 0)
+                'bg-stone-700'
+                'bg-stone-800'
+              }}
             >
               <row.Cell class='border-none'>{{row.item.divisionRank}}</row.Cell>
               <row.Cell class='border-none'>
@@ -54,10 +58,14 @@ class StandingsTable extends Component {
               <row.Cell class='border-none'>{{row.item.losses}}</row.Cell>
               <row.Cell class='border-none'>{{row.item.pct}}</row.Cell>
               <row.Cell class='border-none'>{{row.item.gamesBack}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.wildCardGamesBack}}</row.Cell>
+              <row.Cell
+                class='border-none'
+              >{{row.item.wildCardGamesBack}}</row.Cell>
               <row.Cell class='border-none'>{{row.item.runsScored}}</row.Cell>
               <row.Cell class='border-none'>{{row.item.runsAllowed}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.runDifferential}}</row.Cell>
+              <row.Cell
+                class='border-none'
+              >{{row.item.runDifferential}}</row.Cell>
             </row.Row>
           </:row>
         </SortableTable>

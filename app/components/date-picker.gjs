@@ -6,18 +6,17 @@ import { DateTime } from 'luxon';
 
 export default class DatePicker extends Component {
   <template>
-    <span class="date-picker">
-      <label class="hidden" for="date-picker">date picker</label>
+    <span class='date-picker'>
+      <label class='hidden' for='date-picker'>date picker</label>
       <input
-        id="date-picker"
-        class="bg-gray-900 border-2 border-stone-50 rounded [color-scheme:dark]"
-        type="date"
+        id='date-picker'
+        class='bg-gray-900 border-2 border-stone-50 rounded [color-scheme:dark]'
+        type='date'
         max={{this.max}}
         value={{this.date}}
-        {{on "input" (perform this.updateDate)}}
+        {{on 'input' (perform this.updateDate)}}
       />
     </span>
-
   </template>
 
   get date() {

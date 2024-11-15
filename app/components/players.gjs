@@ -9,13 +9,13 @@ import SortableTable from './sortable-table';
 
 class Batters extends Component {
   <template>
-    <div class="w-fit">
-      {{yield to="header"}}
+    <div class='w-fit'>
+      {{yield to='header'}}
       <SortableTable
-        class="border-collapse border-2 border-stone-50 mb-4"
+        class='border-collapse border-2 border-stone-50 mb-4'
         @items={{@batters}}
         @headers={{this.headers}}
-        @headerClasses="bg-stone-800 text-stone-50"
+        @headerClasses='bg-stone-800 text-stone-50'
         ...attributes
       >
         <:header as |h|>
@@ -27,27 +27,41 @@ class Batters extends Component {
           <row.Row>
             <row.Cell>{{row.item.battingOrder}}</row.Cell>
             <row.Cell>{{row.item.position}}</row.Cell>
-            <row.Cell class="text-left">
-              <LinkTo class="hover:underline whitespace-nowrap" @route="player" @model={{row.item.id}}>
+            <row.Cell class='text-left'>
+              <LinkTo
+                class='hover:underline whitespace-nowrap'
+                @route='player'
+                @model={{row.item.id}}
+              >
                 <PlayerName>
                   <:first>{{row.item.firstName}}</:first>
                   <:last>{{row.item.lastName}}</:last>
                 </PlayerName>
               </LinkTo>
             </row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.number}}</row.Cell>
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.number}}</row.Cell>
             <row.Cell>{{row.item.atBats}}</row.Cell>
             <row.Cell>{{row.item.hits}}</row.Cell>
             <row.Cell>{{row.item.runs}}</row.Cell>
             <row.Cell>{{row.item.baseOnBalls}}</row.Cell>
             <row.Cell>{{row.item.rbi}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.singles}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.doubles}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.triples}}</row.Cell>
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.singles}}</row.Cell>
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.doubles}}</row.Cell>
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.triples}}</row.Cell>
             <row.Cell>{{row.item.homeRuns}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.hitByPitch}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.avg}}</row.Cell>
-            {{!-- TODO: Configurable list of table columns (advanced stats?) --}}
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.hitByPitch}}</row.Cell>
+            <row.Cell class='hidden lg:table-cell'>{{row.item.avg}}</row.Cell>
+            {{! TODO: Configurable list of table columns (advanced stats?) }}
           </row.Row>
         </:row>
       </SortableTable>
@@ -77,13 +91,13 @@ class Batters extends Component {
 
 class Pitchers extends Component {
   <template>
-    <div class="w-fit">
-      {{yield to="header"}}
+    <div class='w-fit'>
+      {{yield to='header'}}
       <SortableTable
-        class="border-collapse border-2 border-stone-50 mb-4"
+        class='border-collapse border-2 border-stone-50 mb-4'
         @items={{@pitchers}}
         @headers={{this.headers}}
-        @headerClasses="bg-stone-800 text-stone-50"
+        @headerClasses='bg-stone-800 text-stone-50'
         ...attributes
       >
         <:header as |h|>
@@ -94,23 +108,31 @@ class Pitchers extends Component {
         <:row as |row|>
           <row.Row>
             <row.Cell>#{{add row.index 1}}</row.Cell>
-            <row.Cell class="text-left">
-              <LinkTo class="hover:underline whitespace-nowrap" @route="player" @model={{row.item.id}}>
+            <row.Cell class='text-left'>
+              <LinkTo
+                class='hover:underline whitespace-nowrap'
+                @route='player'
+                @model={{row.item.id}}
+              >
                 <PlayerName>
                   <:first>{{row.item.firstName}}</:first>
                   <:last>{{row.item.lastName}}</:last>
                 </PlayerName>
               </LinkTo>
             </row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.number}}</row.Cell>
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.number}}</row.Cell>
             <row.Cell>{{row.item.inningsPitched}}</row.Cell>
             <row.Cell>{{row.item.hits}}</row.Cell>
             <row.Cell>{{row.item.earnedRuns}}</row.Cell>
             <row.Cell>{{row.item.strikeOuts}}</row.Cell>
             <row.Cell>{{row.item.baseOnBalls}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.balls}}/{{row.item.strikes}}</row.Cell>
-            <row.Cell class="hidden lg:table-cell">{{row.item.era}}</row.Cell>
-            {{!-- TODO: Configurable list of table columns (advanced stats?) --}}
+            <row.Cell
+              class='hidden lg:table-cell'
+            >{{row.item.balls}}/{{row.item.strikes}}</row.Cell>
+            <row.Cell class='hidden lg:table-cell'>{{row.item.era}}</row.Cell>
+            {{! TODO: Configurable list of table columns (advanced stats?) }}
           </row.Row>
         </:row>
       </SortableTable>
@@ -135,49 +157,57 @@ class Pitchers extends Component {
 
 <template>
   <div
-    class="flex gap-4 flex-row flex-wrap md:items-start overflow-auto"
+    class='flex gap-4 flex-row flex-wrap md:items-start overflow-auto'
     ...attributes
   >
-    <div class="flex flex-col mx-auto md:items-center">
+    <div class='flex flex-col mx-auto md:items-center'>
       <Batters
-        class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}}"
+        class='{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}}'
         @batters={{@game.awayTeam.batters}}
       >
         <:header>
-          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
-            {{t "playerTable.batters_title" team=@game.awayTeam.name}}
+          <h4
+            class='bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg'
+          >
+            {{t 'playerTable.batters_title' team=@game.awayTeam.name}}
           </h4>
         </:header>
       </Batters>
       <Pitchers
-        class="{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}}"
+        class='{{@game.awayTeam.bgClass}} {{@game.awayTeam.textClass}}'
         @pitchers={{@game.awayTeam.pitchers}}
       >
         <:header>
-          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
-            {{t "playerTable.pitchers_title" team=@game.awayTeam.name}}
+          <h4
+            class='bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg'
+          >
+            {{t 'playerTable.pitchers_title' team=@game.awayTeam.name}}
           </h4>
         </:header>
       </Pitchers>
     </div>
-    <div class="flex flex-col mx-auto md:items-center">
+    <div class='flex flex-col mx-auto md:items-center'>
       <Batters
-        class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}}"
+        class='{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}}'
         @batters={{@game.homeTeam.batters}}
       >
         <:header>
-          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
-            {{t "playerTable.batters_title" team=@game.homeTeam.name}}
+          <h4
+            class='bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg'
+          >
+            {{t 'playerTable.batters_title' team=@game.homeTeam.name}}
           </h4>
         </:header>
       </Batters>
       <Pitchers
-        class="{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}}"
+        class='{{@game.homeTeam.bgClass}} {{@game.homeTeam.textClass}}'
         @pitchers={{@game.homeTeam.pitchers}}
       >
         <:header>
-          <h4 class="bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg">
-            {{t "playerTable.pitchers_title" team=@game.homeTeam.name}}
+          <h4
+            class='bg-stone-800 border-2 border-b-0 border-stone-50 text-center p-2 text-stone-50 font-bold text-lg'
+          >
+            {{t 'playerTable.pitchers_title' team=@game.homeTeam.name}}
           </h4>
         </:header>
       </Pitchers>
