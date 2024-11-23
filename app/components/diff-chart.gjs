@@ -15,10 +15,7 @@ import or from 'ember-truth-helpers/helpers/or';
 import didResize from '../modifiers/did-resize';
 import positionElement from '../modifiers/position-element';
 
-/* global path */
-/* global g */
-/* global circle */
-/* global image */
+/* eslint-disable no-unused-vars */
 class Line extends Component {
   <template>
     <path
