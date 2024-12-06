@@ -88,8 +88,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.2(@babel/core@7.26.0)(@glint/template@1.5.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.96.1))
       ember-cli:
-        specifier: ~5.12.0
-        version: 5.12.0(handlebars@4.7.8)(underscore@1.13.6)
+        specifier: ~6.0.1
+        version: 6.0.1(handlebars@4.7.8)(underscore@1.13.6)
       ember-cli-app-version:
         specifier: ^7.0.0
         version: 7.0.0(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.96.1))
@@ -101,7 +101,7 @@ importers:
         version: 3.0.0
       ember-cli-dependency-checker:
         specifier: ^3.3.3
-        version: 3.3.3(ember-cli@5.12.0(handlebars@4.7.8)(underscore@1.13.6))
+        version: 3.3.3(ember-cli@6.0.1(handlebars@4.7.8)(underscore@1.13.6))
       ember-cli-deploy:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1994,6 +1994,9 @@ packages:
   babel-plugin-syntax-dynamic-import@6.18.0:
     resolution: {integrity: sha512-MioUE+LfjCEz65Wf7Z/Rm4XCP5k2c+TbMd2Z2JKc7U9uwjBhAfNPE48KC4GTGKhppMeYVepwDBNO/nGY6NYHBA==}
 
+  babel-remove-types@1.0.0:
+    resolution: {integrity: sha512-Kg+NZLwfe1E+LoGrkX9I9nFDM1FVBoiIdyW4bjNGGvrqWhvgcdauqijOFn5/WYkdoGXpUEDRWvU4X100ghVx4A==}
+
   babylon@6.18.0:
     resolution: {integrity: sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==}
     hasBin: true
@@ -3372,8 +3375,8 @@ packages:
     resolution: {integrity: sha512-rk7GY+FmLn/2e22HsZs0Ycrz8HQ1W3Fv+2TFOuEFW9optnDXDgkntPBIl6gact/LHsfBM5RKbM3dHsIIeLgl0Q==}
     engines: {node: 10.* || >= 12.*}
 
-  ember-cli@5.12.0:
-    resolution: {integrity: sha512-48ZOoUZTXsav37RIYY9gyCR35yo64mhzfv5YHtTbsZZwLv/HjvTz27X0CTvkfVQaOWHYDFekxdp9ppaKz84VNA==}
+  ember-cli@6.0.1:
+    resolution: {integrity: sha512-UD9szFnZS27uC66iaFMBPEHcDDmtEy7+mwzjoCmDnYT85ZIXsEh5r+aEry2NSJnTXayOItbhDtSbd0eTqKPyUQ==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -5189,10 +5192,6 @@ packages:
   minimatch@7.4.6:
     resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
     engines: {node: '>=10'}
-
-  minimatch@9.0.3:
-    resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
-    engines: {node: '>=16 || 14 >=14.17'}
 
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
@@ -9396,7 +9395,7 @@ snapshots:
 
   array-buffer-byte-length@1.0.1:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       is-array-buffer: 3.0.4
 
   array-equal@1.0.2: {}
@@ -9410,7 +9409,7 @@ snapshots:
   arraybuffer.prototype.slice@1.0.3:
     dependencies:
       array-buffer-byte-length: 1.0.1
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       es-abstract: 1.22.3
       es-errors: 1.3.0
@@ -9596,6 +9595,15 @@ snapshots:
       - supports-color
 
   babel-plugin-syntax-dynamic-import@6.18.0: {}
+
+  babel-remove-types@1.0.0:
+    dependencies:
+      '@babel/core': 7.26.0(supports-color@8.1.1)
+      '@babel/plugin-syntax-decorators': 7.25.9(@babel/core@7.26.0)
+      '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.26.0)
+      prettier: 2.8.8
+    transitivePeerDependencies:
+      - supports-color
 
   babylon@6.18.0: {}
 
@@ -11148,10 +11156,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-dependency-checker@3.3.3(ember-cli@5.12.0(handlebars@4.7.8)(underscore@1.13.6)):
+  ember-cli-dependency-checker@3.3.3(ember-cli@6.0.1(handlebars@4.7.8)(underscore@1.13.6)):
     dependencies:
       chalk: 2.4.2
-      ember-cli: 5.12.0(handlebars@4.7.8)(underscore@1.13.6)
+      ember-cli: 6.0.1(handlebars@4.7.8)(underscore@1.13.6)
       find-yarn-workspace-root: 2.0.0
       is-git-url: 1.0.0
       resolve: 1.22.8
@@ -11429,9 +11437,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli@5.12.0(handlebars@4.7.8)(underscore@1.13.6):
+  ember-cli@6.0.1(handlebars@4.7.8)(underscore@1.13.6):
     dependencies:
       '@pnpm/find-workspace-dir': 6.0.2
+      babel-remove-types: 1.0.0
       broccoli: 3.5.2
       broccoli-builder: 0.18.14
       broccoli-concat: 4.2.5
@@ -11498,12 +11507,11 @@ snapshots:
       promise-map-series: 0.3.0
       promise.hash.helper: 1.0.8
       quick-temp: 0.1.8
-      remove-types: 1.0.0
       resolve: 1.22.8
       resolve-package-path: 4.0.3
       safe-stable-stringify: 2.4.3
       sane: 5.0.1
-      semver: 7.6.0
+      semver: 7.6.3
       silent-error: 1.1.1
       sort-package-json: 1.57.0
       symlink-or-copy: 1.3.1
@@ -12005,7 +12013,7 @@ snapshots:
       array-buffer-byte-length: 1.0.1
       arraybuffer.prototype.slice: 1.0.3
       available-typed-arrays: 1.0.6
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       es-set-tostringtag: 2.0.2
       es-to-primitive: 1.2.1
       function.prototype.name: 1.1.6
@@ -12536,13 +12544,13 @@ snapshots:
 
   find-yarn-workspace-root@2.0.0:
     dependencies:
-      micromatch: 4.0.5
+      micromatch: 4.0.8
 
   findup-sync@4.0.0:
     dependencies:
       detect-file: 1.0.0
       is-glob: 4.0.3
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       resolve-dir: 1.0.1
 
   fireworm@0.7.2:
@@ -12716,7 +12724,7 @@ snapshots:
 
   function.prototype.name@1.1.6:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       es-abstract: 1.22.3
       functions-have-names: 1.2.3
@@ -12762,7 +12770,7 @@ snapshots:
 
   get-symbol-description@1.0.1:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       es-errors: 1.3.0
 
   get-tsconfig@4.8.1:
@@ -12798,7 +12806,7 @@ snapshots:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.5
       minipass: 7.0.4
       path-scurry: 1.10.1
 
@@ -12872,7 +12880,7 @@ snapshots:
       dir-glob: 3.0.1
       fast-glob: 3.3.2
       glob: 7.2.3
-      ignore: 5.3.1
+      ignore: 5.3.2
       merge2: 1.4.1
       slash: 3.0.0
 
@@ -13179,7 +13187,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       hasown: 2.0.0
-      side-channel: 1.0.5
+      side-channel: 1.0.6
 
   internmap@2.0.3: {}
 
@@ -13204,12 +13212,12 @@ snapshots:
 
   is-arguments@1.1.1:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       has-tostringtag: 1.0.2
 
   is-array-buffer@3.0.4:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       get-intrinsic: 1.2.4
 
   is-arrayish@0.2.1: {}
@@ -13224,7 +13232,7 @@ snapshots:
 
   is-boolean-object@1.1.2:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       has-tostringtag: 1.0.2
 
   is-buffer@1.1.6: {}
@@ -13323,12 +13331,12 @@ snapshots:
 
   is-regex@1.1.4:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       has-tostringtag: 1.0.2
 
   is-shared-array-buffer@1.0.2:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
 
   is-stream@1.1.0: {}
 
@@ -13360,7 +13368,7 @@ snapshots:
 
   is-weakref@1.0.2:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
 
   is-windows@1.0.2: {}
 
@@ -13835,10 +13843,6 @@ snapshots:
     dependencies:
       brace-expansion: 2.0.1
 
-  minimatch@9.0.3:
-    dependencies:
-      brace-expansion: 2.0.1
-
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.1
@@ -14032,7 +14036,7 @@ snapshots:
 
   object.assign@4.1.5:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       has-symbols: 1.0.3
       object-keys: 1.1.1
@@ -14698,7 +14702,7 @@ snapshots:
 
   regexp.prototype.flags@1.5.1:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       set-function-name: 2.0.1
 
@@ -14720,7 +14724,7 @@ snapshots:
   remove-types@1.0.0:
     dependencies:
       '@babel/core': 7.26.0(supports-color@8.1.1)
-      '@babel/plugin-syntax-decorators': 7.24.1(@babel/core@7.26.0)
+      '@babel/plugin-syntax-decorators': 7.25.9(@babel/core@7.26.0)
       '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.26.0)
       prettier: 2.8.8
     transitivePeerDependencies:
@@ -14875,7 +14879,7 @@ snapshots:
 
   safe-array-concat@1.1.0:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       get-intrinsic: 1.2.4
       has-symbols: 1.0.3
       isarray: 2.0.5
@@ -14888,7 +14892,7 @@ snapshots:
 
   safe-regex-test@1.0.3:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       es-errors: 1.3.0
       is-regex: 1.1.4
 
@@ -14922,7 +14926,7 @@ snapshots:
       exec-sh: 0.3.6
       execa: 4.1.0
       fb-watchman: 2.0.2
-      micromatch: 4.0.5
+      micromatch: 4.0.8
       minimist: 1.2.8
       walker: 1.0.8
 
@@ -15038,7 +15042,7 @@ snapshots:
 
   side-channel@1.0.5:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       es-errors: 1.3.0
       get-intrinsic: 1.2.4
       object-inspect: 1.13.1
@@ -15265,19 +15269,19 @@ snapshots:
 
   string.prototype.trim@1.2.8:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       es-abstract: 1.22.3
 
   string.prototype.trimend@1.0.7:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       es-abstract: 1.22.3
 
   string.prototype.trimstart@1.0.7:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       define-properties: 1.2.1
       es-abstract: 1.22.3
 
@@ -15807,13 +15811,13 @@ snapshots:
 
   typed-array-buffer@1.0.1:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       es-errors: 1.3.0
       is-typed-array: 1.1.13
 
   typed-array-byte-length@1.0.0:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       for-each: 0.3.3
       has-proto: 1.0.1
       is-typed-array: 1.1.13
@@ -15821,14 +15825,14 @@ snapshots:
   typed-array-byte-offset@1.0.0:
     dependencies:
       available-typed-arrays: 1.0.6
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       for-each: 0.3.3
       has-proto: 1.0.1
       is-typed-array: 1.1.13
 
   typed-array-length@1.0.4:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       for-each: 0.3.3
       is-typed-array: 1.1.13
 
@@ -15845,7 +15849,7 @@ snapshots:
 
   unbox-primitive@1.0.2:
     dependencies:
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       has-bigints: 1.0.2
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
@@ -16080,7 +16084,7 @@ snapshots:
   which-typed-array@1.1.14:
     dependencies:
       available-typed-arrays: 1.0.6
-      call-bind: 1.0.6
+      call-bind: 1.0.7
       for-each: 0.3.3
       gopd: 1.0.1
       has-tostringtag: 1.0.2
