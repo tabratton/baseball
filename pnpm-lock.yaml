@@ -166,8 +166,8 @@ importers:
         specifier: ^8.2.3
         version: 8.2.3(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1))
       ember-power-select:
-        specifier: ^8.4.0
-        version: 8.4.0(w4gdlihswpedoslbqglxl3cdeu)
+        specifier: ^8.6.2
+        version: 8.6.2(w4gdlihswpedoslbqglxl3cdeu)
       ember-qunit:
         specifier: ^8.1.1
         version: 8.1.1(@ember/test-helpers@3.3.1(@babel/core@7.26.0)(@glint/template@1.5.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1))(@glint/template@1.5.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1))(qunit@2.23.0)
@@ -3461,8 +3461,8 @@ packages:
     peerDependencies:
       ember-source: '>= 3.28.0'
 
-  ember-power-select@8.4.0:
-    resolution: {integrity: sha512-Kxur31Gxc6Va7djphIjiRayZFQXRVseBNK0zCDAK7P19iXzNI8vtptkYQJ9Wgr1QftIu5N+ksJ4pMySqCQq7QQ==}
+  ember-power-select@8.6.2:
+    resolution: {integrity: sha512-EUDMxcO+I0iK6QBM4rOuqn7OMZOxrznslulgI51OStAfbT+Qf5MAvSeOMOEdPbDI7n/racXKr55kCn3HviQSgQ==}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.1 || ^4.0.2
       '@glimmer/component': ^1.1.2 || ^2.0.0
@@ -11702,7 +11702,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-power-select@8.4.0(w4gdlihswpedoslbqglxl3cdeu):
+  ember-power-select@8.6.2(w4gdlihswpedoslbqglxl3cdeu):
     dependencies:
       '@ember/test-helpers': 3.3.1(@babel/core@7.26.0)(@glint/template@1.5.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.5.0)(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       '@embroider/addon-shim': 1.9.0
