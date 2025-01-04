@@ -15,6 +15,10 @@ module.exports = function (defaults) {
         require.resolve('ember-concurrency/async-arrow-task-transform'),
       ],
     },
+    'ember-fetch': {
+      preferNative: true,
+      nativePromise: true,
+    },
   });
 
   function isProduction() {
@@ -24,10 +28,10 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
-    // staticAddonTrees: true,
-    // staticHelpers: true,
-    // staticModifiers: true,
-    // staticComponents: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticModifiers: true,
+    staticComponents: true,
     staticEmberSource: true,
     skipBabel: [
       {
