@@ -32,7 +32,7 @@
     "@ember/optional-features": "^2.2.0",
     "@ember/render-modifiers": "^2.0.5",
     "@ember/string": "^4.0.0",
-    "@ember/test-helpers": "^3.3.1",
+    "@ember/test-helpers": "^4.0.5",
     "@embroider/compat": "^3.7.1",
     "@embroider/core": "^3.4.20",
     "@embroider/webpack": "^4.0.9",
