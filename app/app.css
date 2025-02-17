@@ -1,6 +1,379 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "ember-power-select/vendor/ember-power-select";
+
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --color-crimson-50: #fff1f1;
+  --color-crimson-100: #ffdfdf;
+  --color-crimson-200: #ffc5c5;
+  --color-crimson-300: #ff9c9c;
+  --color-crimson-400: #ff6363;
+  --color-crimson-500: #f33;
+  --color-crimson-600: #ef1a1a;
+  --color-crimson-700: #c90c0c;
+  --color-crimson-800: #a60e0e;
+  --color-crimson-900: #891313;
+  --color-crimson-950: #4b0404;
+  --shadow-md-side:
+    4px 0 6px -1px rgba(0 0 0 / 10%), 2px 0 4px -1px rgba(0 0 0 / 6%);
+  --height-content: calc(100vh - 12.5rem);
+  --height-home: calc(100vh - 2rem);
+  --height-leaders: calc(100vh - 6.5rem);
+  /* stylelint-disable */
+  --padding-2_5: 0.625rem;
+  --padding-5_5: 1.375rem;
+  /* stylelint-enable */
+  --min-height-leader-select: 2.625rem;
+  --min-height-locale-select: 2rem;
+  --font-body:
+    "Iosevka Etoile", "Iosevka", "Menlo", "Monaco", "ui-monospace",
+    "SFMono-Regular", "Consolas", "Liberation Mono", "Courier New", monospace;
+
+  /* NYY */
+  --color-nyy-main: white;
+  --color-nyy-secondary: #0c2340;
+  --color-nyy-text-main: #0c2340;
+  --color-nyy-text-secondary: white;
+  --stroke-nyy-main: white;
+  --stroke-nyy-secondary: #0c2340;
+  --stroke-nyy-text-main: #0c2340;
+  --stroke-nyy-text-secondary: white;
+
+  /* TB */
+  --color-tb-main: #092c5c;
+  --color-tb-secondary: #8fbce6;
+  --color-tb-text-main: white;
+  --color-tb-text-secondary: black;
+  --stroke-tb-main: #092c5c;
+  --stroke-tb-secondary: #8fbce6;
+  --stroke-tb-text-main: white;
+  --stroke-tb-text-secondary: black;
+
+  /* TOR */
+  --color-tor-main: #134a8e;
+  --color-tor-secondary: #e8291c;
+  --color-tor-text-main: white;
+  --color-tor-text-secondary: white;
+  --stroke-tor-main: #134a8e;
+  --stroke-tor-secondary: #e8291c;
+  --stroke-tor-text-main: white;
+  --stroke-tor-text-secondary: white;
+
+  /* BOS */
+  --color-bos-main: #bd3039;
+  --color-bos-secondary: #0c2340;
+  --color-bos-text-main: white;
+  --color-bos-text-secondary: white;
+  --stroke-bos-main: #bd3039;
+  --stroke-bos-secondary: #0c2340;
+  --stroke-bos-text-main: white;
+  --stroke-bos-text-secondary: white;
+
+  /* BAL */
+  --color-bal-main: #df4601;
+  --color-bal-secondary: black;
+  --color-bal-text-main: white;
+  --color-bal-text-secondary: white;
+  --stroke-bal-main: #df4601;
+  --stroke-bal-secondary: black;
+  --stroke-bal-text-main: white;
+  --stroke-bal-text-secondary: white;
+
+  /* MIN */
+  --color-min-main: #002b5c;
+  --color-min-secondary: #d31145;
+  --color-min-text-main: white;
+  --color-min-text-secondary: white;
+  --stroke-min-main: #002b5c;
+  --stroke-min-secondary: #d31145;
+  --stroke-min-text-main: white;
+  --stroke-min-text-secondary: white;
+
+  /* CWS */
+  --color-cws-main: #27251f;
+  --color-cws-secondary: #c4ced4;
+  --color-cws-text-main: white;
+  --color-cws-text-secondary: black;
+  --stroke-cws-main: #27251f;
+  --stroke-cws-secondary: #c4ced4;
+  --stroke-cws-text-main: white;
+  --stroke-cws-text-secondary: black;
+
+  /* CLE */
+  --color-cle-main: #0c2340;
+  --color-cle-secondary: #e31937;
+  --color-cle-text-main: white;
+  --color-cle-text-secondary: white;
+  --stroke-cle-main: #0c2340;
+  --stroke-cle-secondary: #e31937;
+  --stroke-cle-text-main: white;
+  --stroke-cle-text-secondary: white;
+
+  /* KC */
+  --color-kc-main: #004687;
+  --color-kc-secondary: #bd9b60;
+  --color-kc-text-main: white;
+  --color-kc-text-secondary: black;
+  --stroke-kc-main: #004687;
+  --stroke-kc-secondary: #bd9b60;
+  --stroke-kc-text-main: white;
+  --stroke-kc-text-secondary: black;
+
+  /* DET */
+  --color-det-main: #0c2340;
+  --color-det-secondary: #fa4616;
+  --color-det-text-main: white;
+  --color-det-text-secondary: white;
+  --stroke-det-main: #0c2340;
+  --stroke-det-secondary: #fa4616;
+  --stroke-det-text-main: white;
+  --stroke-det-text-secondary: white;
+
+  /* OAK */
+  --color-oak-main: #003831;
+  --color-oak-secondary: #efb21e;
+  --color-oak-text-main: white;
+  --color-oak-text-secondary: black;
+  --stroke-oak-main: #003831;
+  --stroke-oak-secondary: #efb21e;
+  --stroke-oak-text-main: white;
+  --stroke-oak-text-secondary: black;
+
+  /* SEA */
+  --color-sea-main: #0c2c56;
+  --color-sea-secondary: #005c5c;
+  --color-sea-text-main: white;
+  --color-sea-text-secondary: white;
+  --stroke-sea-main: #0c2c56;
+  --stroke-sea-secondary: #005c5c;
+  --stroke-sea-text-main: white;
+  --stroke-sea-text-secondary: white;
+
+  /* TEX */
+  --color-tex-main: #003278;
+  --color-tex-secondary: #c0111f;
+  --color-tex-text-main: white;
+  --color-tex-text-secondary: white;
+  --stroke-tex-main: #003278;
+  --stroke-tex-secondary: #c0111f;
+  --stroke-tex-text-main: white;
+  --stroke-tex-text-secondary: white;
+
+  /* LAA */
+  --color-laa-main: #ba0021;
+  --color-laa-secondary: #003263;
+  --color-laa-text-main: white;
+  --color-laa-text-secondary: white;
+  --stroke-laa-main: #ba0021;
+  --stroke-laa-secondary: #003263;
+  --stroke-laa-text-main: white;
+  --stroke-laa-text-secondary: white;
+
+  /* HOU */
+  --color-hou-main: #eb6e1f;
+  --color-hou-secondary: #002d62;
+  --color-hou-text-main: black;
+  --color-hou-text-secondary: white;
+  --stroke-hou-main: #eb6e1f;
+  --stroke-hou-secondary: #002d62;
+  --stroke-hou-text-main: black;
+  --stroke-hou-text-secondary: white;
+
+  /* PHI */
+  --color-phi-main: #e81828;
+  --color-phi-secondary: #002d72;
+  --color-phi-text-main: white;
+  --color-phi-text-secondary: white;
+  --stroke-phi-main: #e81828;
+  --stroke-phi-secondary: #002d72;
+  --stroke-phi-text-main: white;
+  --stroke-phi-text-secondary: white;
+
+  /* MIA */
+  --color-mia-main: #00a3e0;
+  --color-mia-secondary: black;
+  --color-mia-text-main: white;
+  --color-mia-text-secondary: white;
+  --stroke-mia-main: #00a3e0;
+  --stroke-mia-secondary: black;
+  --stroke-mia-text-main: white;
+  --stroke-mia-text-secondary: white;
+
+  /* ATL */
+  --color-atl-main: #ce1141;
+  --color-atl-secondary: #13274f;
+  --color-atl-text-main: white;
+  --color-atl-text-secondary: white;
+  --stroke-atl-main: #ce1141;
+  --stroke-atl-secondary: #13274f;
+  --stroke-atl-text-main: white;
+  --stroke-atl-text-secondary: white;
+
+  /* NYM */
+  --color-nym-main: #ff5910;
+  --color-nym-secondary: #002d72;
+  --color-nym-text-main: black;
+  --color-nym-text-secondary: white;
+  --stroke-nym-main: #ff5910;
+  --stroke-nym-secondary: #002d72;
+  --stroke-nym-text-main: black;
+  --stroke-nym-text-secondary: white;
+
+  /* PIT */
+  --color-pit-main: #fdb827;
+  --color-pit-secondary: #27251f;
+  --color-pit-text-main: black;
+  --color-pit-text-secondary: white;
+  --stroke-pit-main: #fdb827;
+  --stroke-pit-secondary: #27251f;
+  --stroke-pit-text-main: black;
+  --stroke-pit-text-secondary: white;
+
+  /* WSH */
+  --color-wsh-main: #ab0003;
+  --color-wsh-secondary: #14225a;
+  --color-wsh-text-main: white;
+  --color-wsh-text-secondary: white;
+  --stroke-wsh-main: #ab0003;
+  --stroke-wsh-secondary: #14225a;
+  --stroke-wsh-text-main: white;
+  --stroke-wsh-text-secondary: white;
+
+  /* STL */
+  --color-stl-main: #c41e3a;
+  --color-stl-secondary: #0c2340;
+  --color-stl-text-main: white;
+  --color-stl-text-secondary: white;
+  --stroke-stl-main: #c41e3a;
+  --stroke-stl-secondary: #0c2340;
+  --stroke-stl-text-main: white;
+  --stroke-stl-text-secondary: white;
+
+  /* MIL */
+  --color-mil-main: #12284b;
+  --color-mil-secondary: #ffc52f;
+  --color-mil-text-main: white;
+  --color-mil-text-secondary: black;
+  --stroke-mil-main: #12284b;
+  --stroke-mil-secondary: #ffc52f;
+  --stroke-mil-text-main: white;
+  --stroke-mil-text-secondary: black;
+
+  /* CHC */
+  --color-chc-main: #0e3386;
+  --color-chc-secondary: #cc3433;
+  --color-chc-text-main: white;
+  --color-chc-text-secondary: white;
+  --stroke-chc-main: #0e3386;
+  --stroke-chc-secondary: #cc3433;
+  --stroke-chc-text-main: white;
+  --stroke-chc-text-secondary: white;
+
+  /* CIN */
+  --color-cin-main: #c6011f;
+  --color-cin-secondary: black;
+  --color-cin-text-main: white;
+  --color-cin-text-secondary: white;
+  --stroke-cin-main: #c6011f;
+  --stroke-cin-secondary: black;
+  --stroke-cin-text-main: white;
+  --stroke-cin-text-secondary: white;
+
+  /* SD */
+  --color-sd-main: #2f241d;
+  --color-sd-secondary: #ffc425;
+  --color-sd-text-main: white;
+  --color-sd-text-secondary: black;
+  --stroke-sd-main: #2f241d;
+  --stroke-sd-secondary: #ffc425;
+  --stroke-sd-text-main: white;
+  --stroke-sd-text-secondary: black;
+
+  /* SF */
+  --color-sf-main: #27251f;
+  --color-sf-secondary: #fd5a1e;
+  --color-sf-text-main: white;
+  --color-sf-text-secondary: black;
+  --stroke-sf-main: #27251f;
+  --stroke-sf-secondary: #fd5a1e;
+  --stroke-sf-text-main: white;
+  --stroke-sf-text-secondary: black;
+
+  /* ARI */
+  --color-ari-main: #a71930;
+  --color-ari-secondary: #e3d4ad;
+  --color-ari-text-main: white;
+  --color-ari-text-secondary: black;
+  --stroke-ari-main: #a71930;
+  --stroke-ari-secondary: #e3d4ad;
+  --stroke-ari-text-main: white;
+  --stroke-ari-text-secondary: black;
+
+  /* COL */
+  --color-col-main: #33006f;
+  --color-col-secondary: #c4ced4;
+  --color-col-text-main: white;
+  --color-col-text-secondary: black;
+  --stroke-col-main: #33006f;
+  --stroke-col-secondary: #c4ced4;
+  --stroke-col-text-main: white;
+  --stroke-col-text-secondary: black;
+
+  /* LAD */
+  --color-lad-main: #005a9c;
+  --color-lad-secondary: #a5acaf;
+  --color-lad-text-main: white;
+  --color-lad-text-secondary: black;
+  --stroke-lad-main: #005a9c;
+  --stroke-lad-secondary: #a5acaf;
+  --stroke-lad-text-main: white;
+  --stroke-lad-text-secondary: black;
+
+  /* NL */
+  --color-nl-main: #002d72;
+  --color-nl-secondary: #d50032;
+  --color-nl-text-main: white;
+  --color-nl-text-secondary: white;
+  --stroke-nl-main: #002d72;
+  --stroke-nl-secondary: #d50032;
+  --stroke-nl-text-main: white;
+  --stroke-nl-text-secondary: white;
+
+  /* AL */
+  --color-al-main: #d50032;
+  --color-al-secondary: #002d72;
+  --color-al-text-main: white;
+  --color-al-text-secondary: white;
+  --stroke-al-main: #d50032;
+  --stroke-al-secondary: #002d72;
+  --stroke-al-text-main: white;
+  --stroke-al-text-secondary: white;
+
+  /* SVG */
+  --fill-black: black;
+  --fill-white: white;
+  --stroke-black: black;
+  --stroke-white: white;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 /* stylelint-disable selector-class-pattern */
 .ember-power-select-trigger {
@@ -8,7 +381,7 @@
 }
 
 .ember-power-select-trigger--active {
-  @apply border-stone-50 border-2 !important;
+  @apply border-stone-50! border-2!;
 }
 
 .ember-power-select-placeholder {
@@ -16,7 +389,7 @@
 }
 
 .ember-power-select-dropdown {
-  @apply border-2 border-stone-50 !important;
+  @apply border-2! border-stone-50!;
 }
 
 .ember-power-select-search,

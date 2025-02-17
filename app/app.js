@@ -3,8 +3,6 @@ import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from 'baseball/config/environment';
 
-import 'ember-power-select/styles';
-
 import './app.css';
 import './fontawesome';
 
