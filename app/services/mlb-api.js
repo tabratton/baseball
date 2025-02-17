@@ -1,8 +1,5 @@
 import Service from '@ember/service';
 
-import fetch from 'fetch';
-import { all, hash } from 'rsvp';
-
 import Game from 'baseball/models/game';
 import LeagueLeaders from 'baseball/models/league-leaders';
 import Player from 'baseball/models/player';
@@ -24,7 +21,9 @@ export default class MlbApi extends Service {
         this.handleResponse(response, 'could not fetch games'),
       )
       .then(({ dates: [dateData] }) => dateData?.games || [])
-      .then((games) => all(games.map((d) => this.fetchGame(`${d.gamePk}`))));
+      .then((games) =>
+        Promise.all(games.map((d) => this.fetchGame(`${d.gamePk}`))),
+      );
   }
 
   fetchGameData(gamePk) {
@@ -96,7 +95,7 @@ export default class MlbApi extends Service {
         return response.seasons[0];
       });
 
-    const diffs = await all(
+    const diffs = await Promise.all(
       teamMap
         .filter((team) => team.id !== 159 && team.id !== 160)
         .map((team) => {
@@ -167,18 +166,18 @@ export default class MlbApi extends Service {
       url += '&playerPool=qualified';
     }
 
-    const { american, national } = await hash({
-      american: fetch(encodeURI(`${url}&leagueId=103`))
+    const [american, national] = await Promise.all([
+      fetch(encodeURI(`${url}&leagueId=103`))
         .then((response) =>
           this.handleResponse(response, 'could not fetch stats'),
         )
         .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
-      national: fetch(encodeURI(`${url}&leagueId=104`))
+      fetch(encodeURI(`${url}&leagueId=104`))
         .then((response) =>
           this.handleResponse(response, 'could not fetch stats'),
         )
         .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
-    });
+    ]);
 
     return new LeagueLeaders(american, national);
   }

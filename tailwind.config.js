@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const colors = require('tailwindcss/colors');
 const path = require('node:path');
 const appEntry = path.join(__dirname, 'app');

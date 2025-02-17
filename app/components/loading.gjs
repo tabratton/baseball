@@ -1,10 +1,11 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 <template>
   {{#if @loading}}
     <FaIcon
-      @icon='spinner'
-      @size='4x'
+      @icon={{faSpinner}}
+      @size="4x"
       @spin={{true}}
       @fixedWidth={{true}}
       ...attributes

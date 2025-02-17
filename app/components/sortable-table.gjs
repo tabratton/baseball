@@ -11,16 +11,16 @@ import Chevron from './chevron';
 
 const Header = <template>
   <th
-    class='cursor-pointer whitespace-nowrap border-2 border-stone-50 py-1 px-2 sm:px-3'
+    class="cursor-pointer whitespace-nowrap border-2 border-stone-50 py-1 px-2 sm:px-3"
     ...attributes
   >
-    <span role='button' {{on 'click' (fn @sort @field)}}>
+    <span role="button" {{on "click" (fn @sort @field)}}>
       {{yield}}
       {{#if (eq @sortField @field)}}
         <Chevron
-          class='inline'
-          role='presentation'
-          @isUp={{eq @sortDirection 'asc'}}
+          class="inline"
+          role="presentation"
+          @isUp={{eq @sortDirection "asc"}}
         />
       {{/if}}
     </span>
@@ -35,7 +35,7 @@ const Row = <template>
 
 const Cell = <template>
   <td
-    class='border-l-2 border-r-2 border-stone-50 py-1 px-2 sm:px-3'
+    class="border-l-2 border-r-2 border-stone-50 py-1 px-2 sm:px-3"
     ...attributes
   >
     {{yield}}
@@ -44,8 +44,8 @@ const Cell = <template>
 
 export default class SortableTable extends Component {
   <template>
-    <table class='table-auto text-center' ...attributes>
-      {{yield to='caption'}}
+    <table class="table-auto text-center" ...attributes>
+      {{yield to="caption"}}
       <thead>
         <tr class={{@headerClasses}}>
           {{#each @headers as |header index|}}
@@ -61,7 +61,7 @@ export default class SortableTable extends Component {
                 header=header
                 index=index
               )
-              to='header'
+              to="header"
             }}
           {{/each}}
         </tr>
@@ -75,7 +75,7 @@ export default class SortableTable extends Component {
               item=listItem
               index=index
             )
-            to='row'
+            to="row"
           }}
         {{/each}}
         {{yield}}

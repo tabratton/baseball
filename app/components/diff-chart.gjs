@@ -15,21 +15,20 @@ import or from 'ember-truth-helpers/helpers/or';
 import didResize from '../modifiers/did-resize';
 import positionElement from '../modifiers/position-element';
 
-/* eslint-disable no-unused-vars */
 class Line extends Component {
   <template>
     <path
-      class='fill-transparent stroke-[0.25rem] {{@team.team.stroke}}'
+      class="fill-transparent stroke-[0.25rem] {{@team.team.stroke}}"
       d={{this.lineData}}
     >
     </path>
-    <g transform='translate({{this.logoPosition.x}}, {{this.logoPosition.y}})'>
+    <g transform="translate({{this.logoPosition.x}}, {{this.logoPosition.y}})">
       <circle
-        stroke='white'
-        fill='white'
-        opacity='0.8'
-        cx='16'
-        cy='16'
+        stroke="white"
+        fill="white"
+        opacity="0.8"
+        cx="16"
+        cy="16"
         r={{this.circleRadius}}
       />
       <image
@@ -84,34 +83,34 @@ class Line extends Component {
 export default class DiffChart extends Component {
   <template>
     <div
-      class='relative'
+      class="relative"
       ...attributes
-      {{on 'pointerenter' this.onPointerMoved}}
-      {{on 'pointermove' this.onPointerMoved}}
-      {{on 'pointerleave' this.onPointerLeave}}
+      {{on "pointerenter" this.onPointerMoved}}
+      {{on "pointermove" this.onPointerMoved}}
+      {{on "pointerleave" this.onPointerLeave}}
     >
       <svg
-        class='diff-chart h-full w-full'
+        class="diff-chart h-full w-full"
         {{this.initSvg}}
         {{didResize this.updateDimensions}}
       >
         <g
-          aria-hidden='true'
-          class='y-axis {{if @enableGridlines "hidden"}}'
-          transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
+          aria-hidden="true"
+          class="y-axis {{if @enableGridlines 'hidden'}}"
+          transform="translate({{this.yAxisWidth}}, {{this.margin.top}})"
         >
         </g>
         <g
-          class='gridlines {{unless @enableGridlines "hidden"}}'
-          transform='translate({{this.yAxisWidth}}, {{this.margin.top}})'
+          class="gridlines {{unless @enableGridlines 'hidden'}}"
+          transform="translate({{this.yAxisWidth}}, {{this.margin.top}})"
         ></g>
         <g
-          aria-hidden='true'
-          class='x-axis'
-          transform='translate(0, {{this.xAxisPosition}})'
+          aria-hidden="true"
+          class="x-axis"
+          transform="translate(0, {{this.xAxisPosition}})"
         >
         </g>
-        <g class='canvas' transform='translate(0, {{this.margin.top}})'>
+        <g class="canvas" transform="translate(0, {{this.margin.top}})">
           {{#each this.filteredData as |team|}}
             <Line
               @team={{team}}
@@ -125,39 +124,39 @@ export default class DiffChart extends Component {
       </svg>
       {{#if (and this.showTooltips this.tooltipData)}}
         <div
-          class='flex flex-col rounded bg-stone-800 shadow w-max absolute'
+          class="flex flex-col rounded bg-stone-800 shadow w-max absolute"
           {{positionElement top=this.margin.top left=this.tooltipX}}
         >
-          <div class='p-2'>
-            {{get this.tooltipData '0.count'}}
+          <div class="p-2">
+            {{get this.tooltipData "0.count"}}
             games played
           </div>
           {{#each this.tooltipDataSorted as |tooltip|}}
             <div
-              class='flex flex-col p-2 items-center
+              class="flex flex-col p-2 items-center
                 {{tooltip.team.mainBackground}}
-                {{tooltip.team.mainText}}'
+                {{tooltip.team.mainText}}"
             >
               <span>{{tooltip.team.short}}</span>
               <span>{{formatNumber
                   (or tooltip.diff 0)
-                  signDisplay='exceptZero'
+                  signDisplay="exceptZero"
                 }}</span>
             </div>
           {{/each}}
         </div>
       {{/if}}
     </div>
-    <div class='flex items-center justify-center gap-4'>
+    <div class="flex items-center justify-center gap-4">
       {{#each @data as |team|}}
         <div
-          class='flex items-center justify-center gap-1 cursor-pointer'
-          role='button'
-          {{on 'click' (fn this.toggleTeam team)}}
+          class="flex items-center justify-center gap-1 cursor-pointer"
+          role="button"
+          {{on "click" (fn this.toggleTeam team)}}
         >
           <span
-            class='h-[0.25rem] w-[1.5rem]
-              {{if team.selected team.team.mainBackground "bg-stone-700"}}'
+            class="h-[0.25rem] w-[1.5rem]
+              {{if team.selected team.team.mainBackground 'bg-stone-700'}}"
           ></span>
           <span>{{team.team.short}}</span>
         </div>

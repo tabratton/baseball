@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const env = process.env.EMBER_ENV || 'development';
 
 const plugins = [

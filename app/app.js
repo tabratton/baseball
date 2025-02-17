@@ -6,6 +6,7 @@ import config from 'baseball/config/environment';
 import 'ember-power-select/styles';
 
 import './app.css';
+import './fontawesome';
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;

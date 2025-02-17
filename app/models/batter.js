@@ -1,4 +1,4 @@
-import { getOwner, setOwner } from '@ember/application';
+import { getOwner, setOwner } from '@ember/owner';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 

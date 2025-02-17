@@ -16,11 +16,11 @@ import { TrackedObject } from 'tracked-built-ins';
 
 export default class ScorebugList extends Component {
   <template>
-    <div class='mt-4'>
+    <div class="mt-4">
       <DatePicker @date={{@date}} @onUpdate={{@onUpdate}} />
     </div>
-    <div class='rounded' ...attributes>
-      <Loading class='mt-4' @loading={{this.data.loading}}>
+    <div class="rounded" ...attributes>
+      <Loading class="mt-4" @loading={{this.data.loading}}>
         {{#each this.inProgress as |g|}}
           <Scorebug @game={{g}} {{gameRefresher g}} />
         {{/each}}
@@ -30,7 +30,7 @@ export default class ScorebugList extends Component {
         {{#if
           (and (eq this.inProgress.length 0) (eq this.notInProgress.length 0))
         }}
-          {{t 'scorebug.list.no_games'}}
+          {{t "scorebug.list.no_games"}}
         {{/if}}
       </Loading>
     </div>
