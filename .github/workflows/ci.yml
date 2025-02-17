@@ -20,5 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
+        with:
+          pnpm-version: 9
+          args: '--frozen-lockfile'
       - name: Run Tests
         run: pnpm test

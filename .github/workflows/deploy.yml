@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wyvox/action-setup-pnpm@v3
+        with:
+          pnpm-version: 9
+          args: '--frozen-lockfile'
       - run: pnpm run deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
