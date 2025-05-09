@@ -4,6 +4,3 @@
 # compiled output
 /dist/
 /public/assets/tailwind.css
-
-# addons
-/.node_modules.ember-try/

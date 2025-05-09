@@ -13,14 +13,10 @@ export default class Standings extends Route {
   };
 
   async model(params) {
+    const date = params.date || DateTime.now().toFormat('y-MM-dd');
     return Promise.all([
-      this.mlbApi.fetchStandings(
-        params.date || DateTime.now().toFormat('y-MM-dd'),
-        'regularSeason',
-      ),
-      this.mlbApi.fetchWinDifferentials(
-        params.date?.split('-')[0] || DateTime.now().toFormat('y'),
-      ),
+      this.mlbApi.fetchStandings(date, 'regularSeason'),
+      this.mlbApi.fetchWinDifferentials(date),
     ]).then(([standings, winDifferentials]) => ({
       standings,
       winDifferentials,

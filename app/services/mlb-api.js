@@ -80,8 +80,9 @@ export default class MlbApi extends Service {
       });
   }
 
-  async fetchWinDifferentials(year) {
-    const { regularSeasonStartDate, regularSeasonEndDate } = await fetch(
+  async fetchWinDifferentials(date) {
+    const year = date.split('-')[0];
+    const { regularSeasonStartDate } = await fetch(
       encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`),
     )
       .then((response) =>
@@ -101,7 +102,7 @@ export default class MlbApi extends Service {
         .map((team) => {
           return fetch(
             encodeURI(
-              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${regularSeasonEndDate}`,
+              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${date}`,
             ),
           )
             .then((response) =>
