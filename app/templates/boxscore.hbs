@@ -1,4 +1,10 @@
-{{page-title this.model.awayTeam.teamName " at " this.model.homeTeam.teamName " - " (format-date this.model.gameTime)}}
+{{page-title
+  this.model.awayTeam.teamName
+  " at "
+  this.model.homeTeam.teamName
+  " - "
+  (format-date this.model.gameTime)
+}}
 
 <div class="overflow-auto w-full h-home" {{game-refresher this.model}}>
   {{#if this.model.inProgress}}

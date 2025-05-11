@@ -1,8 +1,18 @@
-{{page-title this.model.firstName " " this.model.nickname " " this.model.lastName}}
+{{page-title
+  this.model.firstName
+  " "
+  this.model.nickname
+  " "
+  this.model.lastName
+}}
 
 <div class="h-home w-full overflow-auto">
   <div class="bg-stone-800 p-4 rounded">
-    <div class="font-bold text-2xl text-center">{{this.model.firstName}} {{this.model.nickname}} {{this.model.lastName}} - {{this.model.number}}</div>
+    <div class="font-bold text-2xl text-center">{{this.model.firstName}}
+      {{this.model.nickname}}
+      {{this.model.lastName}}
+      -
+      {{this.model.number}}</div>
     <div class="flex gap-12 mt-4 justify-center">
       <div class="flex flex-col">
         <div class="flex justify-between gap-4">
@@ -66,110 +76,253 @@
           @items={{this.model.seasonHittingStats}}
         >
           <:header as |h|>
-            <h.Header class='border-none {{h.header.class}} {{if (eq h.index 0) "sticky left-0 bg-stone-800"}}'>
+            <h.Header
+              class="border-none
+                {{h.header.class}}
+                {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
+            >
               {{h.header.label}}
             </h.Header>
           </:header>
           <:row as |row|>
             <row.Row>
               <row.Cell
-                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
-                {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
+                class="sticky left-0 whitespace-nowrap border-none
+                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
+                {{on
+                  "click"
+                  (fn (mut row.item.isExpanded) (not row.item.isExpanded))
+                }}
               >
                 {{row.item.total.season}}
                 {{#if (eq row.item.teams.length 1)}}
-                  {{concat " - " (get (get-team-config (get row.item.teams "0.id")) "short")}}
+                  {{concat
+                    " - "
+                    (get (get-team-config (get row.item.teams "0.id")) "short")
+                  }}
                 {{else}}
-                  {{!-- TODO: Add font awesome icon --}}
+                  {{! TODO: Add font awesome icon }}
                 {{/if}}
               </row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.gamesPlayed}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.plateAppearances}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.atBats}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.avg}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.hits}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.doubles}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.triples}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.homeRuns}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.rbi}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.runs}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.baseOnBalls}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.strikeOuts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.obp}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.slg}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.ops}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.babip}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.stolenBases}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.stolenBasePercentage}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.intentionalWalks}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.hitByPitch}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.groundIntoDoublePlay}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.totalBases}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.sacFlies}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.sacBunts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.atBatsPerHomeRun}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.gamesPlayed}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.plateAppearances}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.atBats}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.avg}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.hits}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.doubles}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.triples}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.homeRuns}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.rbi}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.runs}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.baseOnBalls}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.strikeOuts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.obp}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.slg}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.ops}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.babip}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.stolenBases}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.stolenBasePercentage}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.intentionalWalks}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.hitByPitch}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.groundIntoDoublePlay}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.totalBases}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.sacFlies}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.sacBunts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.atBatsPerHomeRun}}</row.Cell>
             </row.Row>
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesPlayed}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.plateAppearances}}</td>
+                  <td
+                    class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right"
+                  >{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.gamesPlayed}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.plateAppearances}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.atBats}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.avg}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.hits}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.doubles}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.triples}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.homeRuns}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.homeRuns}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.rbi}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.runs}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.baseOnBalls}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.strikeOuts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.baseOnBalls}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.strikeOuts}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.obp}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.slg}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.ops}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.babip}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.stolenBases}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.stolenBasePercentage}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.intentionalWalks}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.hitByPitch}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.groundIntoDoublePlay}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.totalBases}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.sacFlies}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.sacBunts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.atBatsPerHomeRun}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.stolenBases}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.stolenBasePercentage}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.intentionalWalks}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.hitByPitch}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.groundIntoDoublePlay}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.totalBases}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.sacFlies}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.sacBunts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.atBatsPerHomeRun}}</td>
                 </tr>
               {{/each}}
             {{/if}}
           </:row>
           <:default>
             <tr>
-              <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3">Career</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.gamesPlayed}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.plateAppearances}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.atBats}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.avg}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.hits}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.doubles}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.triples}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.homeRuns}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.rbi}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.runs}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.baseOnBalls}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.strikeOuts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.obp}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.slg}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.ops}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.babip}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.stolenBases}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.stolenBasePercentage}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.intentionalWalks}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.hitByPitch}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.groundIntoDoublePlay}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.totalBases}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.sacFlies}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.sacBunts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.hitting.stat.atBatsPerHomeRun}}</td>
+              <td
+                class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3"
+              >Career</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.gamesPlayed}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.plateAppearances}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.atBats}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.avg}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.hits}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.doubles}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.triples}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.homeRuns}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.rbi}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.runs}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.baseOnBalls}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.strikeOuts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.obp}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.slg}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.ops}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.babip}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.stolenBases}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.stolenBasePercentage}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.intentionalWalks}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.hitByPitch}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.groundIntoDoublePlay}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.totalBases}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.sacFlies}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.sacBunts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.hitting.stat.atBatsPerHomeRun}}</td>
             </tr>
           </:default>
         </SortableTable>
@@ -180,51 +333,100 @@
           @items={{this.model.seasonFieldingStats}}
         >
           <:header as |h|>
-            <h.Header class='border-none {{h.header.class}} {{if (eq h.index 0) "sticky left-0 bg-stone-800"}}'>
+            <h.Header
+              class="border-none
+                {{h.header.class}}
+                {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
+            >
               {{h.header.label}}
             </h.Header>
           </:header>
           <:row as |row|>
-            {{!-- TODO: handle row coloring for career (base on stat array length) --}}
+            {{! TODO: handle row coloring for career (base on stat array length) }}
             <row.Row
-              class={{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}
+              class={{if
+                (eq (mod row.index 2) 0)
+                "bg-stone-700"
+                "bg-stone-800"
+              }}
             >
               <row.Cell
-                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}}'
-                {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
+                class="sticky left-0 whitespace-nowrap border-none
+                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
+                {{on
+                  "click"
+                  (fn (mut row.item.isExpanded) (not row.item.isExpanded))
+                }}
               >
-                {{row.item.total.season}} - {{row.item.total.position.abbreviation}}
+                {{row.item.total.season}}
+                -
+                {{row.item.total.position.abbreviation}}
                 {{#if (eq row.item.teams.length 1)}}
-                  {{concat " - " (get (get-team-config (get row.item.teams "0.id")) "short")}}
+                  {{concat
+                    " - "
+                    (get (get-team-config (get row.item.teams "0.id")) "short")
+                  }}
                 {{else}}
-                  {{!-- TODO: Add font awesome icon --}}
+                  {{! TODO: Add font awesome icon }}
                 {{/if}}
               </row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.gamesPlayed}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.gamesStarted}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.innings}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.assists}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.putOuts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.chances}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.doublePlays}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.errors}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.fielding}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.rangeFactorPer9Inn}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.gamesPlayed}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.gamesStarted}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.innings}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.assists}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.putOuts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.chances}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.doublePlays}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.errors}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.fielding}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.rangeFactorPer9Inn}}</row.Cell>
             </row.Row>
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesPlayed}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesStarted}}</td>
+                  <td
+                    class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right"
+                  >{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.gamesPlayed}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.gamesStarted}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.innings}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.assists}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.putOuts}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.chances}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.doublePlays}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.doublePlays}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.errors}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.fielding}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.rangeFactorPer9Inn}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.fielding}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.rangeFactorPer9Inn}}</td>
                 </tr>
               {{/each}}
             {{/if}}
@@ -232,9 +434,14 @@
           <:default>
             {{#each this.model.careerStats.fielding as |fielding index|}}
               <tr>
-                <td class="sticky left-0 py-1 px-2 sm:px-3 whitespace-nowrap {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}">Career - {{fielding.position.abbreviation}}</td>
+                <td
+                  class="sticky left-0 py-1 px-2 sm:px-3 whitespace-nowrap
+                    {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}"
+                >Career - {{fielding.position.abbreviation}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesPlayed}}</td>
-                <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesStarted}}</td>
+                <td
+                  class="py-1 px-2 sm:px-3"
+                >{{fielding.stat.gamesStarted}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.innings}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.assists}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.putOuts}}</td>
@@ -242,7 +449,9 @@
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.doublePlays}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.errors}}</td>
                 <td class="py-1 px-2 sm:px-3">{{fielding.stat.fielding}}</td>
-                <td class="py-1 px-2 sm:px-3">{{fielding.stat.rangeFactorPer9Inn}}</td>
+                <td
+                  class="py-1 px-2 sm:px-3"
+                >{{fielding.stat.rangeFactorPer9Inn}}</td>
               </tr>
             {{/each}}
           </:default>
@@ -254,111 +463,265 @@
           @items={{this.model.seasonPitchingStats}}
         >
           <:header as |h|>
-            <h.Header class='border-none {{h.header.class}} {{if (eq h.index 0) "sticky left-0 bg-stone-800"}}'>
+            <h.Header
+              class="border-none
+                {{h.header.class}}
+                {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
+            >
               {{h.header.label}}
             </h.Header>
           </:header>
           <:row as |row|>
-            {{!-- TODO: handle row coloring for career (base on stat array length) --}}
+            {{! TODO: handle row coloring for career (base on stat array length) }}
             <row.Row>
               <row.Cell
-                class='sticky left-0 whitespace-nowrap border-none {{if (gt row.item.teams.length 1) "cursor-pointer"}} {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}'
-                {{on "click" (fn (mut row.item.isExpanded) (not row.item.isExpanded))}}
+                class="sticky left-0 whitespace-nowrap border-none
+                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}
+                  {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}"
+                {{on
+                  "click"
+                  (fn (mut row.item.isExpanded) (not row.item.isExpanded))
+                }}
               >
                 {{row.item.total.season}}
                 {{#if (eq row.item.teams.length 1)}}
-                  {{concat " - " (get (get-team-config (get row.item.teams "0.id")) "short")}}
+                  {{concat
+                    " - "
+                    (get (get-team-config (get row.item.teams "0.id")) "short")
+                  }}
                 {{else}}
-                {{!-- TODO: Add font awesome icon --}}
+                  {{! TODO: Add font awesome icon }}
                 {{/if}}
               </row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.wins}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.losses}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.winPercentage}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.gamesStarted}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.inningsPitched}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.strikeOuts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.baseOnBalls}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.hitByPitch}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.era}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.whip}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.strikeoutsPer9Inn}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.strikeoutWalkRatio}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.saves}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.completeGames}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.shutouts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.battersFaced}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.airOuts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.groundOuts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.groundOutsToAirouts}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.numberOfPitches}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.pitchesPerInning}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.hitsPer9Inn}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.runsScoredPer9}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.homeRunsPer9}}</row.Cell>
-              <row.Cell class='border-none'>{{row.item.total.stat.walksPer9Inn}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.wins}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.losses}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.winPercentage}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.gamesStarted}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.inningsPitched}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.strikeOuts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.baseOnBalls}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.hitByPitch}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.era}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.whip}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.strikeoutsPer9Inn}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.strikeoutWalkRatio}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.saves}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.completeGames}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.shutouts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.battersFaced}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.airOuts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.groundOuts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.groundOutsToAirouts}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.numberOfPitches}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.pitchesPerInning}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.hitsPer9Inn}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.runsScoredPer9}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.homeRunsPer9}}</row.Cell>
+              <row.Cell
+                class="border-none"
+              >{{row.item.total.stat.walksPer9Inn}}</row.Cell>
             </row.Row>
             {{#if row.item.isExpanded}}
               {{#each row.item.teams as |seasonTeam|}}
                 <tr>
-                  <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right">{{get (get-team-config seasonTeam.team.id) "short"}}</td>
+                  <td
+                    class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right"
+                  >{{get (get-team-config seasonTeam.team.id) "short"}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.wins}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.losses}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.winPercentage}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.gamesStarted}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.inningsPitched}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.strikeOuts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.baseOnBalls}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.hitByPitch}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.winPercentage}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.gamesStarted}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.inningsPitched}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.strikeOuts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.baseOnBalls}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.hitByPitch}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.era}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.whip}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.strikeoutsPer9Inn}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.strikeoutWalkRatio}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.strikeoutsPer9Inn}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.strikeoutWalkRatio}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.saves}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.completeGames}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.shutouts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.battersFaced}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.completeGames}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.shutouts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.battersFaced}}</td>
                   <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.airOuts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.groundOuts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.groundOutsToAirouts}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.numberOfPitches}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.pitchesPerInning}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.hitsPer9Inn}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.runsScoredPer9}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.homeRunsPer9}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.walksPer9Inn}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.groundOuts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.groundOutsToAirouts}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.numberOfPitches}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.pitchesPerInning}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.hitsPer9Inn}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.runsScoredPer9}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.homeRunsPer9}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{seasonTeam.stat.walksPer9Inn}}</td>
                 </tr>
               {{/each}}
             {{/if}}
           </:row>
           <:default>
             <tr>
-              <td class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3">Career</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.wins}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.losses}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.winPercentage}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.gamesStarted}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.inningsPitched}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.strikeOuts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.baseOnBalls}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.hitByPitch}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.era}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.whip}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.strikeoutsPer9Inn}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.strikeoutWalkRatio}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.saves}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.completeGames}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.shutouts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.battersFaced}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.airOuts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.groundOuts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.groundOutsToAirouts}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.numberOfPitches}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.pitchesPerInning}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.hitsPer9Inn}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.runsScoredPer9}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.homeRunsPer9}}</td>
-              <td class="py-1 px-2 sm:px-3">{{this.model.careerStats.pitching.stat.walksPer9Inn}}</td>
+              <td
+                class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3"
+              >Career</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.wins}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.losses}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.winPercentage}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.gamesStarted}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.inningsPitched}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.strikeOuts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.baseOnBalls}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.hitByPitch}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.era}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.whip}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.strikeoutsPer9Inn}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.strikeoutWalkRatio}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.saves}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.completeGames}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.shutouts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.battersFaced}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.airOuts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.groundOuts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.groundOutsToAirouts}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.numberOfPitches}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.pitchesPerInning}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.hitsPer9Inn}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.runsScoredPer9}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.homeRunsPer9}}</td>
+              <td
+                class="py-1 px-2 sm:px-3"
+              >{{this.model.careerStats.pitching.stat.walksPer9Inn}}</td>
             </tr>
           </:default>
         </SortableTable>
