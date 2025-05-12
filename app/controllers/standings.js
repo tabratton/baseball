@@ -19,4 +19,12 @@ export default class Standings extends Controller {
   get maxDate() {
     return DateTime.now();
   }
+
+  get isRegularSeason() {
+    return this.model.regularSeasonInterval.contains(this.selectedDate);
+  }
+
+  get isPostSeason() {
+    return this.model.postSeasonInterval.contains(this.selectedDate);
+  }
 }

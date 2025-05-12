@@ -80,11 +80,8 @@ export default class MlbApi extends Service {
       });
   }
 
-  async fetchWinDifferentials(date) {
-    const year = date.split('-')[0];
-    const { regularSeasonStartDate } = await fetch(
-      encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`),
-    )
+  getSeasonData(year) {
+    return fetch(encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`))
       .then((response) =>
         this.handleResponse(response, 'could not fetch win diffs'),
       )
@@ -95,14 +92,16 @@ export default class MlbApi extends Service {
 
         return response.seasons[0];
       });
+  }
 
+  async fetchWinDifferentials(beginDate, endDate) {
     const diffs = await Promise.all(
       teamMap
         .filter((team) => team.id !== 159 && team.id !== 160)
         .map((team) => {
           return fetch(
             encodeURI(
-              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${regularSeasonStartDate}&endDate=${date}`,
+              `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${beginDate}&endDate=${endDate}`,
             ),
           )
             .then((response) =>
@@ -189,5 +188,40 @@ export default class MlbApi extends Service {
     }
 
     return response.json();
+  }
+
+  async fetchPostSeasonData(year) {
+    const data = await fetch(
+      encodeURI(
+        `${this.apiHost}v1/schedule/postseason/series?season=${year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus&hydrate=seriesStatus`,
+      ),
+    )
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch post season data'),
+      )
+      .then((response) => {
+        if (!response.series[0]) {
+          throw new Error('no post season data');
+        }
+
+        return response.series;
+      });
+    return data.map((s) => {
+      const lastGame = s.games.slice().pop();
+      return {
+        team1: {
+          id: lastGame.teams.home.team.id,
+          name: lastGame.teams.home.team.name,
+          wins: lastGame.teams.home.leagueRecord.wins,
+        },
+        team2: {
+          id: lastGame.teams.away.team.id,
+          name: lastGame.teams.away.team.name,
+          wins: lastGame.teams.away.leagueRecord.wins,
+        },
+        seriesId: s.series.id,
+        seriesType: lastGame.seriesStatus.abbreviation,
+      };
+    });
   }
 }

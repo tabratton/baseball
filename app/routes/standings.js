@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 
 export default class Standings extends Route {
   @service mlbApi;
@@ -14,12 +14,39 @@ export default class Standings extends Route {
 
   async model(params) {
     const date = params.date || DateTime.now().toFormat('y-MM-dd');
-    return Promise.all([
-      this.mlbApi.fetchStandings(date, 'regularSeason'),
-      this.mlbApi.fetchWinDifferentials(date),
-    ]).then(([standings, winDifferentials]) => ({
-      standings,
-      winDifferentials,
-    }));
+    const year = date.split('-')[0];
+    const {
+      regularSeasonStartDate,
+      regularSeasonEndDate,
+      postSeasonStartDate,
+      postSeasonEndDate,
+    } = await this.mlbApi.getSeasonData(year);
+    const selectedDate = DateTime.fromISO(date);
+    const regularSeasonInterval = Interval.fromDateTimes(
+      DateTime.fromISO(regularSeasonStartDate),
+      DateTime.fromISO(regularSeasonEndDate),
+    );
+    const postSeasonInterval = Interval.fromDateTimes(
+      DateTime.fromISO(postSeasonStartDate),
+      DateTime.fromISO(postSeasonEndDate),
+    );
+
+    if (postSeasonInterval.contains(selectedDate)) {
+      return this.mlbApi.fetchPostSeasonData(year).then((postSeasonData) => ({
+        regularSeasonInterval,
+        postSeasonInterval,
+        postSeason: postSeasonData,
+      }));
+    } else if (regularSeasonInterval.contains(selectedDate)) {
+      return Promise.all([
+        this.mlbApi.fetchStandings(date, 'regularSeason'),
+        this.mlbApi.fetchWinDifferentials(regularSeasonStartDate, date),
+      ]).then(([standings, winDifferentials]) => ({
+        regularSeasonInterval,
+        postSeasonInterval,
+        standings,
+        winDifferentials,
+      }));
+    }
   }
 }

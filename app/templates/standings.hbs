@@ -8,16 +8,22 @@
       @onUpdate={{fn (mut this.selectedDate)}}
     />
   </div>
-  <Standings
-    @league={{this.model.standings.american}}
-    @diffData={{this.model.winDifferentials}}
-  >
-    {{t "standings.american.title"}}
-  </Standings>
-  <Standings
-    @league={{this.model.standings.national}}
-    @diffData={{this.model.winDifferentials}}
-  >
-    {{t "standings.national.title"}}
-  </Standings>
+  {{#if this.isRegularSeason}}
+    <Standings
+      @league={{this.model.standings.american}}
+      @diffData={{this.model.winDifferentials}}
+    >
+      {{t "standings.american.title"}}
+    </Standings>
+    <Standings
+      @league={{this.model.standings.national}}
+      @diffData={{this.model.winDifferentials}}
+    >
+      {{t "standings.national.title"}}
+    </Standings>
+  {{else if this.isPostSeason}}
+    <div class="text-center p-4">post season coming soon</div>
+  {{/if}}
+
+  {{!-- TODO write post season display component --}}
 </div>
