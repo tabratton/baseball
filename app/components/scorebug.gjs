@@ -264,6 +264,6 @@ export default class Scorebug extends Component {
   }
 
   findBy(field, value, array) {
-    return array.find(i => i[field] === value);
+    return array.find((i) => i[field] === value);
   }
 }
