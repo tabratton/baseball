@@ -13,9 +13,6 @@ module.exports = function (defaults) {
         DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
       },
     },
-    'ember-composable-helpers': {
-      only: ['find-by'],
-    },
     'ember-math-helpers': {
       only: ['add', 'mod', 'sub'],
     },

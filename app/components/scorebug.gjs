@@ -5,7 +5,6 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import findBy from 'ember-composable-helpers/helpers/find-by';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
@@ -102,9 +101,9 @@ export default class Scorebug extends Component {
             >
               {{#each
                 (array
-                  (findBy "num" 2 @game.runners)
-                  (findBy "num" 1 @game.runners)
-                  (findBy "num" 3 @game.runners)
+                  (this.findBy "num" 2 @game.runners)
+                  (this.findBy "num" 1 @game.runners)
+                  (this.findBy "num" 3 @game.runners)
                 )
                 as |base|
               }}
@@ -262,5 +261,9 @@ export default class Scorebug extends Component {
   @action
   goToBoxScore() {
     this.router.transitionTo('boxscore', this.args.game.gamePk);
+  }
+
+  findBy(field, value, array) {
+    return array.find(i => i[field] === value);
   }
 }
