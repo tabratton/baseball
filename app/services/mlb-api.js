@@ -1,4 +1,9 @@
 import Service from '@ember/service';
+import { cached } from '@glimmer/tracking';
+
+import { DateTime } from 'luxon';
+import { resource, use } from 'ember-resources';
+import { TrackedObject } from 'tracked-built-ins';
 
 import Game from 'baseball/models/game';
 import LeagueLeaders from 'baseball/models/league-leaders';
@@ -6,10 +11,56 @@ import Player from 'baseball/models/player';
 import TeamRecord from 'baseball/models/team-record';
 import teamMap from 'baseball/utils/team-map';
 import WinDifferential from 'baseball/models/win-differential';
-import { DateTime } from 'luxon';
 
 export default class MlbApi extends Service {
   apiHost = 'https://statsapi.mlb.com/api/';
+
+  @use leagues = resource(() => {
+    const state = new TrackedObject({
+      value: [],
+      loading: true,
+      promise: null,
+    });
+
+    state.promise = fetch(encodeURI(`${this.apiHost}v1/leagues?sportId=1`))
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch leagues'),
+      )
+      .then(({ leagues }) => (state.value = leagues || []))
+      .catch(() => (state.value = []))
+      .finally(() => (state.loading = false));
+
+    return state;
+  });
+
+  @use _teams = resource(() => {
+    const state = new TrackedObject({
+      value: [],
+      loading: true,
+      promise: null,
+    });
+
+    state.promise = fetch(encodeURI(`${this.apiHost}v1/teams?sportId=1`))
+      .then((response) =>
+        this.handleResponse(response, 'could not fetch leagues'),
+      )
+      .then(({ teams }) => (state.value = teams || []))
+      .catch(() => (state.value = []))
+      .finally(() => (state.loading = false));
+
+    return state;
+  });
+
+  @cached
+  get teams() {
+    return this._teams.value.map((team) => {
+      const additionalInfo = teamMap.find((t) => t.id === team.id) || {};
+      return {
+        ...team,
+        ...additionalInfo,
+      };
+    });
+  }
 
   fetchGamesForDay(date) {
     return fetch(
@@ -193,7 +244,7 @@ export default class MlbApi extends Service {
   async fetchPostSeasonData(year) {
     const data = await fetch(
       encodeURI(
-        `${this.apiHost}v1/schedule/postseason/series?season=${year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus&hydrate=seriesStatus`,
+        `${this.apiHost}v1/schedule/postseason/series?season=${year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus,leagueId&hydrate=seriesStatus`,
       ),
     )
       .then((response) =>

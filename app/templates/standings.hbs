@@ -22,8 +22,6 @@
       {{t "standings.national.title"}}
     </Standings>
   {{else if this.isPostSeason}}
-    <div class="text-center p-4">post season coming soon</div>
+    <PlayoffsBracket @model={{this.model.postSeason}} />
   {{/if}}
-
-  {{!-- TODO write post season display component --}}
 </div>
