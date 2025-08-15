@@ -16,7 +16,7 @@
   --color-crimson-900: #891313;
   --color-crimson-950: #4b0404;
   --shadow-md-side:
-    4px 0 6px -1px rgba(0 0 0 / 10%), 2px 0 4px -1px rgba(0 0 0 / 6%);
+    4px 0 6px -1px rgb(0 0 0 / 10%), 2px 0 4px -1px rgb(0 0 0 / 6%);
   --height-content: calc(100vh - 12.5rem);
   --height-home: calc(100vh - 2rem);
   --height-leaders: calc(100vh - 6.5rem);
