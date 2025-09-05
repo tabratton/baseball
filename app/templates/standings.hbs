@@ -1,6 +1,6 @@
 {{page-title "Standings"}}
 
-<div class="standings h-home w-full overflow-auto">
+<div class="standings h-home w-full">
   <div class="flex items-center justify-center">
     <DatePicker
       @date={{this.selectedDate}}
@@ -22,6 +22,8 @@
       {{t "standings.national.title"}}
     </Standings>
   {{else if this.isPostSeason}}
-    <PlayoffsBracket @model={{this.model.postSeason}} />
+    <div class="overflow-auto">
+      <PlayoffsBracket @model={{this.model.postSeason}} />
+    </div>
   {{/if}}
 </div>

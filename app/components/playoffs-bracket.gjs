@@ -82,7 +82,7 @@ class Round extends Component {
 
 export default class PlayoffsBracket extends Component {
   <template>
-    <div class="tournament flex py-16 px-4 justify-center">
+    <div class="tournament flex py-16 px-4">
       <Round @type="round" @side="left" @index="0" as |TeamContainer|>
         <div>
           {{#let (this.getRound "ALWC" true) as |alwc1|}}

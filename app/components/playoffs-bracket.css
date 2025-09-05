@@ -2,32 +2,31 @@
 
 /* stylelint-disable selector-class-pattern */
 .round > div {
-  margin-bottom: 1rem;
+  @apply mb-4;
 }
 
 .round > div:last-child {
-  margin-bottom: 0;
+  @apply mb-0;
 }
 
 .round .team--top::after,
 .round .team--bottom::after {
   content: "";
-  border-left: none;
   height: calc(50% + 1rem);
-  left: 100%;
-  width: 2rem;
 
-  @apply absolute border-2 border-stone-600;
+  @apply absolute w-8 border-2 border-stone-600;
 }
 
 .round .team--top::after {
   border-bottom: none;
-  top: 50%;
+
+  @apply top-1/2;
 }
 
 .round .team--bottom::after {
   border-top: none;
-  bottom: 50%;
+
+  @apply bottom-1/2;
 }
 
 .round2 .team--top::after,
@@ -38,56 +37,54 @@
 .round2 .team::before,
 .team--wc::before {
   content: "";
-  right: 100%;
-  bottom: 50%;
   width: calc(2rem + 0.25rem);
 
-  @apply absolute border-b-2 border-stone-600;
+  @apply absolute right-full bottom-1/2 border-b-2 border-stone-600;
 }
 
 .finals .team--left {
-  margin-right: 4rem;
+  @apply mr-16;
 }
 
 .finals .team--right {
-  margin-left: 4rem;
+  @apply ml-16;
 }
 
 .finals .team::after,
 .finals .team::before {
   content: " ";
   height: calc(50% + 0.5rem);
-  top: 50%;
   width: calc(2rem + 0.25rem);
 
-  @apply absolute border-t-2 border-stone-600;
+  @apply absolute top-1/2 border-t-2 border-stone-600;
 }
 
 .finals .team::after {
-  left: 100%;
+  @apply left-full;
 }
 
 .finals .team::before {
-  right: 100%;
+  @apply right-full;
 }
 
 .round:not(:first-child, :last-child) {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  @apply my-8;
 }
 
 .round.round--right .team--top::after,
 .round.round--right .team--bottom::after {
-  right: 100%;
-  left: unset;
-  border-right: none;
+  @apply right-full border-r-0 border-l-2 border-stone-600;
+}
 
-  @apply border-l-2 border-stone-600;
+.round.round--left .team--top::after,
+.round.round--left .team--bottom::after {
+  @apply left-full border-l-0 border-r-2;
 }
 
 .round2.round--right .team::before,
 .round--right .team--wc::before {
   right: unset;
-  left: 100%;
+
+  @apply left-full;
 }
 /* stylelint-enable selector-class-pattern */
