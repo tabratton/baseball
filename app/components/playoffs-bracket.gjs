@@ -285,6 +285,10 @@ export default class PlayoffsBracket extends Component {
 
   @action
   winningTeam(series) {
+    if (!series?.team1 || !series?.team2) {
+      return undefined;
+    }
+
     if (series.team1.wins > series.team2.wins) {
       return this.getTeam(series.team1.id);
     } else {
@@ -312,7 +316,11 @@ export default class PlayoffsBracket extends Component {
 
   @action
   decideTeam(series, ancestor, matchAncestor) {
-    const ancestors = [ancestor.team1.id, ancestor.team2.id];
+    if (!series?.team1 || !series?.team2) {
+      return undefined;
+    }
+
+    const ancestors = [ancestor.team1?.id, ancestor.team2?.id];
     if (ancestors.includes(series.team1.id)) {
       return this.getTeam(matchAncestor ? series.team1.id : series.team2.id);
     } else {

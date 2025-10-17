@@ -241,10 +241,10 @@ export default class MlbApi extends Service {
     return response.json();
   }
 
-  async fetchPostSeasonData(year) {
+  async fetchPostSeasonData(selectedDate) {
     const data = await fetch(
       encodeURI(
-        `${this.apiHost}v1/schedule/postseason/series?season=${year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus,leagueId&hydrate=seriesStatus`,
+        `${this.apiHost}v1/schedule/postseason/series?season=${selectedDate.year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus,leagueId&hydrate=seriesStatus`,
       ),
     )
       .then((response) =>
@@ -257,7 +257,20 @@ export default class MlbApi extends Service {
 
         return response.series;
       });
-    return data.map((s) => {
+
+    const filteredData = [];
+
+    data.forEach((d) => {
+      d.games = d.games.filter((g) => {
+        const gameDate = DateTime.fromFormat(g.officialDate, 'y-MM-dd');
+        return gameDate <= selectedDate;
+      });
+      if (d.games.length > 0) {
+        filteredData.push(d);
+      }
+    });
+
+    return filteredData.map((s) => {
       const lastGame = s.games.slice().pop();
       return {
         team1: {

@@ -33,7 +33,7 @@ export default class Standings extends Route {
 
     if (postSeasonInterval.contains(selectedDate)) {
       return this.mlbApi
-        .fetchPostSeasonData(year)
+        .fetchPostSeasonData(selectedDate)
         .then((postSeasonData) => ({
           regularSeasonInterval,
           postSeasonInterval,
