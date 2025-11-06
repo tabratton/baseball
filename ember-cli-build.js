@@ -1,8 +1,11 @@
 'use strict';
-
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function (defaults) {
+const { compatBuild } = require('@embroider/compat');
+
+module.exports = async function (defaults) {
+  const { buildOnce } = await import('@embroider/vite');
+
   const app = new EmberApp(defaults, {
     emberData: {
       deprecations: {
@@ -27,20 +30,12 @@ module.exports = function (defaults) {
     return EmberApp.env() === 'production';
   }
 
-  const { Webpack } = require('@embroider/webpack');
-  return require('@embroider/compat').compatBuild(app, Webpack, {
-    staticAddonTestSupportTrees: true,
-    staticAddonTrees: true,
+  return compatBuild(app, buildOnce, {
     staticHelpers: true,
     staticModifiers: true,
     staticComponents: true,
-    staticEmberSource: true,
     staticInvokables: true,
-    skipBabel: [
-      {
-        package: 'qunit',
-      },
-    ],
+
     packagerOptions: {
       // publicAssetURL is used similarly to Ember CLI's asset fingerprint prepend option.
       publicAssetURL: '/',
@@ -57,16 +52,6 @@ module.exports = function (defaults) {
           localIdentName: isProduction()
             ? '[sha512:hash:base64:5]'
             : '[path][name]__[local]',
-        },
-      },
-      webpackConfig: {
-        module: {
-          rules: [
-            {
-              test: /\.css$/i,
-              use: ['postcss-loader'],
-            },
-          ],
         },
       },
     },

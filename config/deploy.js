@@ -13,6 +13,9 @@ module.exports = function (deployTarget) {
     },
     s3: {},
     's3-index': {},
+    'smart-compress': {
+      zopfli: true,
+    }
   };
 
   if (deployTarget === 'production') {

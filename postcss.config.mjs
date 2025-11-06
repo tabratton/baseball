@@ -1,13 +1,5 @@
-const env = process.env.EMBER_ENV || 'development';
-
-const plugins = {
-  '@tailwindcss/postcss': {},
-};
-
-if (env === 'production') {
-  plugins.cssnano = { preset: 'default' };
-}
+import autoprefixer from 'autoprefixer';
 
 export default {
-  plugins,
+  plugins: [autoprefixer()],
 };
