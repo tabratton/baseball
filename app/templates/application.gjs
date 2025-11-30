@@ -1,0 +1,55 @@
+import { on } from '@ember/modifier';
+import { pageTitle } from 'ember-page-title';
+import BasicDropdownWormhole from 'ember-basic-dropdown/components/basic-dropdown-wormhole';
+import { t } from 'ember-intl';
+
+<template>
+  {{pageTitle "Baseball"}}
+
+  <div id="app-grid" class="h-screen w-screen text-stone-50">
+    <div class="navbar w-full">
+      <div
+        class="flex flex-row items-center justify-between bg-crimson-900 shadow-lg"
+      >
+        <svg
+          class="ml-4 cursor-pointer"
+          viewBox="189.848 157.915 17 17.119"
+          width="17"
+          height="17.119"
+          role="button"
+          {{on "click" @controller.goHome}}
+        >
+          <path
+            class="stroke-black fill-white"
+            d="M 206.503 166.512 L 197.953 175.012 M 189.848 157.915 L 206.848 157.915 M 190.348 158.399 L 190.348 166.899 M 206.36 158.399 L 206.36 166.899 M 190.203 166.512 L 198.633 175.034"
+          ></path>
+          <polygon
+            class="stroke-white fill-white"
+            points="198.283 173.812 190.966 166.441 190.966 158.512 205.766 158.512 205.832 166.458"
+          ></polygon>
+        </svg>
+        <div class="flex flex-row">
+          <button
+            class="hover:bg-crimson-950 p-2 leading-4 focus:outline-none mr-2 cursor-pointer"
+            type="button"
+            {{on "click" @controller.goToStandings}}
+          >
+            {{t "navbar.standings"}}
+          </button>
+          <button
+            class="hover:bg-crimson-950 p-2 leading-4 focus:outline-none mr-2 cursor-pointer"
+            type="button"
+            {{on "click" @controller.goToLeagueLeaders}}
+          >
+            {{t "navbar.league_leaders"}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="content p-4">
+      {{outlet}}
+    </div>
+  </div>
+
+  <BasicDropdownWormhole />
+</template>
