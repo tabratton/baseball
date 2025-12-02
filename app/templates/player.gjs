@@ -10,13 +10,7 @@ import SortableTable from '../components/sortable-table';
 import getTeamConfig from '../helpers/get-team-config';
 
 <template>
-  {{pageTitle
-    @model.firstName
-    " "
-    @model.nickname
-    " "
-    @model.lastName
-  }}
+  {{pageTitle @model.firstName " " @model.nickname " " @model.lastName}}
 
   <div class="h-home w-full overflow-auto">
     <div class="bg-stone-800 p-4 rounded">
@@ -90,7 +84,7 @@ import getTeamConfig from '../helpers/get-team-config';
             <:header as |h|>
               <h.Header
                 class="border-none
-                {{h.header.class}}
+                  {{h.header.class}}
                   {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
               >
                 {{h.header.label}}
@@ -100,7 +94,7 @@ import getTeamConfig from '../helpers/get-team-config';
               <row.Row>
                 <row.Cell
                   class="sticky left-0 whitespace-nowrap border-none
-                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
+                    {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
                   {{on
                     "click"
                     (fn (mut row.item.isExpanded) (not row.item.isExpanded))
@@ -113,7 +107,7 @@ import getTeamConfig from '../helpers/get-team-config';
                       (get (getTeamConfig (get row.item.teams "0.id")) "short")
                     }}
                   {{else}}
-                  {{! TODO: Add font awesome icon }}
+                    {{! TODO: Add font awesome icon }}
                   {{/if}}
                 </row.Cell>
                 <row.Cell
@@ -204,11 +198,17 @@ import getTeamConfig from '../helpers/get-team-config';
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.plateAppearances}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.atBats}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.atBats}}</td>
                     <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.avg}}</td>
                     <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.hits}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.doubles}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.triples}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.doubles}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.triples}}</td>
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.homeRuns}}</td>
@@ -347,7 +347,7 @@ import getTeamConfig from '../helpers/get-team-config';
             <:header as |h|>
               <h.Header
                 class="border-none
-                {{h.header.class}}
+                  {{h.header.class}}
                   {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
               >
                 {{h.header.label}}
@@ -357,14 +357,14 @@ import getTeamConfig from '../helpers/get-team-config';
               {{! TODO: handle row coloring for career (base on stat array length) }}
               <row.Row
                 class={{if
-                (eq (mod row.index 2) 0)
-                "bg-stone-700"
-                "bg-stone-800"
-              }}
+                  (eq (mod row.index 2) 0)
+                  "bg-stone-700"
+                  "bg-stone-800"
+                }}
               >
                 <row.Cell
                   class="sticky left-0 whitespace-nowrap border-none
-                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
+                    {{if (gt row.item.teams.length 1) 'cursor-pointer'}}"
                   {{on
                     "click"
                     (fn (mut row.item.isExpanded) (not row.item.isExpanded))
@@ -379,7 +379,7 @@ import getTeamConfig from '../helpers/get-team-config';
                       (get (getTeamConfig (get row.item.teams "0.id")) "short")
                     }}
                   {{else}}
-                  {{! TODO: Add font awesome icon }}
+                    {{! TODO: Add font awesome icon }}
                   {{/if}}
                 </row.Cell>
                 <row.Cell
@@ -425,14 +425,24 @@ import getTeamConfig from '../helpers/get-team-config';
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.gamesStarted}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.innings}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.assists}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.putOuts}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.chances}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.innings}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.assists}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.putOuts}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.chances}}</td>
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.doublePlays}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.errors}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.errors}}</td>
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.fielding}}</td>
@@ -448,9 +458,11 @@ import getTeamConfig from '../helpers/get-team-config';
                 <tr>
                   <td
                     class="sticky left-0 py-1 px-2 sm:px-3 whitespace-nowrap
-                    {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}"
+                      {{if (eq (mod index 2) 0) 'bg-stone-700' 'bg-stone-800'}}"
                   >Career - {{fielding.position.abbreviation}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{fielding.stat.gamesPlayed}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{fielding.stat.gamesPlayed}}</td>
                   <td
                     class="py-1 px-2 sm:px-3"
                   >{{fielding.stat.gamesStarted}}</td>
@@ -458,7 +470,9 @@ import getTeamConfig from '../helpers/get-team-config';
                   <td class="py-1 px-2 sm:px-3">{{fielding.stat.assists}}</td>
                   <td class="py-1 px-2 sm:px-3">{{fielding.stat.putOuts}}</td>
                   <td class="py-1 px-2 sm:px-3">{{fielding.stat.chances}}</td>
-                  <td class="py-1 px-2 sm:px-3">{{fielding.stat.doublePlays}}</td>
+                  <td
+                    class="py-1 px-2 sm:px-3"
+                  >{{fielding.stat.doublePlays}}</td>
                   <td class="py-1 px-2 sm:px-3">{{fielding.stat.errors}}</td>
                   <td class="py-1 px-2 sm:px-3">{{fielding.stat.fielding}}</td>
                   <td
@@ -477,7 +491,7 @@ import getTeamConfig from '../helpers/get-team-config';
             <:header as |h|>
               <h.Header
                 class="border-none
-                {{h.header.class}}
+                  {{h.header.class}}
                   {{if (eq h.index 0) 'sticky left-0 bg-stone-800'}}"
               >
                 {{h.header.label}}
@@ -488,8 +502,12 @@ import getTeamConfig from '../helpers/get-team-config';
               <row.Row>
                 <row.Cell
                   class="sticky left-0 whitespace-nowrap border-none
-                  {{if (gt row.item.teams.length 1) 'cursor-pointer'}}
-                    {{if (eq (mod row.index 2) 0) 'bg-stone-700' 'bg-stone-800'}}"
+                    {{if (gt row.item.teams.length 1) 'cursor-pointer'}}
+                    {{if
+                      (eq (mod row.index 2) 0)
+                      'bg-stone-700'
+                      'bg-stone-800'
+                    }}"
                   {{on
                     "click"
                     (fn (mut row.item.isExpanded) (not row.item.isExpanded))
@@ -502,7 +520,7 @@ import getTeamConfig from '../helpers/get-team-config';
                       (get (getTeamConfig (get row.item.teams "0.id")) "short")
                     }}
                   {{else}}
-                  {{! TODO: Add font awesome icon }}
+                    {{! TODO: Add font awesome icon }}
                   {{/if}}
                 </row.Cell>
                 <row.Cell
@@ -588,7 +606,9 @@ import getTeamConfig from '../helpers/get-team-config';
                       class="sticky left-0 whitespace-nowrap bg-stone-800 py-1 px-2 sm:px-3 text-right"
                     >{{get (getTeamConfig seasonTeam.team.id) "short"}}</td>
                     <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.wins}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.losses}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.losses}}</td>
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.winPercentage}}</td>
@@ -625,7 +645,9 @@ import getTeamConfig from '../helpers/get-team-config';
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.battersFaced}}</td>
-                    <td class="py-1 px-2 sm:px-3">{{seasonTeam.stat.airOuts}}</td>
+                    <td
+                      class="py-1 px-2 sm:px-3"
+                    >{{seasonTeam.stat.airOuts}}</td>
                     <td
                       class="py-1 px-2 sm:px-3"
                     >{{seasonTeam.stat.groundOuts}}</td>

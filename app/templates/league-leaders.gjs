@@ -42,10 +42,10 @@ import PlayerName from '../components/player-name';
             <:row as |row|>
               <row.Row
                 class={{if
-                (eq (mod row.index 2) 0)
-                "bg-stone-700"
-                "bg-stone-800"
-              }}
+                  (eq (mod row.index 2) 0)
+                  "bg-stone-700"
+                  "bg-stone-800"
+                }}
               >
                 <row.Cell class="border-r-0">
                   <LinkTo
