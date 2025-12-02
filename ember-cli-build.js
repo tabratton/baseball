@@ -35,7 +35,13 @@ module.exports = async function (defaults) {
     staticModifiers: true,
     staticComponents: true,
     staticInvokables: true,
-
+    splitAtRoutes: [
+      'boxscore',
+      'index',
+      'league-leaders',
+      'player',
+      'standings',
+    ],
     packagerOptions: {
       // publicAssetURL is used similarly to Ember CLI's asset fingerprint prepend option.
       publicAssetURL: '/',
