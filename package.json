@@ -58,7 +58,6 @@
     "babel-plugin-ember-template-compilation": "^2.4.1",
     "browserslist": "^4.28.1",
     "concurrently": "^9.2.1",
-    "daisyui": "^5.5.14",
     "decorator-transforms": "^2.3.0",
     "ember-auto-import": "^2.12.0",
     "ember-basic-dropdown": "^8.11.0",
