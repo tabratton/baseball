@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "ember-power-select/vendor/ember-power-select";
+@import 'tailwindcss';
+@import 'ember-power-select/vendor/ember-power-select';
 
 @plugin "@tailwindcss/forms";
 
@@ -27,8 +27,8 @@
   --min-height-leader-select: 2.625rem;
   --min-height-locale-select: 2rem;
   --font-body:
-    "Iosevka Etoile", "Iosevka", "Menlo", "Monaco", "ui-monospace",
-    "SFMono-Regular", "Consolas", "Liberation Mono", "Courier New", monospace;
+    'Iosevka Etoile', 'Iosevka', 'Menlo', 'Monaco', 'ui-monospace',
+    'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
   /* NYY */
   --color-nyy-main: white;
@@ -413,11 +413,11 @@
   @apply my-2;
 }
 
-.ember-power-select-option[aria-current="true"] {
+.ember-power-select-option[aria-current='true'] {
   @apply bg-crimson-900;
 }
 
-.ember-power-select-option[aria-selected="true"] {
+.ember-power-select-option[aria-selected='true'] {
   @apply bg-crimson-950;
 }
 
@@ -481,8 +481,8 @@ table.player-table tbody tr:nth-of-type(2n + 1) td {
 #app-grid {
   display: grid;
   grid-template:
-    "navbar" 2rem
-    "content" calc(100vh - 2rem)
+    'navbar' 2rem
+    'content' calc(100vh - 2rem)
     / 100vw;
 }
 

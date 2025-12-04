@@ -12,7 +12,7 @@ export default class LeagueLeaders {
   get allLeaders() {
     const maxRank = Math.max(
       ...this.american.map((l) => l.rank),
-      ...this.national.map((l) => l.rank),
+      ...this.national.map((l) => l.rank)
     );
 
     const ranks = [];
@@ -29,7 +29,7 @@ export default class LeagueLeaders {
     return ranks.reduce((newRanks, currentRank) => {
       const ties = Math.max(
         currentRank.american.length,
-        currentRank.national.length,
+        currentRank.national.length
       );
 
       for (let i = 0; i < ties; i++) {

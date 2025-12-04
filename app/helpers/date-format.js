@@ -7,5 +7,5 @@ export function dateFormat(params, hash) {
 }
 
 export default helper((params, { date, locale, format }) =>
-  dateFormatUtil(date, locale, format),
+  dateFormatUtil(date, locale, format)
 );

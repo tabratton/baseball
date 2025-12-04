@@ -64,7 +64,7 @@ export default class ScorebugList extends Component {
     return this.scorebugGames
       ?.filter((game) => game.inProgress)
       ?.sort((a, b) =>
-        a.inning > b.inning ? 1 : a.inning === b.inning ? 0 : -1,
+        a.inning > b.inning ? 1 : a.inning === b.inning ? 0 : -1
       );
   }
 

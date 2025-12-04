@@ -20,7 +20,7 @@ export default class Batter {
           style: 'decimal',
           maximumFractionDigits: 3,
           minimumFractionDigits: 3,
-        },
+        }
       )
       .replace(/^0/, '');
   }

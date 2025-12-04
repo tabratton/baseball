@@ -3,7 +3,7 @@ import { modifier } from 'ember-modifier';
 export default modifier(function positionElement(
   element,
   positional,
-  { top, left },
+  { top, left }
 ) {
   element.style.top = `${top}px`;
   element.style.left = `${left}px`;

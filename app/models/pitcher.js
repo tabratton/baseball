@@ -76,7 +76,7 @@ export default class Pitcher {
         style: 'decimal',
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-      },
+      }
     );
   }
 }

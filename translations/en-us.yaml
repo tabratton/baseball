@@ -8,8 +8,8 @@ scorebug:
   current_players: Current Players
   player: Player
   stat: Stat
-  batter_stats: "{hits}-{atBats}"
-  pitches: "{num}P"
+  batter_stats: '{hits}-{atBats}'
+  pitches: '{num}P'
   list:
     no_games: No Games
 status:
@@ -18,8 +18,8 @@ status:
   P: Pregame
 playerTable:
   name: Name
-  batters_title: "{team} - Batters"
-  pitchers_title: "{team} - Pitchers"
+  batters_title: '{team} - Batters'
+  pitchers_title: '{team} - Pitchers'
 standings:
   american:
     title: American League
@@ -28,81 +28,81 @@ standings:
 boxscore:
   starts: Starts
 leader-categories:
-  rank: "Rank"
-  name: "Name"
-  team: "Team"
-  value: "Value"
-  selectPrompt: "Select..."
-  hitting: "Hitting"
-  pitching: "Pitching"
-  catching: "Catching"
-  fielding: "Fielding"
-  national: "National League Leaders"
-  american: "American League Leaders"
+  rank: 'Rank'
+  name: 'Name'
+  team: 'Team'
+  value: 'Value'
+  selectPrompt: 'Select...'
+  hitting: 'Hitting'
+  pitching: 'Pitching'
+  catching: 'Catching'
+  fielding: 'Fielding'
+  national: 'National League Leaders'
+  american: 'American League Leaders'
 leader-types:
-  assists: "Assists"
-  shutouts: "Shutouts"
-  homeRuns: "Home Runs"
-  sacrificeBunts: "Sacrifice Bunts"
-  sacrificeFlies: "Sacrifice Flies"
-  runs: "Runs"
-  groundoutToFlyoutRatio: "Strikeout/Flyout Ratio"
-  stolenBases: "Stolen Bases"
-  groundOuts: "Ground Outs"
-  numberOfPitches: "Number of Pitches"
-  onBasePercentage: "OBP"
-  caughtStealing: "Caught Stealing"
-  groundIntoDoublePlays: "GIDP"
-  totalBases: "Total Bases"
-  earnedRunAverage: "ERA"
-  fieldingPercentage: "Fielding %"
-  walksAndHitsPerInningPitched: "WHIP"
-  hitByPitches: "HBP"
-  gamesPlayed: "Games Played"
-  walks: "Walks"
-  sluggingPercentage: "SLG"
-  onBasePlusSlugging: "OPS"
-  runsBattedIn: "RBI"
-  triples: "Triples"
-  extraBaseHits: "Extra Base Hits"
-  hits: "Hits"
-  atBats: "At Bats"
-  strikeouts: "Strike Outs"
-  doubles: "Doubles"
-  totalPlateAppearances: "Plate Appearances"
-  intentionalWalks: "IBB"
-  wins: "Wins"
-  losses: "Losses"
-  saves: "Saves"
-  wildPitch: "Wild Pitch"
-  airOuts: "Air Outs"
-  balk: "Balks"
-  blownSaves: "Blown Saves"
-  catcherEarnedRunAverage: "ERA"
-  catchersInterference: "Catcher Interference"
-  completeGames: "Complete Games"
-  doublePlays: "Double Plays"
-  earnedRun: "Earned Runs"
-  errors: "Errors"
-  gamesStarted: "Games Started"
-  hitBatsman: "HBP (Pitcher)"
-  hitsPer9Inn: "H/9"
-  holds: "Holds"
-  innings: "Innings"
-  inningsPitched: "Innings Pitched"
-  passedBalls: "Passed Balls"
-  pickoffs: "Pickoffs"
-  pitchesPerInning: "Pitches Per Inning"
-  putOuts: "Put Outs"
-  rangeFactorPerGame: "Range Factor/Game"
-  rangeFactorPer9Inn: "Range Factor/9"
-  saveOpportunities: "Save Opportunities"
-  stolenBasePercentage: "Stolen Base %"
-  strikeoutsPer9Inn: "SO/9"
-  strikeoutWalkRatio: "SO/BB"
-  throwingErrors: "Throwing Errors"
-  totalBattersFaced: "Total Batters Faced"
-  triplePlays: "Triple Plays"
-  walksPer9Inn: "BB/9"
-  winPercentage: "W %"
-  battingAverage: "Batting Average"
+  assists: 'Assists'
+  shutouts: 'Shutouts'
+  homeRuns: 'Home Runs'
+  sacrificeBunts: 'Sacrifice Bunts'
+  sacrificeFlies: 'Sacrifice Flies'
+  runs: 'Runs'
+  groundoutToFlyoutRatio: 'Strikeout/Flyout Ratio'
+  stolenBases: 'Stolen Bases'
+  groundOuts: 'Ground Outs'
+  numberOfPitches: 'Number of Pitches'
+  onBasePercentage: 'OBP'
+  caughtStealing: 'Caught Stealing'
+  groundIntoDoublePlays: 'GIDP'
+  totalBases: 'Total Bases'
+  earnedRunAverage: 'ERA'
+  fieldingPercentage: 'Fielding %'
+  walksAndHitsPerInningPitched: 'WHIP'
+  hitByPitches: 'HBP'
+  gamesPlayed: 'Games Played'
+  walks: 'Walks'
+  sluggingPercentage: 'SLG'
+  onBasePlusSlugging: 'OPS'
+  runsBattedIn: 'RBI'
+  triples: 'Triples'
+  extraBaseHits: 'Extra Base Hits'
+  hits: 'Hits'
+  atBats: 'At Bats'
+  strikeouts: 'Strike Outs'
+  doubles: 'Doubles'
+  totalPlateAppearances: 'Plate Appearances'
+  intentionalWalks: 'IBB'
+  wins: 'Wins'
+  losses: 'Losses'
+  saves: 'Saves'
+  wildPitch: 'Wild Pitch'
+  airOuts: 'Air Outs'
+  balk: 'Balks'
+  blownSaves: 'Blown Saves'
+  catcherEarnedRunAverage: 'ERA'
+  catchersInterference: 'Catcher Interference'
+  completeGames: 'Complete Games'
+  doublePlays: 'Double Plays'
+  earnedRun: 'Earned Runs'
+  errors: 'Errors'
+  gamesStarted: 'Games Started'
+  hitBatsman: 'HBP (Pitcher)'
+  hitsPer9Inn: 'H/9'
+  holds: 'Holds'
+  innings: 'Innings'
+  inningsPitched: 'Innings Pitched'
+  passedBalls: 'Passed Balls'
+  pickoffs: 'Pickoffs'
+  pitchesPerInning: 'Pitches Per Inning'
+  putOuts: 'Put Outs'
+  rangeFactorPerGame: 'Range Factor/Game'
+  rangeFactorPer9Inn: 'Range Factor/9'
+  saveOpportunities: 'Save Opportunities'
+  stolenBasePercentage: 'Stolen Base %'
+  strikeoutsPer9Inn: 'SO/9'
+  strikeoutWalkRatio: 'SO/BB'
+  throwingErrors: 'Throwing Errors'
+  totalBattersFaced: 'Total Batters Faced'
+  triplePlays: 'Triple Plays'
+  walksPer9Inn: 'BB/9'
+  winPercentage: 'W %'
+  battingAverage: 'Batting Average'

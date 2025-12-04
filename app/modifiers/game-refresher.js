@@ -20,7 +20,7 @@ export default class GameRefresher extends Modifier {
       runTask(
         this,
         'doRefresh',
-        (this.game.gameFeed.metaData.wait || 60) * 1000,
+        (this.game.gameFeed.metaData.wait || 60) * 1000
       );
     }
   }

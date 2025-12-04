@@ -24,11 +24,11 @@ export default class Standings extends Route {
     const selectedDate = DateTime.fromISO(date);
     const regularSeasonInterval = Interval.fromDateTimes(
       DateTime.fromISO(regularSeasonStartDate),
-      DateTime.fromISO(regularSeasonEndDate),
+      DateTime.fromISO(regularSeasonEndDate)
     );
     const postSeasonInterval = Interval.fromDateTimes(
       DateTime.fromISO(postSeasonStartDate),
-      DateTime.fromISO(postSeasonEndDate),
+      DateTime.fromISO(postSeasonEndDate)
     );
 
     if (postSeasonInterval.contains(selectedDate)) {

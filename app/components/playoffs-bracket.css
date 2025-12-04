@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* stylelint-disable selector-class-pattern */
 .round > div {
@@ -11,7 +11,7 @@
 
 .round .team--top::after,
 .round .team--bottom::after {
-  content: "";
+  content: '';
   height: calc(50% + 1rem);
 
   @apply absolute w-8 border-2 border-stone-600;
@@ -36,7 +36,7 @@
 
 .round2 .team::before,
 .team--wc::before {
-  content: "";
+  content: '';
   width: calc(2rem + 0.25rem);
 
   @apply absolute right-full bottom-1/2 border-b-2 border-stone-600;
@@ -52,7 +52,7 @@
 
 .finals .team::after,
 .finals .team::before {
-  content: " ";
+  content: ' ';
   height: calc(50% + 0.5rem);
   width: calc(2rem + 0.25rem);
 

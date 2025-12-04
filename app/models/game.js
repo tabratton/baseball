@@ -178,10 +178,10 @@ export default class Game {
       return durationFormat(
         Duration.fromObject({
           hours: Math.floor(
-            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60,
+            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60
           ),
           minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-        }),
+        })
       );
     } else if (this.inProgress) {
       const millis =
@@ -192,7 +192,7 @@ export default class Game {
         duration
           .minus(duration.milliseconds)
           .minus(duration.seconds * 1000)
-          .rescale(),
+          .rescale()
       );
     }
 

@@ -303,7 +303,7 @@ export default class PlayoffsBracket extends Component {
     if (ancestor) {
       const ancestors = [ancestor.team1.id, ancestor.team2.id];
       return series.find(
-        (s) => ancestors.includes(s.team1.id) || ancestors.includes(s.team2.id),
+        (s) => ancestors.includes(s.team1.id) || ancestors.includes(s.team2.id)
       );
     }
 
