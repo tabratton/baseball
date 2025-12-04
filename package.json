@@ -55,7 +55,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/vite": "^4.1.17",
-    "babel-plugin-ember-template-compilation": "^2.4.1",
+    "babel-plugin-ember-template-compilation": "^3.0.1",
     "browserslist": "^4.28.0",
     "concurrently": "^9.2.1",
     "daisyui": "^5.5.5",
