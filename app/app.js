@@ -7,6 +7,12 @@ import Resolver from 'ember-resolver';
 
 import config from './config/environment';
 
+import { setConfig } from 'ember-basic-dropdown/config';
+
+setConfig({
+  rootElement: config.APP.rootElement,
+});
+
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');
 }
