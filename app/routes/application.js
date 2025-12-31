@@ -8,9 +8,8 @@ export default class Application extends Route {
 
   async beforeModel() {
     this.intl.setFormats(formats);
-    const { default: translations } = await import(
-      '../../translations/en-us.json'
-    );
+    const { default: translations } =
+      await import('../../translations/en-us.json');
     this.intl.addTranslations('en-us', translations);
     this.intl.setLocale(['en-us']);
   }
