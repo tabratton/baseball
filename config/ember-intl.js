@@ -38,7 +38,7 @@ module.exports = function (/* environment */) {
      * @type {Boolean}
      * @default "false"
      */
-    publicOnly: false,
+    publicOnly: true,
 
     /**
      * Add the subdirectories of the translations as a namespace for all keys.
@@ -48,48 +48,5 @@ module.exports = function (/* environment */) {
      * @default "false"
      */
     wrapTranslationsWithNamespace: false,
-
-    /**
-     * Cause a build error if ICU argument mismatches are detected between translations
-     * with the same key across all locales.
-     *
-     * @property errorOnNamedArgumentMismatch
-     * @type {Boolean}
-     * @default "false"
-     */
-    errorOnNamedArgumentMismatch: false,
-
-    /**
-     * Cause a build error if missing translations are detected.
-     *
-     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#throwing-a-build-error-on-missing-required-translation
-     *
-     * @property errorOnMissingTranslations
-     * @type {Boolean}
-     * @default "false"
-     */
-    errorOnMissingTranslations: false,
-
-    /**
-     * Removes empty translations from the build output.
-     *
-     * @property stripEmptyTranslations
-     * @type {Boolean}
-     * @default "false"
-     */
-    stripEmptyTranslations: false,
-
-    /**
-     * A function that is called whenever any translation key, from any locale, is missing at build time.
-     *
-     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations
-     *
-     * @property requiresTranslation
-     * @type {Function}
-     * @default "function(key,locale) { return true }"
-     */
-    requiresTranslation(/* key, locale */) {
-      return true;
-    },
   };
 };
