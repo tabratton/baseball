@@ -46,7 +46,7 @@ import { t } from 'ember-intl';
         </div>
       </div>
     </div>
-    <div class="content p-4">
+    <div class="content p-4 overflow-scroll">
       {{outlet}}
     </div>
   </div>
