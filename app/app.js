@@ -1,3 +1,4 @@
+import '@warp-drive/ember/install';
 import Application from '@ember/application';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';

@@ -3,14 +3,27 @@ import { service } from '@ember/service';
 
 import formats from '../ember-intl';
 
+const translationModules = {
+  'en-us': () => import('virtual:ember-intl/translations/en-us'),
+};
+
 export default class Application extends Route {
   @service intl;
 
   async beforeModel() {
+    await this.loadTranslations('en-us');
     this.intl.setFormats(formats);
-    const { default: translations } =
-      await import('../../translations/en-us.json');
-    this.intl.addTranslations('en-us', translations);
     this.intl.setLocale(['en-us']);
+  }
+
+  async loadTranslations(locale) {
+    let translations;
+    switch (locale) {
+      case 'en-us':
+        translations = (await translationModules['en-us']()).default;
+        break;
+    }
+
+    this.intl.addTranslations(locale, translations);
   }
 }

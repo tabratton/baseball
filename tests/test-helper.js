@@ -1,3 +1,4 @@
+import '@warp-drive/ember/install';
 import Application from 'baseball/app';
 import config from 'baseball/config/environment';
 import * as QUnit from 'qunit';

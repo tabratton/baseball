@@ -3,7 +3,7 @@ allowBuilds:
   esbuild: true
   node-zopfli-es: true
 onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
+  - "@tailwindcss/oxide"
   - core-js
   - corejs
   - esbuild

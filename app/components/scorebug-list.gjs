@@ -12,7 +12,7 @@ import gameRefresher from '../modifiers/game-refresher';
 import DatePicker from './date-picker';
 import Loading from './loading';
 import Scorebug from './scorebug';
-import { TrackedObject } from 'tracked-built-ins';
+import { trackedObject } from '@ember/reactive/collections';
 
 export default class ScorebugList extends Component {
   <template>
@@ -41,7 +41,7 @@ export default class ScorebugList extends Component {
   @tracked games;
 
   @use data = resource(() => {
-    const state = new TrackedObject({
+    const state = new trackedObject({
       value: [],
       loading: true,
     });
@@ -64,7 +64,7 @@ export default class ScorebugList extends Component {
     return this.scorebugGames
       ?.filter((game) => game.inProgress)
       ?.sort((a, b) =>
-        a.inning > b.inning ? 1 : a.inning === b.inning ? 0 : -1
+        a.inning > b.inning ? 1 : a.inning === b.inning ? 0 : -1,
       );
   }
 
