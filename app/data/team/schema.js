@@ -1,0 +1,60 @@
+// import { withDefaults } from '@warp-drive/legacy/model/migration-support';
+
+export const TeamSchema = {
+  type: 'team',
+  identity: { kind: '@id', name: 'id' },
+  fields: [
+    { kind: 'field', name: 'abbreviation' },
+    { kind: 'field', name: 'active' },
+    { kind: 'field', name: 'allStarStatus' },
+    { kind: 'field', name: 'clubName' },
+    {
+      kind: 'schema-object',
+      name: 'division',
+      type: 'division',
+      // options: { async: false, inverse: null },
+    },
+    { kind: 'field', name: 'fileCode' },
+    { kind: 'field', name: 'firstYearOfPlay' },
+    { kind: 'field', name: 'franchiseName' },
+    {
+      kind: 'schema-object',
+      name: 'springLeague',
+      type: 'league',
+      // options: { async: false, inverse: null },
+    },
+    {
+      kind: 'schema-object',
+      name: 'league',
+      type: 'league',
+      // options: { async: false, inverse: null },
+    },
+    { kind: 'field', name: 'link' },
+    { kind: 'field', name: 'locationName' },
+    { kind: 'field', name: 'name' },
+    { kind: 'field', name: 'parentOrgId' },
+    { kind: 'field', name: 'parentOrgName' },
+    { kind: 'field', name: 'season' },
+    { kind: 'field', name: 'shortName' },
+    {
+      kind: 'schema-object',
+      name: 'sport',
+      type: 'sport',
+      // options: { async: false, inverse: null },
+    },
+    { kind: 'field', name: 'teamCode' },
+    { kind: 'field', name: 'teamName' },
+    {
+      kind: 'schema-object',
+      name: 'springVenue',
+      type: 'venue',
+      // options: { async: false, inverse: null },
+    },
+    {
+      kind: 'schema-object',
+      name: 'venue',
+      type: 'venue',
+      // options: { async: false, inverse: null },
+    },
+  ],
+};

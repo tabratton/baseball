@@ -29,7 +29,8 @@ class TeamContainer extends Component {
   }
 
   get isNl() {
-    return this.args.team?.league.id === 104;
+    const team = this.args.team;
+    return team?.league.id === 104;
   }
 }
 
@@ -298,7 +299,8 @@ export default class PlayoffsBracket extends Component {
 
   @action
   getRound(seriesType, isTop, ancestor) {
-    const series = this.args.model.filter((s) => s.seriesType === seriesType);
+    const series =
+      this.args.model?.filter((s) => s.seriesType === seriesType) || [];
 
     if (ancestor) {
       const ancestors = [ancestor.team1.id, ancestor.team2.id];

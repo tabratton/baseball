@@ -1,6 +1,5 @@
 import { fn, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
-import Component from '@glimmer/component';
 
 import eq from 'ember-truth-helpers/helpers/eq';
 
@@ -19,11 +18,10 @@ const Tab = <template>
   </div>
 </template>;
 
-/* eslint-disable ember/no-empty-glimmer-component-classes */
-export default class Nav extends Component {
-  <template>
-    <div class="mt-4 border-b-2 border-stone-50 flex justify-center">
-      {{yield (hash Tab=(component Tab selected=@selected onUpdate=@onUpdate))}}
-    </div>
-  </template>
-}
+const Nav = <template>
+  <div class="mt-4 border-b-2 border-stone-50 flex justify-center">
+    {{yield (hash Tab=(component Tab selected=@selected onUpdate=@onUpdate))}}
+  </div>
+</template>;
+
+export default Nav;

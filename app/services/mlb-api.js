@@ -1,9 +1,6 @@
-import Service from '@ember/service';
+import Service, { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
-
 import { DateTime } from 'luxon';
-import { resource, use } from 'ember-resources';
-import { trackedObject } from '@ember/reactive/collections';
 
 import Game from 'baseball/models/game';
 import LeagueLeaders from 'baseball/models/league-leaders';
@@ -11,58 +8,51 @@ import Player from 'baseball/models/player';
 import TeamRecord from 'baseball/models/team-record';
 import teamMap from 'baseball/utils/team-map';
 import WinDifferential from 'baseball/models/win-differential';
+import { buildQueryParams } from '@warp-drive/utilities';
+import { getRequestState } from '@warp-drive/core/reactive';
 
 export default class MlbApi extends Service {
+  @service store;
+
   apiHost = 'https://statsapi.mlb.com/api/';
 
-  @use leagues = resource(() => {
-    const state = new trackedObject({
-      value: [],
-      loading: true,
-      promise: null,
+  @cached
+  get teamsRequest() {
+    return this.store.request({
+      url: `${this.apiHost}v1/teams?sportId=1`,
+      data: buildQueryParams({
+        sportId: 1,
+      }),
+      options: {
+        dataKey: 'teams',
+        failMessage: 'could not fetch leagues',
+      },
     });
+  }
 
-    state.promise = fetch(encodeURI(`${this.apiHost}v1/leagues?sportId=1`))
-      .then((response) =>
-        this.handleResponse(response, 'could not fetch leagues'),
-      )
-      .then(({ leagues }) => (state.value = leagues || []))
-      .catch(() => (state.value = []))
-      .finally(() => (state.loading = false));
-
-    return state;
-  });
-
-  @use _teams = resource(() => {
-    const state = new trackedObject({
-      value: [],
-      loading: true,
-      promise: null,
-    });
-
-    state.promise = fetch(encodeURI(`${this.apiHost}v1/teams?sportId=1`))
-      .then((response) =>
-        this.handleResponse(response, 'could not fetch leagues'),
-      )
-      .then(({ teams }) => (state.value = teams || []))
-      .catch(() => (state.value = []))
-      .finally(() => (state.loading = false));
-
-    return state;
-  });
+  get _teams() {
+    return getRequestState(this.teamsRequest).value?.data || [];
+  }
 
   @cached
   get teams() {
-    return this._teams.value.map((team) => {
-      const additionalInfo = teamMap.find((t) => t.id === team.id) || {};
-      return {
+    return this._teams.map((team) => {
+      const additionalInfo = teamMap.find((t) => `${t.id}` === team.id);
+      const obj = {
         ...team,
-        ...additionalInfo,
+        ...(additionalInfo || {}),
       };
+
+      obj.league = {
+        ...team.league,
+      };
+
+      return obj;
     });
   }
 
   fetchGamesForDay(date) {
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
       encodeURI(
         `${this.apiHost}v1/schedule?sportId=1&date=${date.toFormat('y-MM-dd')}`,
@@ -78,6 +68,7 @@ export default class MlbApi extends Service {
   }
 
   fetchGameData(gamePk) {
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
       encodeURI(`${this.apiHost}v1.1/game/${gamePk}/feed/live`),
     ).then((response) => this.handleResponse(response, 'could not fetch game'));
@@ -92,6 +83,7 @@ export default class MlbApi extends Service {
   async fetchStandings(date, type) {
     const dateTime = DateTime.fromFormat(date, 'y-MM-dd');
 
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
       encodeURI(
         `${
@@ -132,6 +124,7 @@ export default class MlbApi extends Service {
   }
 
   getSeasonData(year) {
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(encodeURI(`${this.apiHost}v1/seasons/${year}/?sportId=1`))
       .then((response) =>
         this.handleResponse(response, 'could not fetch win diffs'),
@@ -150,6 +143,7 @@ export default class MlbApi extends Service {
       teamMap
         .filter((team) => team.id !== 159 && team.id !== 160)
         .map((team) => {
+          /* eslint-disable-next-line warp-drive/no-external-request-patterns */
           return fetch(
             encodeURI(
               `${this.apiHost}v1/schedule?sportId=1&teamId=${team.id}&startDate=${beginDate}&endDate=${endDate}`,
@@ -186,6 +180,7 @@ export default class MlbApi extends Service {
   }
 
   async fetchPlayer(playerId) {
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     const player = await fetch(
       encodeURI(
         `${this.apiHost}v1/people/${playerId}?hydrate=stats(group=[hitting,pitching,fielding],type=[career,yearByYear],currentTeam)`,
@@ -218,11 +213,13 @@ export default class MlbApi extends Service {
     }
 
     const [american, national] = await Promise.all([
+      /* eslint-disable-next-line warp-drive/no-external-request-patterns */
       fetch(encodeURI(`${url}&leagueId=103`))
         .then((response) =>
           this.handleResponse(response, 'could not fetch stats'),
         )
         .then(({ leagueLeaders: [{ leaders = [] }] }) => leaders),
+      /* eslint-disable-next-line warp-drive/no-external-request-patterns */
       fetch(encodeURI(`${url}&leagueId=104`))
         .then((response) =>
           this.handleResponse(response, 'could not fetch stats'),
@@ -242,6 +239,7 @@ export default class MlbApi extends Service {
   }
 
   async fetchPostSeasonData(selectedDate) {
+    /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     const data = await fetch(
       encodeURI(
         `${this.apiHost}v1/schedule/postseason/series?season=${selectedDate.year}&fields=series,id,sortNumber,gameType,games,gamePk,teams,away,home,team,name,officialDate,wins,losses,leagueRecord,abbreviation,seriesStatus,leagueId&hydrate=seriesStatus`,
