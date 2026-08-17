@@ -104,7 +104,7 @@
     "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-qunit": "^8.2.6",
     "eslint-plugin-warp-drive": "^5.8.1",
-    "globals": "^17.4.0",
+    "globals": "^17.11.0",
     "lightningcss": "^1.30.2",
     "node-zopfli-es": "^2.0.4",
     "prettier": "^3.8.1",
