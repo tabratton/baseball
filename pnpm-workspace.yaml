@@ -2,6 +2,9 @@ allowBuilds:
   core-js: true
   esbuild: true
   node-zopfli-es: true
+minimumReleaseAgeExclude:
+  - "@ember/test-helpers@5.5.2"
+  - browserslist@4.29.3
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - core-js
