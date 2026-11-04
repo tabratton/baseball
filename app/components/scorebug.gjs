@@ -10,8 +10,9 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 
 import Chevron from './chevron';
-import dateFormat from '../helpers/date-format';
 import PlayerName from './player-name';
+
+const formatTime = (date) => date.toPlainTime().toLocaleString();
 
 export default class Scorebug extends Component {
   <template>
@@ -82,7 +83,7 @@ export default class Scorebug extends Component {
               class="bg-stone-900 text-right py-2.5 pl-1 pr-2 whitespace-nowrap rounded-br"
             >
               {{#if @game.isPregame}}
-                {{dateFormat date=@game.gameTime format="hh:mm a"}}
+                {{formatTime date=@game.gameTime}}
               {{else if @game.inProgress}}
                 {{concat @game.balls "-" @game.strikes}}
               {{/if}}

@@ -3,8 +3,9 @@ import Component from '@glimmer/component';
 import { concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 
-import dateFormat from '../helpers/date-format';
 import withDefault from '../helpers/with-default';
+
+const formatTime = (date) => date.toPlainTime().toLocaleString();
 
 export default class Boxscore extends Component {
   <template>
@@ -76,7 +77,7 @@ export default class Boxscore extends Component {
         {{#if @game.isPregame}}
           <span>{{t
               "boxscore.starts"
-              time=(dateFormat date=@game.gameTime format="h:mm a")
+              time=(formatTime date=@game.gameTime)
             }}</span>
         {{/if}}
         {{#if @game.isOver}}

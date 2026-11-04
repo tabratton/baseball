@@ -2,7 +2,6 @@ import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { restartableTask, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import { DateTime } from 'luxon';
 
 export default class DatePicker extends Component {
   <template>
@@ -20,16 +19,16 @@ export default class DatePicker extends Component {
   </template>
 
   get date() {
-    return (this.args.date || DateTime.now()).toFormat('y-MM-dd');
+    return (this.args.date || Temporal.Now.plainDateISO()).toString();
   }
 
   get maxDate() {
-    return this.args.maxDate?.toFormat('y-MM-dd');
+    return this.args.maxDate?.toString();
   }
 
   updateDate = restartableTask(async (event) => {
     await timeout(250);
-    const newDate = DateTime.fromISO(event.target.value);
+    const newDate = Temporal.PlainDate.from(event.target.value);
     this.args.onUpdate(newDate);
   });
 }

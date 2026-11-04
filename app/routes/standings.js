@@ -1,8 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
-import { DateTime, Interval } from 'luxon';
-
 export default class Standings extends Route {
   @service mlbApi;
 
@@ -13,7 +11,7 @@ export default class Standings extends Route {
   };
 
   async model(params) {
-    const date = params.date || DateTime.now().toFormat('y-MM-dd');
+    const date = params.date || Temporal.Now.plainDateISO().toString();
     const year = date.split('-')[0];
     const {
       regularSeasonStartDate,
@@ -21,14 +19,14 @@ export default class Standings extends Route {
       postSeasonStartDate,
       postSeasonEndDate,
     } = await this.mlbApi.getSeasonData(year);
-    const selectedDate = DateTime.fromISO(date);
-    const regularSeasonInterval = Interval.fromDateTimes(
-      DateTime.fromISO(regularSeasonStartDate),
-      DateTime.fromISO(regularSeasonEndDate),
+    const selectedDate = Temporal.PlainDate.from(date);
+    const regularSeasonInterval = new Interval(
+      Temporal.PlainDate.from(regularSeasonStartDate),
+      Temporal.PlainDate.from(regularSeasonEndDate),
     );
-    const postSeasonInterval = Interval.fromDateTimes(
-      DateTime.fromISO(postSeasonStartDate),
-      DateTime.fromISO(postSeasonEndDate),
+    const postSeasonInterval = new Interval(
+      Temporal.PlainDate.from(postSeasonStartDate),
+      Temporal.PlainDate.from(postSeasonEndDate),
     );
 
     if (postSeasonInterval.contains(selectedDate)) {
@@ -50,6 +48,24 @@ export default class Standings extends Route {
         standings,
         winDifferentials,
       }));
+    } else {
+      return {};
     }
+  }
+}
+
+class Interval {
+  date1;
+  date2;
+
+  constructor(date1, date2) {
+    this.date1 = date1;
+    this.date2 = date2;
+  }
+
+  contains(date) {
+    const afterBegin = Temporal.PlainDate.compare(date, this.date1) >= 0;
+    const beforeEnd = Temporal.PlainDate.compare(date, this.date2) <= 0;
+    return afterBegin && beforeEnd;
   }
 }

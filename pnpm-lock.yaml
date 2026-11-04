@@ -14,9 +14,6 @@ importers:
       fuse.js:
         specifier: ^7.1.0
         version: 7.5.0
-      luxon:
-        specifier: ^3.7.2
-        version: 3.7.2
     devDependencies:
       '@babel/core':
         specifier: ^7.29.0
@@ -1111,15 +1108,6 @@ packages:
 
   '@embroider/macros@1.21.1':
     resolution: {integrity: sha512-57jR1QobqR3NKZX8bGi8ljONPfQdmQ01/LAzkwx/InGySyiC1HkvgPT4NdNWAFtK5Q00SYGYMQzJXZg3/zh9cQ==}
-    engines: {node: 12.* || 14.* || >= 16}
-    peerDependencies:
-      '@glint/template': ^1.0.0
-    peerDependenciesMeta:
-      '@glint/template':
-        optional: true
-
-  '@embroider/macros@1.20.6':
-    resolution: {integrity: sha512-6XwqG4WepXzLtiMbs+mOLFjNzeCFg6hMi+02xQgtW7zsI86/mThAB+1nrhnrugg/Y4Hcl3y1/vLTWx0i8eLN5Q==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@glint/template': ^1.0.0

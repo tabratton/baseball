@@ -1,4 +1,3 @@
-import { formatDate } from 'ember-intl';
 import { pageTitle } from 'ember-page-title';
 
 import Boxscore from '../components/boxscore';
@@ -6,6 +5,8 @@ import Players from '../components/players';
 import Scorebug from '../components/scorebug';
 
 import gameRefresher from '../modifiers/game-refresher';
+
+const formatDate = (date) => date.toLocaleString();
 
 <template>
   {{pageTitle

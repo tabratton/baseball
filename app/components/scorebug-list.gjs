@@ -57,7 +57,7 @@ export default class ScorebugList extends Component {
   get scorebugGames() {
     return this.data.value
       ?.filter((v) => v)
-      .sort((a, b) => a.gameTime > b.gameTime);
+      .sort((a, b) => Temporal.ZonedDateTime.compare(a.gameTime, b.gameTime));
   }
 
   get inProgress() {

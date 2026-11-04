@@ -2,11 +2,8 @@ import { getOwner, setOwner } from '@ember/owner';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 
-import { DateTime, Duration } from 'luxon';
-
 import Batter from 'baseball/models/batter';
 import Pitcher from 'baseball/models/pitcher';
-import durationFormat from 'baseball/utils/duration-format';
 import teamMap from 'baseball/utils/team-map';
 
 export default class Game {
@@ -40,7 +37,9 @@ export default class Game {
   }
 
   get gameTime() {
-    return DateTime.fromISO(this.gameFeed.gameData.datetime.dateTime);
+    return Temporal.Instant.from(
+      this.gameFeed.gameData.datetime.dateTime,
+    ).toZonedDateTimeISO(Temporal.Now.timeZoneId());
   }
 
   #processInnings(innings) {
@@ -175,25 +174,21 @@ export default class Game {
 
   get gameDuration() {
     if (this.isOver) {
-      return durationFormat(
-        Duration.fromObject({
+      return Temporal.Duration.from({
           hours: Math.floor(
             this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60,
           ),
           minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-        }),
-      );
+        }).toLocaleString();
     } else if (this.inProgress) {
       const millis =
-        DateTime.now() -
-        DateTime.fromISO(this.gameFeed.gameData.gameInfo.firstPitch);
-      const duration = Duration.fromMillis(millis).rescale();
-      return durationFormat(
-        duration
-          .minus(duration.milliseconds)
-          .minus(duration.seconds * 1000)
-          .rescale(),
-      );
+        Temporal.Now.instant().epochMilliseconds -
+        Temporal.Instant.from(this.gameFeed.gameData.gameInfo.firstPitch).epochMilliseconds;
+      const duration = Temporal.Duration.from({ milliseconds: millis }).round();
+      return duration
+          .subtract(Temporal.Duration.from({ milliseconds: duration.milliseconds }))
+          .subtract(Temporal.Duration.from({ seconds: duration.seconds }))
+          .round().toLocaleString();
     }
 
     return '';

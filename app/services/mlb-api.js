@@ -1,6 +1,5 @@
 import Service, { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
-import { DateTime } from 'luxon';
 
 import Game from 'baseball/models/game';
 import LeagueLeaders from 'baseball/models/league-leaders';
@@ -55,7 +54,7 @@ export default class MlbApi extends Service {
     /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
       encodeURI(
-        `${this.apiHost}v1/schedule?sportId=1&date=${date.toFormat('y-MM-dd')}`,
+        `${this.apiHost}v1/schedule?sportId=1&date=${date.toString()}`,
       ),
     )
       .then((response) =>
@@ -81,18 +80,15 @@ export default class MlbApi extends Service {
   }
 
   async fetchStandings(date, type) {
-    const dateTime = DateTime.fromFormat(date, 'y-MM-dd');
+    const dateTime = Temporal.PlainDate.from(date);
 
+    const dateString = `${dateTime.month.toString().padStart(2, '0')}/${dateTime.day.toString().padStart(2, '0')}/${dateTime.year}`;
     /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
       encodeURI(
         `${
           this.apiHost
-        }v1/standings?leagueId=103,104&season=${dateTime.toFormat(
-          'y',
-        )}&date=${dateTime.toFormat(
-          'MM/dd/yyyy',
-        )}&standingsType=${type}&hydrate=team(division)`,
+        }v1/standings?leagueId=103,104&season=${dateTime.year}&date=${dateString}&standingsType=${type}&hydrate=team(division)`,
       ),
     )
       .then((response) =>
@@ -260,8 +256,8 @@ export default class MlbApi extends Service {
 
     data.forEach((d) => {
       d.games = d.games.filter((g) => {
-        const gameDate = DateTime.fromFormat(g.officialDate, 'y-MM-dd');
-        return gameDate <= selectedDate;
+        const gameDate = Temporal.PlainDate.from(g.officialDate);
+        return Temporal.PlainDate.compare(gameDate, selectedDate) <= 0;
       });
       if (d.games.length > 0) {
         filteredData.push(d);
