@@ -175,20 +175,24 @@ export default class Game {
   get gameDuration() {
     if (this.isOver) {
       return Temporal.Duration.from({
-          hours: Math.floor(
-            this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60,
-          ),
-          minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
-        }).toLocaleString();
+        hours: Math.floor(
+          this.gameFeed.gameData.gameInfo.gameDurationMinutes / 60,
+        ),
+        minutes: this.gameFeed.gameData.gameInfo.gameDurationMinutes % 60,
+      }).toLocaleString();
     } else if (this.inProgress) {
       const millis =
         Temporal.Now.instant().epochMilliseconds -
-        Temporal.Instant.from(this.gameFeed.gameData.gameInfo.firstPitch).epochMilliseconds;
+        Temporal.Instant.from(this.gameFeed.gameData.gameInfo.firstPitch)
+          .epochMilliseconds;
       const duration = Temporal.Duration.from({ milliseconds: millis }).round();
       return duration
-          .subtract(Temporal.Duration.from({ milliseconds: duration.milliseconds }))
-          .subtract(Temporal.Duration.from({ seconds: duration.seconds }))
-          .round().toLocaleString();
+        .subtract(
+          Temporal.Duration.from({ milliseconds: duration.milliseconds }),
+        )
+        .subtract(Temporal.Duration.from({ seconds: duration.seconds }))
+        .round()
+        .toLocaleString();
     }
 
     return '';

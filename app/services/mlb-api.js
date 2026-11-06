@@ -53,9 +53,7 @@ export default class MlbApi extends Service {
   fetchGamesForDay(date) {
     /* eslint-disable-next-line warp-drive/no-external-request-patterns */
     return fetch(
-      encodeURI(
-        `${this.apiHost}v1/schedule?sportId=1&date=${date.toString()}`,
-      ),
+      encodeURI(`${this.apiHost}v1/schedule?sportId=1&date=${date.toString()}`),
     )
       .then((response) =>
         this.handleResponse(response, 'could not fetch games'),

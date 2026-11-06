@@ -43,7 +43,9 @@ export default class WinDifferential {
         count += 1;
         diff = diff + (g.isWinner ? 1 : -1);
         const acc = {
-          date: Temporal.PlainDate.from(g.date).toZonedDateTime(Temporal.Now.timeZoneId()),
+          date: Temporal.PlainDate.from(g.date).toZonedDateTime(
+            Temporal.Now.timeZoneId(),
+          ),
           diff,
           count,
           isWinner: g.isWinner,
